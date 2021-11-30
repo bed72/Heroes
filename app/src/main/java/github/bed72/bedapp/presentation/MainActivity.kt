@@ -1,7 +1,8 @@
-package github.bed72.bedapp
+package github.bed72.bedapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import github.bed72.bedapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
