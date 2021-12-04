@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import github.bed72.bedapp.R
 import github.bed72.bedapp.databinding.ActivityMainBinding
 
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_container) as NavHostFragment
 
         navController = navHostFragment.navController
+        binding.bottomNavMain.setupWithNavController(navController)
+
         appBarConfiguration = AppBarConfiguration(
             setOf()
         )
