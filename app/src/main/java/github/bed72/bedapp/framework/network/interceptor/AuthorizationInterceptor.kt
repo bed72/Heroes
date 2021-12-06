@@ -1,4 +1,4 @@
-package github.bed72.core.data.network.interceptor
+package github.bed72.bedapp.framework.network.interceptor
 
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
