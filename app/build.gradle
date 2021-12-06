@@ -12,8 +12,8 @@ apply plugin: 'androidx.navigation.safeargs'
 apply from: '../config/detekt/detekt.gradle'
 
 // Keys
-def apikeyPropertiesFile = rootProject.file("apikey.properties")
 def apikeyProperties = new Properties()
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
@@ -31,7 +31,7 @@ android {
         // should correspond to key/value pairs inside the file
         buildConfigField "String", "PUBLIC_KEY", apikeyProperties['PUBLIC_KEY']
         buildConfigField "String", "PRIVATE_KEY", apikeyProperties['PRIVATE_KEY']
-        buildConfigField "String", "BASE_URL", '"https://gateway.marvel.com/v1/public"'
+        buildConfigField "String", "BASE_URL", '"https://gateway.marvel.com/v1/public/"'
     }
 
     buildTypes {
