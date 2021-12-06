@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import github.bed72.bedapp.BuildConfig
-import github.bed72.core.data.network.interceptor.AuthorizationInterceptor
+import github.bed72.bedapp.framework.network.interceptor.AuthorizationInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

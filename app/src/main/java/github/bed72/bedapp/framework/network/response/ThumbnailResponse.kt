@@ -1,4 +1,4 @@
-package github.bed72.core.data.network.response
+package github.bed72.bedapp.framework.network.response
 
 data class ThumbnailResponse(
     val path: String,

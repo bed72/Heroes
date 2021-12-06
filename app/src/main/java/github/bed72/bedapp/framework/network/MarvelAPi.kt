@@ -1,6 +1,6 @@
-package github.bed72.core.data.network
+package github.bed72.bedapp.framework.network
 
-import github.bed72.core.data.network.response.DataWrapperResponse
+import github.bed72.bedapp.framework.network.response.DataWrapperResponse
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
 
