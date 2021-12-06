@@ -7,4 +7,4 @@ data class ThumbnailResponse(
 )
 
 fun ThumbnailResponse.mountPathImage() =
-    "${this.path}.${this.extension}"
+    "${this.path}.${this.extension}".replace("http", "https")

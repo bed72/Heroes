@@ -5,15 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
 import github.bed72.core.domain.model.Character
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
 
     private var _binding: FragmentCharactersBinding? = null
     private val binding: FragmentCharactersBinding get() = _binding!!
+
+    private val viewModel: CharactersViewModel by viewModels()
 
     private val charactersAdapter = CharactersAdapter()
 
@@ -33,9 +39,11 @@ class CharactersFragment : Fragment() {
 
         initCharactersAdapter()
 
-        charactersAdapter.submitList(
-            mockCharacter()
-        )
+        lifecycleScope.launch {
+            viewModel.charactersPagingData("").collect { pagingData ->
+                charactersAdapter.submitData(pagingData)
+            }
+        }
     }
 
     private fun initCharactersAdapter() {
@@ -44,11 +52,4 @@ class CharactersFragment : Fragment() {
             adapter = charactersAdapter
         }
     }
-
-    private fun mockCharacter() = listOf(
-        Character("3-D Man", "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"),
-        Character("3-D Man", "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"),
-        Character("3-D Man", "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"),
-        Character("3-D Man", "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg")
-    )
 }
