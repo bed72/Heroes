@@ -1,4 +1,4 @@
-package github.bed72.core.domain.entities
+package github.bed72.core.domain.entity
 
 data class Character(
     val name: String,

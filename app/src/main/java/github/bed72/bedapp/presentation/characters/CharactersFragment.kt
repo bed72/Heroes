@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
-import github.bed72.core.domain.entities.Character
+import github.bed72.core.domain.entity.Character
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {

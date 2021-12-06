@@ -3,7 +3,7 @@ package github.bed72.bedapp.presentation.characters
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import github.bed72.core.domain.entities.Character
+import github.bed72.core.domain.entity.Character
 
 class CharactersAdapter : ListAdapter<Character, CharactersViewHolder>(diffCallback) {
 
