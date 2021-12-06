@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import github.bed72.bedapp.R
 import github.bed72.bedapp.databinding.ItemCharacterBinding
-import github.bed72.core.domain.entity.Character
+import github.bed72.core.domain.model.Character
 
 class CharactersViewHolder(
     itemCharacterBinding: ItemCharacterBinding
