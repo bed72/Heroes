@@ -8,8 +8,6 @@ import javax.inject.Inject
 class RetrofitCharactersDataSource @Inject constructor(
     private val marvelApi: MarvelApi
 ) : CharactersRemoteDataSource<DataWrapperResponse> {
-
     override suspend fun fetchCharacters(queries: Map<String, String>) =
         marvelApi.getCharacters(queries)
-
 }

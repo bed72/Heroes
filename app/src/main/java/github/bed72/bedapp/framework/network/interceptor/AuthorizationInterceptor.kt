@@ -46,7 +46,7 @@ class AuthorizationInterceptor(
     companion object {
         private const val QUERY_PARAMETER_TS = "ts"
         private const val QUERY_PARAMETER_HASH = "hash"
-        private const val QUERY_PARAMETER_API_KEY = "apiHey"
+        private const val QUERY_PARAMETER_API_KEY = "apikey"
         private const val BASE_TO_CONVERT_TIME_IN_SECONDS = 1000L
     }
 }
