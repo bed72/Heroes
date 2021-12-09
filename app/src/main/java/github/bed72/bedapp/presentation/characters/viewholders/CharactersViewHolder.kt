@@ -1,4 +1,4 @@
-package github.bed72.bedapp.presentation.characters
+package github.bed72.bedapp.presentation.characters.viewholders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

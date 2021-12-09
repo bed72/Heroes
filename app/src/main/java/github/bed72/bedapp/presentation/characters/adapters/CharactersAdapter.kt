@@ -1,9 +1,9 @@
-package github.bed72.bedapp.presentation.characters
+package github.bed72.bedapp.presentation.characters.adapters
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import github.bed72.bedapp.presentation.characters.viewholders.CharactersViewHolder
 import github.bed72.core.domain.model.Character
 
 class CharactersAdapter : PagingDataAdapter<Character, CharactersViewHolder>(diffCallback) {
