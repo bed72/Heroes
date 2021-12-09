@@ -31,4 +31,7 @@ dependencies {
 
     // Paging3 Common
     implementation "androidx.paging:paging-common:$paging_version"
+
+    // Unit tests
+    testImplementation project(':testing')
 }
