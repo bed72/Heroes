@@ -13,7 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
-import github.bed72.core.domain.model.Character
+import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
+import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
