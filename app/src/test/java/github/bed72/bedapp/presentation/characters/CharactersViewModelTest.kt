@@ -5,16 +5,16 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import github.bed72.core.domain.model.Character
 import github.bed72.core.usecase.GetCharactersUseCase
-import kotlinx.coroutines.Dispatchers
+import github.bed72.testing.MainCoroutineRule
+import github.bed72.testing.model.CharacterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -25,29 +25,25 @@ import java.lang.RuntimeException
 @RunWith(MockitoJUnitRunner::class)
 class CharactersViewModelTest {
 
-    private val testDispatcher = TestCoroutineDispatcher()
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
 
     @Mock
     lateinit var getCharactersUseCase: GetCharactersUseCase
 
     private lateinit var charactersViewModel: CharactersViewModel
 
+    private val charactersFactory = CharacterFactory()
+
     private val pagingDataCharacters = PagingData.from(
         listOf(
-            Character(
-                "3-D Man",
-                "https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
-            ),
-            Character(
-                "A-Bomb (HAS)",
-                "https://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16.jpg"
-            )
+            charactersFactory.create(CharacterFactory.Hero.ABomb),
+            charactersFactory.create(CharacterFactory.Hero.ThreeDMan)
         )
     )
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(testDispatcher)
         charactersViewModel = CharactersViewModel(getCharactersUseCase)
     }
 
