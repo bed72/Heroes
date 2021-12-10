@@ -7,11 +7,10 @@ import github.bed72.core.data.repository.CharactersRepository
 import github.bed72.testing.MainCoroutineRule
 import github.bed72.testing.model.CharacterFactory
 import github.bed72.testing.pagingsource.PagingSourceFactory
-import junit.framework.Assert.assertNotNull
+import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -41,7 +40,7 @@ class GetCharactersUseCaseImplTest {
     }
 
     @Test
-    fun `🧪 Should validate flow paging data creation when invoke from use case in called`() =
+    fun `Should validate flow paging data creation when invoke from use case in called`() =
         runBlockingTest {
             whenever(charactersRepository.getCharacters(""))
                 .thenReturn(fakePagingSource)
