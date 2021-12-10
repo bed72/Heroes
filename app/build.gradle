@@ -19,6 +19,15 @@ apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 android {
     compileSdk 31
 
+    signingConfigs {
+        release {
+            storeFile file('/home/bed/Documentos/Code/Mobile/Nativo/BedApp/store/bed_key_store.jks')
+            keyAlias apikeyProperties['KEY_ALIAS']
+            keyPassword apikeyProperties['KEY_PASSWORD']
+            storePassword apikeyProperties['STORE_PASSWORD']
+        }
+    }
+
     defaultConfig {
         applicationId 'github.bed72.bedapp'
         minSdk 23
@@ -29,14 +38,29 @@ android {
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         // should correspond to key/value pairs inside the file
-        buildConfigField "String", "PUBLIC_KEY", apikeyProperties['PUBLIC_KEY']
-        buildConfigField "String", "PRIVATE_KEY", apikeyProperties['PRIVATE_KEY']
-        buildConfigField "String", "BASE_URL", '"https://gateway.marvel.com/v1/public/"'
+        buildConfigField 'String', 'PUBLIC_KEY', apikeyProperties['PUBLIC_KEY']
+        buildConfigField 'String', 'PRIVATE_KEY', apikeyProperties['PRIVATE_KEY']
+        buildConfigField 'String', 'BASE_URL', '"https://gateway.marvel.com/v1/public/"'
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix '.debug'
+        }
+
+        staging {
+            initWith debug
+            minifyEnabled true
+            applicationIdSuffix '.staging'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro', 'proguard-rules-staging.pro'
+        }
+
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -81,7 +105,7 @@ dependencies {
 
     // Other Libs
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
 
     // Navigation
     def nav_version = '2.4.0-beta02'

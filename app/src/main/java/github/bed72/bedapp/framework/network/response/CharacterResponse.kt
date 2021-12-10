@@ -1,10 +1,14 @@
 package github.bed72.bedapp.framework.network.response
 
+import com.google.gson.annotations.SerializedName
 import github.bed72.core.domain.model.Character
 
 data class CharacterResponse(
+    @SerializedName("id")
     val id: String,
+    @SerializedName("name")
     val name: String,
+    @SerializedName("thumbnail")
     val thumbnail: ThumbnailResponse
 )
 
