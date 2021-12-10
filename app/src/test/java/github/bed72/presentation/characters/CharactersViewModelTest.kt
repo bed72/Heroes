@@ -47,7 +47,7 @@ class CharactersViewModelTest {
     }
 
     @Test
-    fun `🧪 Should validate the paging data object values when calling charactersPagingData`() = runBlockingTest {
+    fun `Should validate the paging data object values when calling charactersPagingData`() = runBlockingTest {
         whenever(
             getCharactersUseCase(any())
         ).thenReturn(
@@ -63,7 +63,7 @@ class CharactersViewModelTest {
 
 
     @Test(expected = RuntimeException::class)
-    fun `🧪 Should throw an exception when the calling to the use case returns an exception`() = runBlockingTest {
+    fun `Should throw an exception when the calling to the use case returns an exception`() = runBlockingTest {
         whenever(getCharactersUseCase(any())).thenThrow(RuntimeException())
 
         charactersViewModel.charactersPagingData("")
