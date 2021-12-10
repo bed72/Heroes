@@ -1,15 +1,14 @@
-package github.bed72.bedapp.presentation.characters
+package github.bed72.presentation.characters
 
 import androidx.paging.PagingData
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
-import github.bed72.core.domain.model.Character
+import github.bed72.bedapp.presentation.characters.CharactersViewModel
 import github.bed72.core.usecase.GetCharactersUseCase
 import github.bed72.testing.MainCoroutineRule
 import github.bed72.testing.model.CharacterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.count
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
@@ -48,24 +47,23 @@ class CharactersViewModelTest {
     }
 
     @Test
-    fun `Should validate the paging data object values when calling charactersPagingData`() = runBlockingTest {
-        flow<Unit> {
-            whenever(
-                getCharactersUseCase(any())
-            ).thenReturn(
-                flowOf(
-                    pagingDataCharacters
-                )
+    fun `🧪 Should validate the paging data object values when calling charactersPagingData`() = runBlockingTest {
+        whenever(
+            getCharactersUseCase(any())
+        ).thenReturn(
+            flowOf(
+                pagingDataCharacters
             )
+        )
 
-            val result = charactersViewModel.charactersPagingData("")
+        val result = charactersViewModel.charactersPagingData("")
 
-            assertEquals(1, result.count())
-        }
+        assertEquals(1, result.count())
     }
 
+
     @Test(expected = RuntimeException::class)
-    fun `Should throw an exception when the calling to the use case returns an exception`() = runBlockingTest {
+    fun `🧪 Should throw an exception when the calling to the use case returns an exception`() = runBlockingTest {
         whenever(getCharactersUseCase(any())).thenThrow(RuntimeException())
 
         charactersViewModel.charactersPagingData("")
