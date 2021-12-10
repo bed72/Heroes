@@ -3,6 +3,7 @@ package github.bed72.testing.model
 import github.bed72.core.domain.model.Character
 
 class CharacterFactory {
+
     fun create(hero: Hero) =
         when (hero) {
             Hero.ThreeDMan -> Character(
