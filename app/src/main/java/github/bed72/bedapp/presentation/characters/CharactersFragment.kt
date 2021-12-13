@@ -1,6 +1,8 @@
 package github.bed72.bedapp.presentation.characters
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -60,7 +62,7 @@ class CharactersFragment : Fragment() {
         charactersAdapter = CharactersAdapter()
 
         with(binding.recyclerCharacters, {
-            // scrollToPosition(0) // Set initial position
+            scrollToPosition(0) // Set initial position
             setHasFixedSize(true)
             adapter = charactersAdapter.withLoadStateFooter(
                 footer = CharactersLoadStateAdapter(
@@ -87,7 +89,8 @@ class CharactersFragment : Fragment() {
                          setShimmerVisibility(false)
 
                          binding.includeViewCharactersErrorState.buttonRetry.setOnClickListener {
-                             charactersAdapter.refresh()
+                             Log.d(TAG, "REFRESH")
+                             charactersAdapter.retry()
                          }
                          FLIPPER_CHILD_ERROR
                      }
