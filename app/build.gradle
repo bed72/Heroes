@@ -17,11 +17,12 @@ def apikeyPropertiesFile = rootProject.file("apikey.properties")
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
+
     compileSdk 31
 
     signingConfigs {
         release {
-            storeFile file('/home/bed/Documentos/Code/Mobile/Nativo/BedApp/store/bed_key_store.jks')
+            storeFile file('/home/bed/Documentos/Code/Android/Nativo/bed-app/store/app-bed-store.jks')
             keyAlias apikeyProperties['KEY_ALIAS']
             keyPassword apikeyProperties['KEY_PASSWORD']
             storePassword apikeyProperties['STORE_PASSWORD']
