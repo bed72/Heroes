@@ -1,0 +1,121 @@
+{
+  "project_info": {
+    "project_number": "440099867470",
+    "project_id": "bedapp-1ea72",
+    "storage_bucket": "bedapp-1ea72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440099867470:android:1ecb401087b81adc716c1f",
+        "android_client_info": {
+          "package_name": "github.bed72.bedapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440099867470-s0gvm963qdinuro7lkhod264tn9h45gi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "github.bed72.bedapp",
+            "certificate_hash": "0073abd9ef317eb00cc1076c41ba74a26ff82d60"
+          }
+        },
+        {
+          "client_id": "440099867470-k9gkuhf91nbm9oarl3upmqrj5fk6uu5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP40tekFDp-lTtNjXZPKsOR8e1v3LLT2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440099867470-k9gkuhf91nbm9oarl3upmqrj5fk6uu5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440099867470:android:ae53c41c5b2f25b6716c1f",
+        "android_client_info": {
+          "package_name": "github.bed72.bedapp.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440099867470-aj2othdju6c13f4vi163sh17gnoskf82.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "github.bed72.bedapp.debug",
+            "certificate_hash": "0073abd9ef317eb00cc1076c41ba74a26ff82d60"
+          }
+        },
+        {
+          "client_id": "440099867470-k9gkuhf91nbm9oarl3upmqrj5fk6uu5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP40tekFDp-lTtNjXZPKsOR8e1v3LLT2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440099867470-k9gkuhf91nbm9oarl3upmqrj5fk6uu5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440099867470:android:a091220752cf35a4716c1f",
+        "android_client_info": {
+          "package_name": "github.bed72.bedapp.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440099867470-0qal429ucv4cedejva7r0ul71ujberev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "github.bed72.bedapp.staging",
+            "certificate_hash": "0073abd9ef317eb00cc1076c41ba74a26ff82d60"
+          }
+        },
+        {
+          "client_id": "440099867470-k9gkuhf91nbm9oarl3upmqrj5fk6uu5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP40tekFDp-lTtNjXZPKsOR8e1v3LLT2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440099867470-k9gkuhf91nbm9oarl3upmqrj5fk6uu5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
