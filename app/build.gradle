@@ -1,6 +1,7 @@
 plugins {
     id 'kotlin-android'
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 apply plugin: 'kotlin-kapt'
@@ -21,7 +22,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('/home/bed/Documentos/Code/Mobile/Nativo/BedApp/store/bed_key_store.jks')
+            storeFile file('/home/bed/Documentos/Code/Android/Nativo/bed-app/store/app-bed-store.jks')
             keyAlias apikeyProperties['KEY_ALIAS']
             keyPassword apikeyProperties['KEY_PASSWORD']
             storePassword apikeyProperties['STORE_PASSWORD']
@@ -89,6 +90,10 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
+    // Firebase
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+
     // Material design
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.4.0'
@@ -108,7 +113,7 @@ dependencies {
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
 
     // Navigation
-    def nav_version = '2.4.0-beta02'
+    def nav_version = '2.4.0-rc01'
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
 
@@ -119,7 +124,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     // Room
-    def room_version = '2.3.0'
+    def room_version = '2.4.0'
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
