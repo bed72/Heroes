@@ -18,6 +18,7 @@ def apikeyPropertiesFile = rootProject.file("apikey.properties")
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
+
     compileSdk 31
 
     signingConfigs {
@@ -88,6 +89,7 @@ dependencies {
     // AndroidX
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.core:core-splashscreen:1.0.0-alpha02'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
     // Firebase

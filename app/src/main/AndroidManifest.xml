@@ -15,6 +15,7 @@
         android:theme="@style/Theme.BedApp">
         <activity
             android:name=".presentation.MainActivity"
+            android:theme="@style/Theme.App.Starting"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
