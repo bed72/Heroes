@@ -48,6 +48,10 @@ class CharactersFragment : Fragment() {
         initCharactersAdapter()
         observeInitialLoadState()
 
+        handleCharactersPagingData()
+    }
+
+    private fun handleCharactersPagingData() {
         lifecycleScope.launch {
             // Stop flow in background...
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
