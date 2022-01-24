@@ -11,8 +11,6 @@ java {
 dependencies {
 
     // OkHttp
-
-    def okhttp_version = '5.0.0-alpha.3'
     api "com.squareup.okhttp3:okhttp:$okhttp_version"
     api "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     api platform("com.squareup.okhttp3:okhttp-bom:$okhttp_version")

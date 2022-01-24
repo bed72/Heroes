@@ -156,7 +156,7 @@ dependencies {
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     // Mock WebServer
-    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:4.9.3'
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
     // Memory Leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'

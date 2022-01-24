@@ -25,10 +25,10 @@ import org.junit.runner.RunWith
 @UninstallModules(BaseUrlModule::class) // Desisntalando o modulo de Prod... O Hilt já vai pegar o Modulo BaseUrl de Test de forma automatica
 class CharactersFragmentTest {
 
-    private lateinit var server: MockWebServer
-
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
+
+    private lateinit var server: MockWebServer
 
     @Before
     fun setUp() {
