@@ -13,7 +13,6 @@ import github.bed72.core.data.repository.CharactersRepository
 @Module
 @InstallIn(SingletonComponent::class)
 interface RepositoryModule {
-
     @Binds
     fun bindCharacterRepository(repository: CharactersRepositoryImpl): CharactersRepository
 
@@ -21,5 +20,4 @@ interface RepositoryModule {
     fun bindRemoteDataSource(
         dataSource: RetrofitCharactersDataSource
     ): CharactersRemoteDataSource<DataWrapperResponse>
-
 }

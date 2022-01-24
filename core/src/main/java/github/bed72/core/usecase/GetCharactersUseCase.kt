@@ -27,5 +27,4 @@ class GetCharactersUseCaseImpl @Inject constructor(
             pagingSource
         }.flow
     }
-
 }

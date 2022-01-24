@@ -11,9 +11,6 @@ import javax.inject.Inject
 class CharactersRepositoryImpl @Inject constructor(
     private val remoteDataSource: CharactersRemoteDataSource<DataWrapperResponse>
 ) : CharactersRepository {
-
-    override fun getCharacters(query: String): PagingSource<Int, Character> {
-        return CharactersPagingSource(query, remoteDataSource)
-    }
-
+    override fun getCharacters(query: String): PagingSource<Int, Character> =
+        CharactersPagingSource(query, remoteDataSource)
 }

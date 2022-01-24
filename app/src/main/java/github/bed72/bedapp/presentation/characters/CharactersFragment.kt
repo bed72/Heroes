@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -41,6 +40,7 @@ class CharactersFragment : Fragment() {
     ).apply {
         _binding = this
     }.root
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -94,7 +94,6 @@ class CharactersFragment : Fragment() {
                          }
                          FLIPPER_CHILD_ERROR
                      }
-
                 }
             }
         }
@@ -104,9 +103,7 @@ class CharactersFragment : Fragment() {
         binding.includeViewCharactersLoadingState.shimmerCharacters.run {
             isVisible = visibility
 
-            if (visibility) startShimmer()
-            else startShimmer()
-
+            if (visibility) startShimmer() else startShimmer()
         }
     }
 

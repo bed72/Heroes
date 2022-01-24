@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import github.bed72.core.domain.model.Character
 import github.bed72.core.usecase.GetCharactersUseCase
 import kotlinx.coroutines.flow.Flow
+import github.bed72.core.usecase.GetCharactersUseCase.GetCharactersParams
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,7 +19,7 @@ class CharactersViewModel @Inject constructor(
 
     fun charactersPagingData(query: String): Flow<PagingData<Character>> =
         getCharactersUseCase(
-            GetCharactersUseCase.GetCharactersParams(
+            GetCharactersParams(
                 query,
                 getPageConfig()
             )
