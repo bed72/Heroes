@@ -2,8 +2,8 @@ package github.bed72.bedapp.presentation.characters
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -12,6 +12,7 @@ import github.bed72.bedapp.R
 import github.bed72.bedapp.data.extensions.asJsonString
 import github.bed72.bedapp.framework.di.BaseUrlModule
 import github.bed72.bedapp.launchFragmentInHiltContainer
+import github.bed72.bedapp.presentation.characters.viewholders.CharactersViewHolder
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -46,12 +47,55 @@ class CharactersFragmentTest {
 
     @Test
     fun shouldShowCharactersWhenViewIsCreated() {
-        server.enqueue(MockResponse().setBody("characters_pag_1.json".asJsonString()))
+        loadString("characters_pag_1.json")
 
         onView(
             withId(R.id.recycler_characters)
         ).check(
             matches(isDisplayed())
         )
+    }
+
+    @Test
+    fun shouldLoadMoreCharactersWhenNewPageIsRequested() {
+        // Arrange
+        val firstNameCharacterToSecondPage = "Amora"
+        loadString("characters_pag_1.json")
+        loadString("characters_pag_2.json")
+
+        // Action
+        onView(
+            withId(R.id.recycler_characters)
+        ).perform(
+            RecyclerViewActions
+                .scrollToPosition<CharactersViewHolder>(20)
+        )
+
+        // Assert
+        onView(
+            withText(firstNameCharacterToSecondPage)
+        ).check(
+            matches(isDisplayed())
+        )
+    }
+
+    @Test
+    fun shouldShowErrorViewWhenReceivesAnErrorFromApi() {
+        // Arrange
+        loadError(404)
+
+        onView(
+            withId(R.id.text_initial_loading_error)
+        ).check(
+            matches(isDisplayed())
+        )
+    }
+
+    private fun loadString(json: String) {
+        server.enqueue(MockResponse().setBody(json.asJsonString()))
+    }
+
+    private fun loadError(error: Int) {
+        server.enqueue(MockResponse().setResponseCode(error))
     }
 }
