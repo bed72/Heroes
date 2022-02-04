@@ -9,7 +9,6 @@ java {
 }
 
 dependencies {
-
     // OkHttp
     def okhttp_version = '4.9.3'
     api "com.squareup.okhttp3:okhttp:$okhttp_version"
