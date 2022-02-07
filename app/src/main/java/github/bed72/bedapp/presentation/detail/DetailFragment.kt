@@ -7,11 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.R
 import github.bed72.bedapp.databinding.FragmentDetailBinding
+import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
     private var _binding: FragmentDetailBinding? = null
     private val binding: FragmentDetailBinding get() = _binding!!
 
@@ -39,11 +46,7 @@ class DetailFragment : Fragment() {
         binding.imageCharacter.run {
             transitionName = detailViewArgs.name
 
-            Glide.with(context)
-                .load(detailViewArgs.imageUrl)
-                .error(R.drawable.ic_img_loading_error)
-                .fallback(R.drawable.ic_img_loading_error)
-                .into(this)
+            imageLoader.load(this, detailViewArgs.imageUrl, R.drawable.ic_img_loading_error)
         }
 
         setSharedElementTransitionOnEnter()

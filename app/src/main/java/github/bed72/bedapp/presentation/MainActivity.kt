@@ -42,8 +42,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setNavigationBar() {
         navController.addOnDestinationChangedListener {_, destination, _ ->
+            visibilityNavBar(destination.id)
+            visibilityToolBar(destination.id)
             visibilityGoBackInToolBar(destination.id)
-            visibilityNavBarAndToolBar(destination.id)
         }
     }
 
@@ -64,7 +65,18 @@ class MainActivity : AppCompatActivity() {
         if (!isTopLevelDestination) binding.toolbarApp.setNavigationIcon(R.drawable.ic_back)
     }
 
-    private fun visibilityNavBarAndToolBar(destination: Int) {
+    private fun visibilityNavBar(destination: Int) {
+        val visibility = when (destination) {
+            R.id.about_fragment -> VISIBLE
+            R.id.favorites_fragment -> VISIBLE
+            R.id.characters_fragment -> VISIBLE
+            else -> GONE
+        }
+
+        binding.bottomNavMain.visibility = visibility
+    }
+
+    private fun visibilityToolBar(destination: Int) {
         val visibility = when (destination) {
             R.id.about_fragment -> VISIBLE
             R.id.detail_fragment -> VISIBLE
@@ -73,10 +85,7 @@ class MainActivity : AppCompatActivity() {
             else -> GONE
         }
 
-        with (binding) {
-            bottomNavMain.visibility = visibility
-            binding.toolbarApp.visibility = visibility
-        }
+        binding.toolbarApp.visibility = visibility
     }
 
     companion object {

@@ -15,19 +15,23 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
+import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
 import github.bed72.bedapp.presentation.detail.args.DetailViewArg
 import github.bed72.core.domain.model.Character
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
 
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
     private var _binding: FragmentCharactersBinding? = null
     private val binding: FragmentCharactersBinding get() = _binding!!
-
     private val viewModel: CharactersViewModel by viewModels()
 
     private lateinit var charactersAdapter: CharactersAdapter
@@ -65,7 +69,7 @@ class CharactersFragment : Fragment() {
 
 
     private fun initCharactersAdapter() {
-        charactersAdapter = CharactersAdapter { character, view ->
+        charactersAdapter = CharactersAdapter(imageLoader) { character, view ->
             handleNavigation(view, character)
         }
 
