@@ -10,11 +10,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
+import github.bed72.bedapp.presentation.detail.args.DetailViewArg
+import github.bed72.core.domain.model.Character
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -59,8 +63,11 @@ class CharactersFragment : Fragment() {
         }
     }
 
+
     private fun initCharactersAdapter() {
-        charactersAdapter = CharactersAdapter()
+        charactersAdapter = CharactersAdapter { character, view ->
+            handleNavigation(view, character)
+        }
 
         with(binding.recyclerCharacters) {
             scrollToPosition(0) // Set initial position
@@ -72,6 +79,19 @@ class CharactersFragment : Fragment() {
                 )
             )
         }
+    }
+
+    private fun handleNavigation(view: View, character: Character) {
+        val extras = FragmentNavigatorExtras(
+            view to character.name
+        )
+
+        val directions = CharactersFragmentDirections.actionCharactersFragmentToDetailFragment(
+            character.name,
+            DetailViewArg(character.name, character.imageUrl)
+        )
+
+        findNavController().navigate(directions, extras)
     }
 
     private fun observeInitialLoadState() {
@@ -105,6 +125,12 @@ class CharactersFragment : Fragment() {
 
             if (visibility) startShimmer() else startShimmer()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
     companion object {

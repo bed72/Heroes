@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     private fun visibilityNavBarAndToolBar(destination: Int) {
         val visibility = when (destination) {
             R.id.about_fragment -> VISIBLE
+            R.id.detail_fragment -> VISIBLE
             R.id.favorites_fragment -> VISIBLE
             R.id.characters_fragment -> VISIBLE
             else -> GONE
