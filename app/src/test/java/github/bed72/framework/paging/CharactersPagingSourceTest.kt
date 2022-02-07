@@ -9,7 +9,6 @@ import github.bed72.factory.response.DataWrapperResponseFactory
 import github.bed72.testing.MainCoroutineRule
 import github.bed72.testing.model.CharacterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -17,6 +16,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import com.nhaarman.mockitokotlin2.any
 import github.bed72.core.domain.model.Character
+import kotlinx.coroutines.test.runTest
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import java.lang.RuntimeException
@@ -43,7 +43,7 @@ class CharactersPagingSourceTest {
     }
 
     @Test
-    fun `Should return a success load result when method load is called`() = runBlockingTest {
+    fun `Should return a success load result when method load is called`() = runTest {
         // Arrange
         whenever(charactersRemoteDataSource.fetchCharacters(any()))
             .thenReturn(fakeDataWrapperResponse.create())
@@ -75,7 +75,7 @@ class CharactersPagingSourceTest {
     }
 
     @Test
-    fun `Should return a error load result when load is called`() = runBlockingTest {
+    fun `Should return a error load result when load is called`() = runTest {
         // Arrange
         val exception = RuntimeException()
         whenever(charactersRemoteDataSource.fetchCharacters(any()))

@@ -62,7 +62,7 @@ class CharactersFragment : Fragment() {
     private fun initCharactersAdapter() {
         charactersAdapter = CharactersAdapter()
 
-        with(binding.recyclerCharacters, {
+        with(binding.recyclerCharacters) {
             scrollToPosition(0) // Set initial position
             setHasFixedSize(true)
             adapter = charactersAdapter.withLoadStateFooter(
@@ -71,7 +71,7 @@ class CharactersFragment : Fragment() {
                     charactersAdapter::retry
                 )
             )
-        })
+        }
     }
 
     private fun observeInitialLoadState() {

@@ -8,10 +8,10 @@ import github.bed72.core.usecase.GetCharactersUseCase
 import github.bed72.testing.MainCoroutineRule
 import github.bed72.testing.model.CharacterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -47,7 +47,7 @@ class CharactersViewModelTest {
     }
 
     @Test
-    fun `Should validate the paging data object values when calling charactersPagingData`() = runBlockingTest {
+    fun `Should validate the paging data object values when calling charactersPagingData`() = runTest {
         whenever(
             getCharactersUseCase(any())
         ).thenReturn(
@@ -58,12 +58,12 @@ class CharactersViewModelTest {
 
         val result = charactersViewModel.charactersPagingData("")
 
-        assertEquals(1, result.count())
+        assertNotNull(result.first())
     }
 
 
     @Test(expected = RuntimeException::class)
-    fun `Should throw an exception when the calling to the use case returns an exception`() = runBlockingTest {
+    fun `Should throw an exception when the calling to the use case returns an exception`() = runTest {
         whenever(getCharactersUseCase(any())).thenThrow(RuntimeException())
 
         charactersViewModel.charactersPagingData("")
