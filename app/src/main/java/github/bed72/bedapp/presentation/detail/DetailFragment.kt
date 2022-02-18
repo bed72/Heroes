@@ -2,10 +2,12 @@ package github.bed72.bedapp.presentation.detail
 
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.R
@@ -24,6 +26,8 @@ class DetailFragment : Fragment() {
 
     private val args by navArgs<DetailFragmentArgs>()
 
+    private val viewModel: DetailViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +43,7 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupDetails()
+
     }
 
     private fun setupDetails() {
@@ -50,6 +55,8 @@ class DetailFragment : Fragment() {
         }
 
         setSharedElementTransitionOnEnter()
+
+        observeInitialLoadState(detailViewArgs.characterId)
     }
 
     // Define a animação da transição como "move"
@@ -58,6 +65,20 @@ class DetailFragment : Fragment() {
             .inflateTransition(android.R.transition.move).apply {
                 sharedElementEnterTransition = this
             }
+    }
+
+    private fun observeInitialLoadState(characterId: Int) {
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+            val logResult = when (uiState) {
+                DetailViewModel.UiState.Error -> "Error..."
+                DetailViewModel.UiState.Loading -> "Loading..."
+                is DetailViewModel.UiState.Success -> uiState.comics.toString()
+            }
+
+            Log.d(DetailFragment::class.simpleName, logResult)
+        }
+
+        viewModel.getComics(characterId)
     }
 
     override fun onDestroyView() {

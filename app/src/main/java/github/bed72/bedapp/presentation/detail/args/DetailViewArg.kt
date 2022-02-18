@@ -8,5 +8,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class DetailViewArg(
     val name: String,
-    val imageUrl: String
+    val imageUrl: String,
+    val characterId: Int
 ) : Parcelable

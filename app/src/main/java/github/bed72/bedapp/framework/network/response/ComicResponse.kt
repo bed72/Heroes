@@ -1,20 +1,17 @@
 package github.bed72.bedapp.framework.network.response
 
+import github.bed72.core.domain.model.Comic
 import com.google.gson.annotations.SerializedName
-import github.bed72.core.domain.model.Character
 
-data class CharacterResponse(
+data class ComicResponse(
     @SerializedName("id")
     val id: Int,
-    @SerializedName("name")
-    val name: String,
     @SerializedName("thumbnail")
     val thumbnail: ThumbnailResponse
 )
 
-fun CharacterResponse.toCharacterModel() =
-    Character(
+fun ComicResponse.toComicModel() =
+    Comic(
         id = this.id,
-        name = this.name,
         imageUrl = this.thumbnail.mountPathImage()
     )
