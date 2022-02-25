@@ -29,7 +29,7 @@ class CharactersPagingSourceTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     @Mock
-    private lateinit var charactersRemoteDataSource: CharactersRemoteDataSource<DataWrapperResponse>
+    private lateinit var charactersRemoteDataSource: CharactersRemoteDataSource
 
     private lateinit var charactersPagingSource: CharactersPagingSource
 
