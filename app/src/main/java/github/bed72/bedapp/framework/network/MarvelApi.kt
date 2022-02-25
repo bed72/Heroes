@@ -6,6 +6,7 @@ import retrofit2.http.QueryMap
 import github.bed72.bedapp.framework.network.response.ComicResponse
 import github.bed72.bedapp.framework.network.response.CharacterResponse
 import github.bed72.bedapp.framework.network.response.DataWrapperResponse
+import github.bed72.bedapp.framework.network.response.EventResponse
 
 interface MarvelApi {
     @GET("characters")
@@ -19,4 +20,10 @@ interface MarvelApi {
         @Path("characterId")
         characterId: Int
     ) : DataWrapperResponse<ComicResponse>
+
+    @GET("characters/{characterId}/events")
+    suspend fun getEvents(
+        @Path("characterId")
+        characterId: Int
+    ) : DataWrapperResponse<EventResponse>
 }

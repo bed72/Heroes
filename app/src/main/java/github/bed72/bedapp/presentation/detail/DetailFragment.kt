@@ -2,7 +2,6 @@ package github.bed72.bedapp.presentation.detail
 
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
-import github.bed72.bedapp.R
 import github.bed72.bedapp.databinding.FragmentDetailBinding
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.detail.adapters.DetailParentAdapter
@@ -68,14 +66,26 @@ class DetailFragment : Fragment() {
 
     private fun observeInitialLoadState(characterId: Int) {
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
-            when (uiState) {
-                DetailViewModel.UiState.Error -> { }
-                DetailViewModel.UiState.Loading -> { }
-                is DetailViewModel.UiState.Success -> initDetailAdapter(uiState.detailParentList)
+            binding.flipperDetail.displayedChild =  when (uiState) {
+                DetailViewModel.UiState.Empty -> FLIPPER_CHILD_POSITION_EMPTY
+                DetailViewModel.UiState.Error -> {
+
+                    binding.includeViewDetailErrorState.buttonRetry.setOnClickListener {
+                        viewModel.getCharacterCategories(characterId)
+                    }
+
+                    FLIPPER_CHILD_POSITION_ERROR
+                }
+                DetailViewModel.UiState.Loading -> FLIPPER_CHILD_POSITION_LOADING
+                is DetailViewModel.UiState.Success -> {
+                    initDetailAdapter(uiState.detailParentList)
+
+                    FLIPPER_CHILD_POSITION_SUCCESS
+                }
             }
         }
 
-        viewModel.getComics(characterId)
+        viewModel.getCharacterCategories(characterId)
     }
 
     private fun initDetailAdapter(details: List<DetailParentViewEntity>) {
@@ -89,5 +99,12 @@ class DetailFragment : Fragment() {
         super.onDestroyView()
 
         _binding = null
+    }
+
+    companion object {
+        private const val FLIPPER_CHILD_POSITION_LOADING = 0
+        private const val FLIPPER_CHILD_POSITION_SUCCESS = 1
+        private const val FLIPPER_CHILD_POSITION_ERROR = 2
+        private const val FLIPPER_CHILD_POSITION_EMPTY = 3
     }
 }
