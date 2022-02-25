@@ -13,6 +13,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.R
 import github.bed72.bedapp.databinding.FragmentDetailBinding
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
+import github.bed72.bedapp.presentation.detail.adapters.DetailParentAdapter
+import github.bed72.bedapp.presentation.detail.entities.DetailParentViewEntity
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -43,19 +45,16 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupDetails()
-
     }
 
     private fun setupDetails() {
         val detailViewArgs = args.detailViewArg
         binding.imageCharacter.run {
             transitionName = detailViewArgs.name
-
-            imageLoader.load(this, detailViewArgs.imageUrl, R.drawable.ic_img_loading_error)
+            imageLoader.load(this, detailViewArgs.imageUrl)
         }
 
         setSharedElementTransitionOnEnter()
-
         observeInitialLoadState(detailViewArgs.characterId)
     }
 
@@ -69,16 +68,21 @@ class DetailFragment : Fragment() {
 
     private fun observeInitialLoadState(characterId: Int) {
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
-            val logResult = when (uiState) {
-                DetailViewModel.UiState.Error -> "Error..."
-                DetailViewModel.UiState.Loading -> "Loading..."
-                is DetailViewModel.UiState.Success -> uiState.comics.toString()
+            when (uiState) {
+                DetailViewModel.UiState.Error -> { }
+                DetailViewModel.UiState.Loading -> { }
+                is DetailViewModel.UiState.Success -> initDetailAdapter(uiState.detailParentList)
             }
-
-            Log.d(DetailFragment::class.simpleName, logResult)
         }
 
         viewModel.getComics(characterId)
+    }
+
+    private fun initDetailAdapter(details: List<DetailParentViewEntity>) {
+        binding.recyclerParentDetail.run {
+            setHasFixedSize(true)
+            adapter = DetailParentAdapter(imageLoader, details)
+        }
     }
 
     override fun onDestroyView() {

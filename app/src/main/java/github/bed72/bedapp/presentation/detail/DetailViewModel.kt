@@ -12,6 +12,9 @@ import github.bed72.core.domain.model.Comic
 import github.bed72.core.usecase.GetComicsUseCase
 import github.bed72.core.usecase.base.ResultStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
+import github.bed72.bedapp.R
+import github.bed72.bedapp.presentation.detail.entities.DetailChildViewEntity
+import github.bed72.bedapp.presentation.detail.entities.DetailParentViewEntity
 import github.bed72.core.usecase.GetComicsUseCase.GetComicsParams
 
 @HiltViewModel
@@ -31,14 +34,26 @@ class DetailViewModel @Inject constructor(
             _uiState.value = when (status) {
                 ResultStatus.Loading -> UiState.Loading
                 is ResultStatus.Error -> UiState.Error // use 'is' when data class
-                is ResultStatus.Success -> UiState.Success(status.data)
+                is ResultStatus.Success -> handleViewEntity(status.data)
             }
         }
     }
 
+    private fun handleViewEntity(data: List<Comic>): UiState.Success {
+        val detailChildList = data.map { DetailChildViewEntity(it.id, it.imageUrl) }
+        val detailParentList = listOf(
+            DetailParentViewEntity(
+                detailChildViewEntity = detailChildList,
+                categoryStringResId = R.string.details_comics_category
+            )
+        )
+
+        return UiState.Success(detailParentList)
+    }
+
     sealed class UiState {
-        object Error: UiState()
+        object Error : UiState()
         object Loading : UiState()
-        data class Success(val comics: List<Comic>) : UiState()
+        data class Success(val detailParentList: List<DetailParentViewEntity>) : UiState()
     }
 }

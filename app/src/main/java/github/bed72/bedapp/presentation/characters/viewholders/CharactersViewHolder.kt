@@ -22,7 +22,7 @@ class CharactersViewHolder(
     fun bind(character: Character) {
         textNameCharacter.text = character.name
         imageCharacter.transitionName = character.name
-        imageLoader.load(imageCharacter, character.imageUrl, R.drawable.ic_img_loading_error)
+        imageLoader.load(imageCharacter, character.imageUrl)
 
         // Passando o 'imageCharacter' para que o graph conheça-o e consiga fazer a animação
         itemView.setOnClickListener {
