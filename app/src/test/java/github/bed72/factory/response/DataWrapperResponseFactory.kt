@@ -1,12 +1,7 @@
 package github.bed72.factory.response
 
-import github.bed72.bedapp.framework.network.response.CharacterResponse
-import github.bed72.bedapp.framework.network.response.DataWrapperResponse
-import github.bed72.bedapp.framework.network.response.DataContainerResponse
-import github.bed72.bedapp.framework.network.response.ThumbnailResponse
 import github.bed72.core.domain.model.Character
 import github.bed72.core.domain.model.CharacterPaging
-
 
 class DataWrapperResponseFactory {
 

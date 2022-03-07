@@ -2,31 +2,22 @@ package github.bed72.framework.paging
 
 import androidx.paging.PagingSource
 import com.nhaarman.mockitokotlin2.whenever
-import github.bed72.bedapp.framework.network.response.DataWrapperResponse
 import github.bed72.bedapp.framework.paging.CharactersPagingSource
 import github.bed72.core.data.repository.CharactersRemoteDataSource
 import github.bed72.factory.response.DataWrapperResponseFactory
-import github.bed72.testing.MainCoroutineRule
 import github.bed72.testing.model.CharacterFactory
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import com.nhaarman.mockitokotlin2.any
 import github.bed72.core.domain.model.Character
+import github.bed72.framework.base.BaseTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 import java.lang.RuntimeException
 
-@ExperimentalCoroutinesApi
-@RunWith(MockitoJUnitRunner::class)
-class CharactersPagingSourceTest {
-
-    @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+@OptIn(ExperimentalCoroutinesApi::class)
+class CharactersPagingSourceTest : BaseTest() {
 
     @Mock
     private lateinit var charactersRemoteDataSource: CharactersRemoteDataSource
@@ -37,10 +28,11 @@ class CharactersPagingSourceTest {
 
     private val fakeCharacters = CharacterFactory()
 
-    @Before
-    fun setUp() {
+    override fun setUp() {
         charactersPagingSource = CharactersPagingSource("", charactersRemoteDataSource)
     }
+
+    override fun tearDown() { }
 
     @Test
     fun `Should return a success load result when method load is called`() = runTest {
@@ -73,6 +65,7 @@ class CharactersPagingSourceTest {
             result
         )
     }
+
 
     @Test
     fun `Should return a error load result when load is called`() = runTest {
