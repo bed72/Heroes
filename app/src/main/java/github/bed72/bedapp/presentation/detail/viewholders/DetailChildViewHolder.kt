@@ -1,6 +1,5 @@
 package github.bed72.bedapp.presentation.detail.viewholders
 
-import github.bed72.bedapp.R
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.view.LayoutInflater
