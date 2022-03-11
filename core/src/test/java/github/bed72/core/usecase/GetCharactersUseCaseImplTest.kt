@@ -4,26 +4,18 @@ import androidx.paging.PagingConfig
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import github.bed72.core.data.repository.CharactersRepository
-import github.bed72.testing.MainCoroutineRule
+import github.bed72.testing.base.BaseTest
 import github.bed72.testing.model.CharacterFactory
 import github.bed72.testing.pagingsource.PagingSourceFactory
 import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
-import org.junit.Rule
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
-@ExperimentalCoroutinesApi
-@RunWith(MockitoJUnitRunner::class)
-class GetCharactersUseCaseImplTest {
-
-    @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+@OptIn(ExperimentalCoroutinesApi::class)
+class GetCharactersUseCaseImplTest : BaseTest() {
 
     @Mock
     private lateinit var charactersRepository: CharactersRepository
@@ -34,14 +26,15 @@ class GetCharactersUseCaseImplTest {
 
     private val fakePagingSource = PagingSourceFactory().create(listOf(fakeHero))
 
-    @Before
-    fun setUp() {
+    override fun setUp() {
         getCharactersUseCase = GetCharactersUseCaseImpl(charactersRepository)
     }
 
+    override fun tearDown() { }
+
     @Test
     fun `Should validate flow paging data creation when invoke from use case in called`() =
-        runBlockingTest {
+        runTest {
             whenever(charactersRepository.getCharacters(""))
                 .thenReturn(fakePagingSource)
 
@@ -52,7 +45,6 @@ class GetCharactersUseCaseImplTest {
                 )
             )
 
-            //  times(0)
             verify(charactersRepository).getCharacters("")
 
             assertNotNull(result.first())

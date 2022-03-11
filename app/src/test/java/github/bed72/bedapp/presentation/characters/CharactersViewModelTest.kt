@@ -1,20 +1,21 @@
-package github.bed72.presentation.characters
+package github.bed72.bedapp.presentation.characters
 
-import androidx.paging.PagingData
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.whenever
-import github.bed72.bedapp.presentation.characters.CharactersViewModel
-import github.bed72.core.usecase.GetCharactersUseCase
-import github.bed72.framework.base.BaseTest
-import github.bed72.testing.model.CharacterFactory
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.mockito.Mock
 import java.lang.RuntimeException
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
+import org.junit.Assert.assertNotNull
+import kotlinx.coroutines.test.runTest
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.whenever
+import github.bed72.testing.model.CharacterFactory
+import github.bed72.bedapp.framework.base.BaseTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import github.bed72.core.usecase.GetCharactersUseCase
+import github.bed72.testing.model.CharacterFactory.Hero.ABomb
+import github.bed72.testing.model.CharacterFactory.Hero.ThreeDMan
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CharactersViewModelTest : BaseTest() {
@@ -28,8 +29,8 @@ class CharactersViewModelTest : BaseTest() {
 
     private val pagingDataCharacters = PagingData.from(
         listOf(
-            charactersFactory.create(CharacterFactory.Hero.ABomb),
-            charactersFactory.create(CharacterFactory.Hero.ThreeDMan)
+            charactersFactory.create(ABomb),
+            charactersFactory.create(ThreeDMan)
         )
     )
 

@@ -1,16 +1,15 @@
-package github.bed72.framework.paging
+package github.bed72.bedapp.framework.paging
 
 import androidx.paging.PagingSource
 import com.nhaarman.mockitokotlin2.whenever
-import github.bed72.bedapp.framework.paging.CharactersPagingSource
 import github.bed72.core.data.repository.CharactersRemoteDataSource
-import github.bed72.factory.response.DataWrapperResponseFactory
+import github.bed72.bedapp.factory.response.CharacterPagingFactory
 import github.bed72.testing.model.CharacterFactory
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import com.nhaarman.mockitokotlin2.any
 import github.bed72.core.domain.model.Character
-import github.bed72.framework.base.BaseTest
+import github.bed72.testing.base.BaseTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mock
@@ -24,9 +23,9 @@ class CharactersPagingSourceTest : BaseTest() {
 
     private lateinit var charactersPagingSource: CharactersPagingSource
 
-    private val fakeDataWrapperResponse = DataWrapperResponseFactory()
+    private val fakeDataWrapperResponseFactory = CharacterPagingFactory()
 
-    private val fakeCharacters = CharacterFactory()
+    private val charactersFactory = CharacterFactory()
 
     override fun setUp() {
         charactersPagingSource = CharactersPagingSource("", charactersRemoteDataSource)
@@ -38,7 +37,7 @@ class CharactersPagingSourceTest : BaseTest() {
     fun `Should return a success load result when method load is called`() = runTest {
         // Arrange
         whenever(charactersRemoteDataSource.fetchCharacters(any()))
-            .thenReturn(fakeDataWrapperResponse.create())
+            .thenReturn(fakeDataWrapperResponseFactory.create())
 
         // Act
         val result = charactersPagingSource.load(
@@ -52,8 +51,8 @@ class CharactersPagingSourceTest : BaseTest() {
 
         // Assert
         val expected = listOf(
-            fakeCharacters.create(CharacterFactory.Hero.ThreeDMan),
-            fakeCharacters.create(CharacterFactory.Hero.ABomb)
+            charactersFactory.create(CharacterFactory.Hero.ThreeDMan),
+            charactersFactory.create(CharacterFactory.Hero.ABomb)
         )
 
         assertEquals(
@@ -65,7 +64,6 @@ class CharactersPagingSourceTest : BaseTest() {
             result
         )
     }
-
 
     @Test
     fun `Should return a error load result when load is called`() = runTest {

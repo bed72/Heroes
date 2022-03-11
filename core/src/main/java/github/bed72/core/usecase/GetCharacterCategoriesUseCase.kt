@@ -7,23 +7,23 @@ import github.bed72.core.usecase.base.UseCase
 import github.bed72.core.usecase.base.ResultStatus
 import github.bed72.core.data.repository.CharactersRepository
 import github.bed72.core.domain.model.Event
-import github.bed72.core.usecase.GetCharacterCategoriesUse.GetComicsParams
-import github.bed72.core.usecase.base.AppCoroutinesDispatchers
+import github.bed72.core.usecase.GetCharacterCategoriesUseCase.GetComicsParams
+import github.bed72.core.usecase.base.CoroutinesDispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-interface GetCharacterCategoriesUse {
+interface GetCharacterCategoriesUseCase {
     operator fun invoke(params: GetComicsParams): Flow<ResultStatus<Pair<List<Comic>, List<Event>>>>
 
     data class GetComicsParams(val characterId: Int)
 }
 
-class GetCharacterCategoriesUseImpl @Inject constructor(
-    private val dispatchers: AppCoroutinesDispatchers,
+class GetCharacterCategoriesUseCaseImpl @Inject constructor(
+    private val dispatchers: CoroutinesDispatchers,
     private val charactersRepository: CharactersRepository
-) : GetCharacterCategoriesUse, UseCase<GetComicsParams, Pair<List<Comic>, List<Event>>>() {
+) : GetCharacterCategoriesUseCase, UseCase<GetComicsParams, Pair<List<Comic>, List<Event>>>() {
     override suspend fun doWork(params: GetComicsParams): ResultStatus<Pair<List<Comic>, List<Event>>> =
-        withContext(dispatchers.io) {
+        withContext(dispatchers.io()) {
             val comicsDeferred = async { charactersRepository.getComics(params.characterId) }
             val eventsDeferred = async { charactersRepository.getEvents(params.characterId) }
 

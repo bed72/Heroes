@@ -9,25 +9,25 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
 import github.bed72.core.domain.model.Comic
-import github.bed72.core.usecase.GetCharacterCategoriesUse
+import github.bed72.core.usecase.GetCharacterCategoriesUseCase
 import github.bed72.core.usecase.base.ResultStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import github.bed72.bedapp.R
 import github.bed72.bedapp.presentation.detail.entities.DetailChildViewEntity
 import github.bed72.bedapp.presentation.detail.entities.DetailParentViewEntity
 import github.bed72.core.domain.model.Event
-import github.bed72.core.usecase.GetCharacterCategoriesUse.GetComicsParams
+import github.bed72.core.usecase.GetCharacterCategoriesUseCase.GetComicsParams
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val getCharacterCategoriesUse: GetCharacterCategoriesUse
+    private val getCharacterCategoriesUseCase: GetCharacterCategoriesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<UiState>()
     val uiState: LiveData<UiState> get() = _uiState
 
     fun getCharacterCategories(characterId: Int) {
-        getCharacterCategoriesUse(GetComicsParams(characterId)).watchStatus()
+        getCharacterCategoriesUseCase(GetComicsParams(characterId)).watchStatus()
     }
 
     private fun Flow<ResultStatus<Pair<List<Comic>, List<Event>>>>.watchStatus() =

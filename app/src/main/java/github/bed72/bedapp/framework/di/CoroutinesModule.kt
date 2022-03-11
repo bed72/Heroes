@@ -6,14 +6,11 @@ import dagger.hilt.InstallIn
 import kotlinx.coroutines.Dispatchers
 import dagger.hilt.components.SingletonComponent
 import github.bed72.core.usecase.base.AppCoroutinesDispatchers
+import github.bed72.core.usecase.base.CoroutinesDispatchers
 
 @Module
 @InstallIn(SingletonComponent::class)
-object CoroutinesModule {
+interface CoroutinesModule {
     @Provides
-    fun provideDispatchers() = AppCoroutinesDispatchers(
-        Dispatchers.IO,
-        Dispatchers.Main,
-        Dispatchers.Default
-    )
+    fun bindDispatchers(appCoroutinesDispatchers: AppCoroutinesDispatchers): CoroutinesDispatchers
 }

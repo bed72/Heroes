@@ -1,13 +1,12 @@
-package github.bed72.factory.response
+package github.bed72.bedapp.factory.response
 
 import github.bed72.core.domain.model.Character
 import github.bed72.core.domain.model.CharacterPaging
 
-class DataWrapperResponseFactory {
-
+class CharacterPagingFactory {
     fun create() = CharacterPaging(
-        offset = 0,
         total = 2,
+        offset = 0,
         character = listOf(
             Character(
                 id = 1011334,
