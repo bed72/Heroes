@@ -1,10 +1,7 @@
 package github.bed72.bedapp.presentation.characters
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,6 +13,7 @@ import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
+import github.bed72.bedapp.presentation.base.BaseFragment
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
 import github.bed72.bedapp.presentation.detail.args.DetailViewArg
@@ -25,35 +23,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CharactersFragment : Fragment() {
+class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
 
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    private var _binding: FragmentCharactersBinding? = null
-    private val binding: FragmentCharactersBinding get() = _binding!!
     private val viewModel: CharactersViewModel by viewModels()
 
     private lateinit var charactersAdapter: CharactersAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = FragmentCharactersBinding.inflate(
-        inflater,
-        container,
-        false
-    ).apply {
-        _binding = this
-    }.root
-
+    override fun getViewBinding() = FragmentCharactersBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initCharactersAdapter()
         observeInitialLoadState()
-
         handleCharactersPagingData()
     }
 
@@ -66,7 +51,6 @@ class CharactersFragment : Fragment() {
             }
         }
     }
-
 
     private fun initCharactersAdapter() {
         charactersAdapter = CharactersAdapter(imageLoader) { character, view ->
@@ -133,12 +117,6 @@ class CharactersFragment : Fragment() {
 
             if (visibility) startShimmer() else startShimmer()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        _binding = null
     }
 
     companion object {
