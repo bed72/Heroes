@@ -16,7 +16,7 @@ import github.bed72.bedapp.R
 import github.bed72.bedapp.presentation.detail.entities.DetailChildViewEntity
 import github.bed72.bedapp.presentation.detail.entities.DetailParentViewEntity
 import github.bed72.core.domain.model.Event
-import github.bed72.core.usecase.GetCharacterCategoriesUseCase.GetComicsParams
+import github.bed72.core.usecase.GetCharacterCategoriesUseCase.GetCharacterCategoriesParams
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
@@ -27,7 +27,7 @@ class DetailViewModel @Inject constructor(
     val uiState: LiveData<UiState> get() = _uiState
 
     fun getCharacterCategories(characterId: Int) {
-        getCharacterCategoriesUseCase(GetComicsParams(characterId)).watchStatus()
+        getCharacterCategoriesUseCase(GetCharacterCategoriesParams(characterId)).watchStatus()
     }
 
     private fun Flow<ResultStatus<Pair<List<Comic>, List<Event>>>>.watchStatus() =

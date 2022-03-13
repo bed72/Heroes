@@ -184,11 +184,11 @@ class DetailViewModelTest {
         }
 
     companion object {
-        const val COMICS_POSITION = 0
-        const val EVENTS_POSITION = 1
-        const val INITIAL_POSITION = 0
-        const val SIZE_CATEGORIES_ZERO = 0
-        const val SIZE_CATEGORIES_ONE = 1
-        const val SIZE_CATEGORIES_TWO = 2
+        private const val COMICS_POSITION = 0
+        private const val EVENTS_POSITION = 1
+        private const val INITIAL_POSITION = 0
+        private const val SIZE_CATEGORIES_ZERO = 0
+        private const val SIZE_CATEGORIES_ONE = 1
+        private const val SIZE_CATEGORIES_TWO = 2
     }
 }
