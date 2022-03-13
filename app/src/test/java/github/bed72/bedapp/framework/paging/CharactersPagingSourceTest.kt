@@ -1,22 +1,30 @@
 package github.bed72.bedapp.framework.paging
 
-import androidx.paging.PagingSource
-import com.nhaarman.mockitokotlin2.whenever
-import github.bed72.core.data.repository.CharactersRemoteDataSource
-import github.bed72.bedapp.factory.response.CharacterPagingFactory
-import github.bed72.testing.model.CharacterFactory
-import org.junit.Assert.assertEquals
 import org.junit.Test
-import com.nhaarman.mockitokotlin2.any
-import github.bed72.core.domain.model.Character
-import github.bed72.testing.base.BaseTest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
+import org.junit.Rule
+import org.junit.Before
 import org.mockito.Mock
+import org.junit.runner.RunWith
 import java.lang.RuntimeException
+import androidx.paging.PagingSource
+import org.junit.Assert.assertEquals
+import com.nhaarman.mockitokotlin2.any
+import kotlinx.coroutines.test.runTest
+import org.mockito.junit.MockitoJUnitRunner
+import com.nhaarman.mockitokotlin2.whenever
+import github.bed72.testing.MainCoroutineRule
+import github.bed72.core.domain.model.Character
+import github.bed72.testing.model.CharacterFactory
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import github.bed72.bedapp.factory.response.CharacterPagingFactory
+import github.bed72.core.data.repository.CharactersRemoteDataSource
 
+@RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class CharactersPagingSourceTest : BaseTest() {
+class CharactersPagingSourceTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @Mock
     private lateinit var charactersRemoteDataSource: CharactersRemoteDataSource
@@ -27,11 +35,10 @@ class CharactersPagingSourceTest : BaseTest() {
 
     private val charactersFactory = CharacterFactory()
 
-    override fun setUp() {
+    @Before
+    fun setUp() {
         charactersPagingSource = CharactersPagingSource("", charactersRemoteDataSource)
     }
-
-    override fun tearDown() { }
 
     @Test
     fun `Should return a success load result when method load is called`() = runTest {

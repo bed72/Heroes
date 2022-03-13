@@ -1,7 +1,10 @@
 package github.bed72.bedapp.presentation.characters
 
 import org.junit.Test
+import org.junit.Rule
+import org.junit.Before
 import org.mockito.Mock
+import org.junit.runner.RunWith
 import java.lang.RuntimeException
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.first
@@ -9,16 +12,21 @@ import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert.assertNotNull
 import kotlinx.coroutines.test.runTest
 import com.nhaarman.mockitokotlin2.any
+import org.mockito.junit.MockitoJUnitRunner
 import com.nhaarman.mockitokotlin2.whenever
+import github.bed72.testing.MainCoroutineRule
 import github.bed72.testing.model.CharacterFactory
-import github.bed72.bedapp.framework.base.BaseTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import github.bed72.core.usecase.GetCharactersUseCase
 import github.bed72.testing.model.CharacterFactory.Hero.ABomb
 import github.bed72.testing.model.CharacterFactory.Hero.ThreeDMan
 
+@RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class CharactersViewModelTest : BaseTest() {
+class CharactersViewModelTest {
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @Mock
     lateinit var getCharactersUseCase: GetCharactersUseCase
@@ -34,11 +42,10 @@ class CharactersViewModelTest : BaseTest() {
         )
     )
 
-    override fun setUp() {
+    @Before
+    fun setUp() {
         charactersViewModel = CharactersViewModel(getCharactersUseCase)
     }
-
-    override fun tearDown() { }
 
     @Test
     fun `Should validate the paging data object values when calling charactersPagingData`() = runTest {
