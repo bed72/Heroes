@@ -47,7 +47,7 @@ class CharactersFragmentTest {
 
     @Test
     fun shouldShowCharactersWhenViewIsCreated() {
-        loadString("characters_pag_1.json")
+        server.enqueue(MockResponse().setBody("characters_pag_1.json".asJsonString()))
 
         onView(
             withId(R.id.recycler_characters)
@@ -59,9 +59,10 @@ class CharactersFragmentTest {
     @Test
     fun shouldLoadMoreCharactersWhenNewPageIsRequested() {
         // Arrange
-        val firstNameCharacterToSecondPage = "Amora"
-        loadString("characters_pag_1.json")
-        loadString("characters_pag_2.json")
+        with(server) {
+            enqueue(MockResponse().setBody("characters_pag_1.json".asJsonString()))
+            enqueue(MockResponse().setBody("characters_pag_2.json".asJsonString()))
+        }
 
         // Action
         onView(
@@ -73,7 +74,7 @@ class CharactersFragmentTest {
 
         // Assert
         onView(
-            withText(firstNameCharacterToSecondPage)
+            withText("Amora")
         ).check(
             matches(isDisplayed())
         )
@@ -82,20 +83,12 @@ class CharactersFragmentTest {
     @Test
     fun shouldShowErrorViewWhenReceivesAnErrorFromApi() {
         // Arrange
-        loadError(404)
+        server.enqueue(MockResponse().setResponseCode(404))
 
         onView(
             withId(R.id.text_initial_loading_error)
         ).check(
             matches(isDisplayed())
         )
-    }
-
-    private fun loadString(json: String) {
-        server.enqueue(MockResponse().setBody(json.asJsonString()))
-    }
-
-    private fun loadError(error: Int) {
-        server.enqueue(MockResponse().setResponseCode(error))
     }
 }

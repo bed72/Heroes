@@ -5,7 +5,7 @@ import github.bed72.core.domain.model.Character
 
 data class CharacterResponse(
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("name")
     val name: String,
     @SerializedName("thumbnail")
@@ -14,6 +14,7 @@ data class CharacterResponse(
 
 fun CharacterResponse.toCharacterModel() =
     Character(
+        id = this.id,
         name = this.name,
         imageUrl = this.thumbnail.mountPathImage()
     )

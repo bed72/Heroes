@@ -1,29 +1,29 @@
 package github.bed72.core.usecase
 
+import org.junit.Test
+import org.junit.Rule
+import org.junit.Before
+import org.mockito.Mock
+import org.junit.runner.RunWith
 import androidx.paging.PagingConfig
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import github.bed72.core.data.repository.CharactersRepository
+import org.mockito.junit.MockitoJUnitRunner
+import junit.framework.TestCase.assertNotNull
 import github.bed72.testing.MainCoroutineRule
 import github.bed72.testing.model.CharacterFactory
-import github.bed72.testing.pagingsource.PagingSourceFactory
-import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import github.bed72.testing.pagingsource.PagingSourceFactory
+import github.bed72.core.data.repository.CharactersRepository
 
-@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class GetCharactersUseCaseImplTest {
 
     @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+    val mainCoroutineRule = MainCoroutineRule()
 
     @Mock
     private lateinit var charactersRepository: CharactersRepository
@@ -41,7 +41,7 @@ class GetCharactersUseCaseImplTest {
 
     @Test
     fun `Should validate flow paging data creation when invoke from use case in called`() =
-        runBlockingTest {
+        runTest {
             whenever(charactersRepository.getCharacters(""))
                 .thenReturn(fakePagingSource)
 
@@ -52,7 +52,6 @@ class GetCharactersUseCaseImplTest {
                 )
             )
 
-            //  times(0)
             verify(charactersRepository).getCharacters("")
 
             assertNotNull(result.first())
