@@ -1,8 +1,6 @@
 package github.bed72.bedapp.presentation.characters
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -42,14 +39,18 @@ class CharactersFragment : Fragment() {
         _binding = this
     }.root
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initCharactersAdapter()
         observeInitialLoadState()
 
+        handleCharactersPagingData()
+    }
+
+    private fun handleCharactersPagingData() {
         lifecycleScope.launch {
-            // Stop flow in background...
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.charactersPagingData("").collect { pagingData ->
                     charactersAdapter.submitData(pagingData)
@@ -89,12 +90,10 @@ class CharactersFragment : Fragment() {
                          setShimmerVisibility(false)
 
                          binding.includeViewCharactersErrorState.buttonRetry.setOnClickListener {
-                             Log.d(TAG, "REFRESH")
                              charactersAdapter.retry()
                          }
                          FLIPPER_CHILD_ERROR
                      }
-
                 }
             }
         }
@@ -104,9 +103,7 @@ class CharactersFragment : Fragment() {
         binding.includeViewCharactersLoadingState.shimmerCharacters.run {
             isVisible = visibility
 
-            if (visibility) startShimmer()
-            else startShimmer()
-
+            if (visibility) startShimmer() else startShimmer()
         }
     }
 
