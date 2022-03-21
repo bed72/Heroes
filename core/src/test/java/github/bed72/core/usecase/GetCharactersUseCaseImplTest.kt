@@ -16,7 +16,7 @@ import github.bed72.testing.MainCoroutineRule
 import github.bed72.testing.model.CharacterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import github.bed72.testing.pagingsource.PagingSourceFactory
-import github.bed72.core.data.repository.CharactersRepository
+import github.bed72.core.data.repository.characters.CharacterRepository
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -26,7 +26,7 @@ class GetCharactersUseCaseImplTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     @Mock
-    private lateinit var charactersRepository: CharactersRepository
+    private lateinit var characterRepository: CharacterRepository
 
     private lateinit var getCharactersUseCase: GetCharactersUseCase
 
@@ -36,13 +36,13 @@ class GetCharactersUseCaseImplTest {
 
     @Before
     fun setUp() {
-        getCharactersUseCase = GetCharactersUseCaseImpl(charactersRepository)
+        getCharactersUseCase = GetCharactersUseCaseImpl(characterRepository)
     }
 
     @Test
     fun `Should validate flow paging data creation when invoke from use case in called`() =
         runTest {
-            whenever(charactersRepository.getCharacters(""))
+            whenever(characterRepository.getCharacters(""))
                 .thenReturn(fakePagingSource)
 
             val result = getCharactersUseCase(
@@ -52,7 +52,7 @@ class GetCharactersUseCaseImplTest {
                 )
             )
 
-            verify(charactersRepository).getCharacters("")
+            verify(characterRepository).getCharacters("")
 
             assertNotNull(result.first())
         }

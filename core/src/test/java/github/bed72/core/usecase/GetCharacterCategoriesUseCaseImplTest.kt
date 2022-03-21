@@ -17,7 +17,7 @@ import github.bed72.testing.model.EventFactory
 import github.bed72.core.usecase.base.ResultStatus
 import github.bed72.testing.model.CharacterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import github.bed72.core.data.repository.CharactersRepository
+import github.bed72.core.data.repository.characters.CharacterRepository
 import github.bed72.testing.model.CharacterFactory.Hero.ThreeDMan
 import github.bed72.testing.model.ComicFactory.FakeComic.FakeComicOne
 import github.bed72.testing.model.EventFactory.FakeEvent.FakeEventOne
@@ -31,7 +31,7 @@ class GetCharacterCategoriesUseCaseImplTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     @Mock
-    private lateinit var charactersRepository: CharactersRepository
+    private lateinit var characterRepository: CharacterRepository
 
     private lateinit var getCharacterCategoriesUseCase: GetCharacterCategoriesUseCase
 
@@ -42,7 +42,7 @@ class GetCharacterCategoriesUseCaseImplTest {
     @Before
     fun setup() {
         getCharacterCategoriesUseCase = GetCharacterCategoriesUseCaseImpl(
-            charactersRepository = charactersRepository,
+            charactersRepository = characterRepository,
             dispatchers = mainCoroutineRule.testDispatcherProvider
         )
     }
@@ -50,8 +50,8 @@ class GetCharacterCategoriesUseCaseImplTest {
     @Test
     fun `Should return Success from ResultStatus when get both requests return success`() = runTest {
         // Arrange
-        whenever(charactersRepository.getComics(characterFactory.id)).thenReturn(comicsFactory)
-        whenever(charactersRepository.getEvents(characterFactory.id)).thenReturn(eventsFactory)
+        whenever(characterRepository.getComics(characterFactory.id)).thenReturn(comicsFactory)
+        whenever(characterRepository.getEvents(characterFactory.id)).thenReturn(eventsFactory)
 
         // Act
         val result = getCharacterCategoriesUseCase(GetCharacterCategoriesParams(characterFactory.id))
@@ -65,8 +65,8 @@ class GetCharacterCategoriesUseCaseImplTest {
     @Test
     fun `Should return Error from ResultStatus when get events request returns error`() = runTest {
         // Arrange
-        whenever(charactersRepository.getComics(characterFactory.id)).thenReturn(comicsFactory)
-        whenever(charactersRepository.getEvents(characterFactory.id)).thenAnswer {
+        whenever(characterRepository.getComics(characterFactory.id)).thenReturn(comicsFactory)
+        whenever(characterRepository.getEvents(characterFactory.id)).thenAnswer {
             throw Throwable()
         }
 
@@ -82,7 +82,7 @@ class GetCharacterCategoriesUseCaseImplTest {
     @Test
     fun `Should return Error from ResultStatus when get comics request returns error`() = runTest {
         // Arrange
-        whenever(charactersRepository.getComics(characterFactory.id)).thenAnswer {
+        whenever(characterRepository.getComics(characterFactory.id)).thenAnswer {
             throw Throwable()
         }
 
