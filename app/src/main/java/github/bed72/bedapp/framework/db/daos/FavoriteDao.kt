@@ -1,21 +1,18 @@
 package github.bed72.bedapp.framework.db.daos
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Insert
+import androidx.room.Delete
 import kotlinx.coroutines.flow.Flow
+import androidx.room.OnConflictStrategy
 import github.bed72.core.data.constants.DbConstants
 import github.bed72.bedapp.framework.db.entities.FavoriteEntity
 
 @Dao
 interface FavoriteDao {
 
-    @Query(
-        """
-            SELECT ${DbConstants.FAVORITES_COLUMN_INFO_ID}, 
-                ${DbConstants.FAVORITES_COLUMN_INFO_NAME},
-                ${DbConstants.FAVORITES_COLUMN_INFO_IMAGE_URL}
-            FROM ${DbConstants.FAVORITES_TABLE_NAME}
-        """
-    )
+    @Query("SELECT * FROM ${DbConstants.FAVORITES_TABLE_NAME}")
     suspend fun loadFavorites(): Flow<List<FavoriteEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
