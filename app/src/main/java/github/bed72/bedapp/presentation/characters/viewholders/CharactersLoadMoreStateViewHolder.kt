@@ -30,8 +30,7 @@ class CharactersLoadMoreStateViewHolder(
             val itemBinding = ItemCharacterLoadMoreStateBinding
                 .inflate(LayoutInflater.from(parent.context), parent, false)
 
-            return  CharactersLoadMoreStateViewHolder(itemBinding, retry)
+            return CharactersLoadMoreStateViewHolder(itemBinding, retry)
         }
     }
-
 }

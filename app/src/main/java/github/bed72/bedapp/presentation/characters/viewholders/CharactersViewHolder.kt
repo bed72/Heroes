@@ -6,10 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import github.bed72.bedapp.R
 import github.bed72.bedapp.databinding.ItemCharacterBinding
+import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
+import github.bed72.bedapp.utils.OnCharacterItemClick
 import github.bed72.core.domain.model.Character
 
 class CharactersViewHolder(
-    itemCharacterBinding: ItemCharacterBinding
+    itemCharacterBinding: ItemCharacterBinding,
+    private val imageLoader: ImageLoader,
+    private val onItemClick: OnCharacterItemClick
 ) : RecyclerView.ViewHolder(itemCharacterBinding.root) {
 
     private val imageCharacter = itemCharacterBinding.imageCharacter
@@ -17,19 +21,25 @@ class CharactersViewHolder(
 
     fun bind(character: Character) {
         textNameCharacter.text = character.name
-        Glide.with(itemView)
-            .load(character.imageUrl)
-            .error(R.drawable.ic_img_loading_error)
-            .fallback(R.drawable.ic_img_loading_error)
-            .into(imageCharacter)
+        imageCharacter.transitionName = character.name
+        imageLoader.load(imageCharacter, character.imageUrl)
+
+        // Passando o 'imageCharacter' para que o graph conheça-o e consiga fazer a animação
+        itemView.setOnClickListener {
+            onItemClick.invoke(character, imageCharacter)
+        }
     }
 
     companion object {
-        fun create(parent: ViewGroup): CharactersViewHolder {
+        fun create(
+            parent: ViewGroup,
+            imageLoader: ImageLoader,
+            onItemClick: OnCharacterItemClick
+        ): CharactersViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val itemBinding = ItemCharacterBinding.inflate(inflater, parent, false)
 
-            return CharactersViewHolder(itemBinding)
+            return CharactersViewHolder(itemBinding, imageLoader, onItemClick)
         }
     }
 }

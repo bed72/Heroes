@@ -6,10 +6,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import github.bed72.core.usecase.GetCharactersUseCase
 import github.bed72.core.usecase.GetCharactersUseCaseImpl
+import github.bed72.core.usecase.GetCharacterCategoriesUseCase
+import github.bed72.core.usecase.GetCharacterCategoriesUseCaseImpl
 
 @Module
 @InstallIn(ViewModelComponent::class)
 interface UseCaseModule {
     @Binds
-    fun bindCharactersUseCase(useCase: GetCharactersUseCaseImpl): GetCharactersUseCase
+    fun bindGetCharactersUseCase(useCase: GetCharactersUseCaseImpl): GetCharactersUseCase
+
+    @Binds
+    fun bindCharacterCategoriesUseCase(useCase: GetCharacterCategoriesUseCaseImpl): GetCharacterCategoriesUseCase
 }

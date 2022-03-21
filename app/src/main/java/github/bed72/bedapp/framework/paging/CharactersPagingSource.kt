@@ -1,37 +1,32 @@
 package github.bed72.bedapp.framework.paging
 
-import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import github.bed72.bedapp.framework.network.response.DataWrapperResponse
-import github.bed72.bedapp.framework.network.response.toCharacterModel
-import github.bed72.core.data.repository.CharactersRemoteDataSource
+import androidx.paging.PagingSource
 import github.bed72.core.domain.model.Character
+import github.bed72.core.data.repository.CharactersRemoteDataSource
 
 class CharactersPagingSource(
     private val query: String,
-    private val remoteDataSource: CharactersRemoteDataSource<DataWrapperResponse>
+    private val remoteDataSource: CharactersRemoteDataSource
 ) : PagingSource<Int, Character>() {
 
     @Suppress("TooGenericExceptionCaught")
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
         return try {
-            val offset = params.key ?: 0
+            val offsetParams = params.key ?: 0
             val queries = hashMapOf(
-                "offset" to offset.toString()
+                "offset" to offsetParams.toString()
             )
 
-            if (queries.isNotEmpty() && query.isNotEmpty()) {
+            if (queries.isNotEmpty() && query.isNotEmpty())
                 queries["nameStartsWith"] = query
-            }
 
-            val response = remoteDataSource.fetchCharacters(queries)
-            val responseOffset = response.data.offset
-            val responseTotalCharacters = response.data.total
+            val (offset, total, characters) = remoteDataSource.fetchCharacters(queries)
 
             LoadResult.Page(
-                data = response.data.results.map { it.toCharacterModel() },
                 prevKey = null,
-                nextKey = if (responseOffset < responseTotalCharacters) responseOffset + LIMIT else null
+                data = characters,
+                nextKey = if (offset < total) offset + LIMIT else null
             )
         } catch (exception: Exception) {
             LoadResult.Error(exception)

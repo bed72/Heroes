@@ -3,17 +3,31 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.18796296296296297" />
+        <entry key="app/src/main/res/drawable/card_radius.xml" value="0.3687179487179487" />
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.33055555555555555" />
+        <entry key="app/src/main/res/drawable/ic_heroes_menu_outlined.xml" value="0.1925925925925926" />
         <entry key="app/src/main/res/drawable/ic_img_loading_error.xml" value="0.3687179487179487" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/drawable/ic_img_placeholder.xml" value="0.1665" />
+        <entry key="app/src/main/res/drawable/ic_splash.xml" value="0.18981481481481483" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/fragment_characters.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_detail.xml" value="0.34739583333333335" />
         <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/include_error_view.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/include_view_characters_error_state.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/include_view_characters_loading_state.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/include_view_detail_loading_state.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/item_character.xml" value="0.35833333333333334" />
-        <entry key="app/src/main/res/layout/item_character_load_more_state.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/item_character_load_more_state.xml" value="0.4924433249370277" />
+        <entry key="app/src/main/res/layout/item_child_detail.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_parent_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/shimmer_layout_character_item.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/shimmer_layout_detail_category_item.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/menu/app_menu_items.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.18796296296296297" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.18796296296296297" />
       </map>
     </option>
   </component>

@@ -2,6 +2,8 @@ package github.bed72.bedapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,21 +15,40 @@ import github.bed72.bedapp.databinding.ActivityMainBinding
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        installSplashScreen()
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager
+        setNavigationController()
+        setAppBar()
+        setNavigationBar()
+    }
+
+    private fun setNavigationController() {
+        val navigationContainerFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_container) as NavHostFragment
 
-        navController = navHostFragment.navController
+        navController = navigationContainerFragment.navController
         binding.bottomNavMain.setupWithNavController(navController)
+    }
 
+    private fun setNavigationBar() {
+        navController.addOnDestinationChangedListener {_, destination, _ ->
+            visibilityNavBar(destination.id)
+            visibilityToolBar(destination.id)
+            visibilityGoBackInToolBar(destination.id)
+        }
+    }
+
+    private fun setAppBar() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.characters_fragment,
@@ -36,13 +57,39 @@ class MainActivity : AppCompatActivity() {
             )
         )
         binding.toolbarApp.setupWithNavController(navController, appBarConfiguration)
+    }
 
-        navController.addOnDestinationChangedListener {_, destination, _ ->
-            val isTopLevelDestination = appBarConfiguration.topLevelDestinations.contains(destination.id)
+    private fun visibilityGoBackInToolBar(destination: Int) {
+        val isTopLevelDestination = appBarConfiguration.topLevelDestinations.contains(destination)
 
-            if (!isTopLevelDestination) {
-                binding.toolbarApp.setNavigationIcon(R.drawable.ic_back)
-            }
+        if (!isTopLevelDestination) binding.toolbarApp.setNavigationIcon(R.drawable.ic_back)
+    }
+
+    private fun visibilityNavBar(destination: Int) {
+        val visibility = when (destination) {
+            R.id.about_fragment -> VISIBLE
+            R.id.favorites_fragment -> VISIBLE
+            R.id.characters_fragment -> VISIBLE
+            else -> GONE
         }
+
+        binding.bottomNavMain.visibility = visibility
+    }
+
+    private fun visibilityToolBar(destination: Int) {
+        val visibility = when (destination) {
+            R.id.about_fragment -> VISIBLE
+            R.id.detail_fragment -> VISIBLE
+            R.id.favorites_fragment -> VISIBLE
+            R.id.characters_fragment -> VISIBLE
+            else -> GONE
+        }
+
+        binding.toolbarApp.visibility = visibility
+    }
+
+    companion object {
+        private const val GONE = View.GONE
+        private const val VISIBLE = View.VISIBLE
     }
 }
