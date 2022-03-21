@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home"
-    app:startDestination="@id/characters_fragment">
+    app:startDestination="@id/characters_fragment"
+    android:id="@+id/home" >
 
     <fragment
         android:id="@+id/characters_fragment"
-        android:name="github.bed72.bedapp.presentation.characters.CharactersFragment"
         android:label="@string/characters_screen_title"
-        tools:layout="@layout/fragment_characters" />
+        tools:layout="@layout/fragment_characters"
+        android:name="github.bed72.bedapp.presentation.characters.CharactersFragment">
+
+        <action
+            app:destination="@id/detail_fragment"
+            android:id="@+id/action_characters_fragment_to_detail_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/detail_fragment"
+        android:label="{screenTitle}"
+        tools:layout="@layout/fragment_detail"
+        android:name="github.bed72.bedapp.presentation.detail.DetailFragment">
+
+        <argument
+            app:argType="string"
+            android:name="screenTitle" />
+
+        <argument
+            android:name="detailViewArg"
+            app:argType="github.bed72.bedapp.presentation.detail.args.DetailViewArg" />
+
+    </fragment>
+
 </navigation>

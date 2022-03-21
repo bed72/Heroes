@@ -1,51 +1,44 @@
 package github.bed72.bedapp.presentation.characters
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
+import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
+import github.bed72.bedapp.presentation.base.BaseFragment
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
+import github.bed72.bedapp.presentation.detail.args.DetailViewArg
+import github.bed72.core.domain.model.Character
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class CharactersFragment : Fragment() {
+class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
 
-    private var _binding: FragmentCharactersBinding? = null
-    private val binding: FragmentCharactersBinding get() = _binding!!
+    @Inject
+    lateinit var imageLoader: ImageLoader
 
     private val viewModel: CharactersViewModel by viewModels()
 
     private lateinit var charactersAdapter: CharactersAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = FragmentCharactersBinding.inflate(
-        inflater,
-        container,
-        false
-    ).apply {
-        _binding = this
-    }.root
-
+    override fun getViewBinding() = FragmentCharactersBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initCharactersAdapter()
         observeInitialLoadState()
-
         handleCharactersPagingData()
     }
 
@@ -60,9 +53,11 @@ class CharactersFragment : Fragment() {
     }
 
     private fun initCharactersAdapter() {
-        charactersAdapter = CharactersAdapter()
+        charactersAdapter = CharactersAdapter(imageLoader) { character, view ->
+            handleNavigation(view, character)
+        }
 
-        with(binding.recyclerCharacters, {
+        with(binding.recyclerCharacters) {
             scrollToPosition(0) // Set initial position
             setHasFixedSize(true)
             adapter = charactersAdapter.withLoadStateFooter(
@@ -71,7 +66,24 @@ class CharactersFragment : Fragment() {
                     charactersAdapter::retry
                 )
             )
-        })
+        }
+    }
+
+    private fun handleNavigation(view: View, character: Character) {
+        val extras = FragmentNavigatorExtras(
+            view to character.name
+        )
+
+        val directions = CharactersFragmentDirections.actionCharactersFragmentToDetailFragment(
+            character.name,
+            DetailViewArg(
+                characterId = character.id,
+                name = character.name,
+                imageUrl = character.imageUrl
+            )
+        )
+
+        findNavController().navigate(directions, extras)
     }
 
     private fun observeInitialLoadState() {

@@ -3,13 +3,18 @@ package github.bed72.bedapp.presentation.characters.adapters
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.characters.viewholders.CharactersViewHolder
+import github.bed72.bedapp.utils.OnCharacterItemClick
 import github.bed72.core.domain.model.Character
 
-class CharactersAdapter : PagingDataAdapter<Character, CharactersViewHolder>(diffCallback) {
+class CharactersAdapter(
+    private val imageLoader: ImageLoader,
+    private val onItemClick: OnCharacterItemClick
+) : PagingDataAdapter<Character, CharactersViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        CharactersViewHolder.create(parent)
+        CharactersViewHolder.create(parent, imageLoader, onItemClick)
 
     override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) {
         getItem(position)?.let {
