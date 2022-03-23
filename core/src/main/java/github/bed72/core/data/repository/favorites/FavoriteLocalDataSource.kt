@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import github.bed72.core.domain.model.Character
 // Para fonte de dados local 
 interface FavoriteLocalDataSource {
-    suspend fun getAllFavorite(): Flow<List<Character>>
+    fun getAllFavorite(): Flow<List<Character>>
 
     suspend fun saveFavorite(character: Character)
 

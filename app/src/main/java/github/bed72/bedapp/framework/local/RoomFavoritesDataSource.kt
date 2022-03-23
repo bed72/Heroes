@@ -12,7 +12,7 @@ import github.bed72.core.data.repository.favorites.FavoriteLocalDataSource
 class RoomFavoritesDataSource @Inject constructor(
     private val favoriteDao: FavoriteDao
 ) : FavoriteLocalDataSource {
-    override suspend fun getAllFavorite(): Flow<List<Character>> =
+    override fun getAllFavorite(): Flow<List<Character>> =
         favoriteDao.loadFavorites().map { favorites -> favorites.toCharactersModel() }
 
     override suspend fun saveFavorite(character: Character) {
