@@ -42,7 +42,7 @@ class GetCharacterCategoriesUseCaseImplTest {
     @Before
     fun setup() {
         getCharacterCategoriesUseCase = GetCharacterCategoriesUseCaseImpl(
-            charactersRepository = characterRepository,
+            characterRepository = characterRepository,
             dispatchers = mainCoroutineRule.testDispatcherProvider
         )
     }
