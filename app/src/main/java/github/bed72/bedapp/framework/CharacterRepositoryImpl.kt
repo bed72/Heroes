@@ -4,14 +4,14 @@ import javax.inject.Inject
 import androidx.paging.PagingSource
 import github.bed72.core.domain.model.Comic
 import github.bed72.core.domain.model.Character
-import github.bed72.core.data.repository.CharactersRepository
+import github.bed72.core.data.repository.characters.CharacterRepository
 import github.bed72.bedapp.framework.paging.CharactersPagingSource
-import github.bed72.core.data.repository.CharactersRemoteDataSource
+import github.bed72.core.data.repository.characters.CharacterRemoteDataSource
 import github.bed72.core.domain.model.Event
 
-class CharactersRepositoryImpl @Inject constructor(
-    private val remoteDataSource: CharactersRemoteDataSource
-) : CharactersRepository {
+class CharacterRepositoryImpl @Inject constructor(
+    private val remoteDataSource: CharacterRemoteDataSource
+) : CharacterRepository {
 
     override suspend fun getComics(characterId: Int): List<Comic> =
         remoteDataSource.fetchComics(characterId)

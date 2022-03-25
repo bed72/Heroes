@@ -1,11 +1,11 @@
-package github.bed72.core.data.repository
+package github.bed72.core.data.repository.characters
 
 import androidx.paging.PagingSource
 import github.bed72.core.domain.model.Character
 import github.bed72.core.domain.model.Comic
 import github.bed72.core.domain.model.Event
 
-interface CharactersRepository {
+interface CharacterRepository {
 
     suspend fun getComics(characterId: Int): List<Comic>
 

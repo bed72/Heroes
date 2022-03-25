@@ -17,7 +17,7 @@ import github.bed72.core.domain.model.Character
 import github.bed72.testing.model.CharacterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import github.bed72.bedapp.factory.response.CharacterPagingFactory
-import github.bed72.core.data.repository.CharactersRemoteDataSource
+import github.bed72.core.data.repository.characters.CharacterRemoteDataSource
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -27,7 +27,7 @@ class CharactersPagingSourceTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     @Mock
-    private lateinit var charactersRemoteDataSource: CharactersRemoteDataSource
+    private lateinit var characterRemoteDataSource: CharacterRemoteDataSource
 
     private lateinit var charactersPagingSource: CharactersPagingSource
 
@@ -37,13 +37,13 @@ class CharactersPagingSourceTest {
 
     @Before
     fun setUp() {
-        charactersPagingSource = CharactersPagingSource("", charactersRemoteDataSource)
+        charactersPagingSource = CharactersPagingSource("", characterRemoteDataSource)
     }
 
     @Test
     fun `Should return a success load result when method load is called`() = runTest {
         // Arrange
-        whenever(charactersRemoteDataSource.fetchCharacters(any()))
+        whenever(characterRemoteDataSource.fetchCharacters(any()))
             .thenReturn(fakeDataWrapperResponseFactory.create())
 
         // Act
@@ -76,7 +76,7 @@ class CharactersPagingSourceTest {
     fun `Should return a error load result when load is called`() = runTest {
         // Arrange
         val exception = RuntimeException()
-        whenever(charactersRemoteDataSource.fetchCharacters(any()))
+        whenever(characterRemoteDataSource.fetchCharacters(any()))
             .thenThrow(exception)
 
         // Act

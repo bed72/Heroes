@@ -1,44 +1,62 @@
 package github.bed72.bedapp.presentation.detail
 
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import javax.inject.Inject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.Flow
 import github.bed72.core.domain.model.Comic
 import github.bed72.core.usecase.GetCharacterCategoriesUseCase
-import github.bed72.core.usecase.base.ResultStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import github.bed72.bedapp.R
+import github.bed72.bedapp.presentation.detail.args.DetailViewArg
 import github.bed72.bedapp.presentation.detail.entities.DetailChildViewEntity
 import github.bed72.bedapp.presentation.detail.entities.DetailParentViewEntity
+import github.bed72.bedapp.presentation.extensions.watchStatus
 import github.bed72.core.domain.model.Event
+import github.bed72.core.usecase.AddFavoriteUseCase
+import github.bed72.core.usecase.AddFavoriteUseCase.AddFavoriteParams
 import github.bed72.core.usecase.GetCharacterCategoriesUseCase.GetCharacterCategoriesParams
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
+    private val addFavoriteUseCase: AddFavoriteUseCase,
     private val getCharacterCategoriesUseCase: GetCharacterCategoriesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<UiState>()
     val uiState: LiveData<UiState> get() = _uiState
 
-    fun getCharacterCategories(characterId: Int) {
-        getCharacterCategoriesUseCase(GetCharacterCategoriesParams(characterId)).watchStatus()
+    private val _favoriteUiState = MutableLiveData<FavoriteUiState>()
+    val favoriteUiState: LiveData<FavoriteUiState> get() = _favoriteUiState
+
+    init {
+        _favoriteUiState.value = FavoriteUiState.FavoriteIcon(R.drawable.ic_favorite_unchecked)
     }
 
-    private fun Flow<ResultStatus<Pair<List<Comic>, List<Event>>>>.watchStatus() =
-        viewModelScope.launch {
-            collect { status ->
-                _uiState.value = when (status) {
-                    ResultStatus.Loading -> UiState.Loading
-                    is ResultStatus.Error -> UiState.Error // use 'is' when data class
-                    is ResultStatus.Success -> handleViewEntity(status.data)
-                }
-            }
+    fun getCharacterCategories(characterId: Int) = viewModelScope.launch {
+        getCharacterCategoriesUseCase(GetCharacterCategoriesParams(characterId)).watchStatus(
+            error = { _uiState.value = UiState.Error },
+            loading = { _uiState.value = UiState.Loading },
+            success = { data -> _uiState.value = handleViewEntity(data) }
+        )
+    }
+
+    fun updateFavorite(detailViewArg: DetailViewArg) = viewModelScope.launch {
+        detailViewArg.run {
+            addFavoriteUseCase(
+                AddFavoriteParams(characterId, name, imageUrl)
+            ).watchStatus(
+                loading = { _favoriteUiState.value = FavoriteUiState.Loading },
+                success = {
+                    _favoriteUiState.value =
+                        FavoriteUiState.FavoriteIcon(R.drawable.ic_favorite_checked)
+                },
+                error = { }
+            )
+        }
     }
 
     private fun handleViewEntity(data: Pair<List<Comic>, List<Event>>): UiState {
@@ -79,5 +97,10 @@ class DetailViewModel @Inject constructor(
         object Error : UiState()
         object Loading : UiState()
         data class Success(val detailParentList: List<DetailParentViewEntity>) : UiState()
+    }
+
+    sealed class FavoriteUiState {
+        object Loading : FavoriteUiState()
+        data class FavoriteIcon(@DrawableRes val icon: Int) : FavoriteUiState()
     }
 }

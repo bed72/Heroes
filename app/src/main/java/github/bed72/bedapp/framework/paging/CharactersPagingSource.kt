@@ -3,11 +3,11 @@ package github.bed72.bedapp.framework.paging
 import androidx.paging.PagingState
 import androidx.paging.PagingSource
 import github.bed72.core.domain.model.Character
-import github.bed72.core.data.repository.CharactersRemoteDataSource
+import github.bed72.core.data.repository.characters.CharacterRemoteDataSource
 
 class CharactersPagingSource(
     private val query: String,
-    private val remoteDataSource: CharactersRemoteDataSource
+    private val remoteDataSource: CharacterRemoteDataSource
 ) : PagingSource<Int, Character>() {
 
     @Suppress("TooGenericExceptionCaught")
