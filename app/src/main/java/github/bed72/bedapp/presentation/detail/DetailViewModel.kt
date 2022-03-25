@@ -53,7 +53,8 @@ class DetailViewModel @Inject constructor(
                 success = {
                     _favoriteUiState.value =
                         FavoriteUiState.FavoriteIcon(R.drawable.ic_favorite_checked)
-                }
+                },
+                error = { }
             )
         }
     }
