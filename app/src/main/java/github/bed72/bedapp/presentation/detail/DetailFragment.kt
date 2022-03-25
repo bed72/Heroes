@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.databinding.FragmentDetailBinding
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.detail.adapters.DetailParentAdapter
+import github.bed72.bedapp.presentation.detail.args.DetailViewArg
 import github.bed72.bedapp.presentation.detail.entities.DetailParentViewEntity
 import javax.inject.Inject
 
@@ -53,7 +54,17 @@ class DetailFragment : Fragment() {
         }
 
         setSharedElementTransitionOnEnter()
-        observeInitialLoadState(detailViewArgs.characterId)
+
+        observeUiState(detailViewArgs)
+        observeUiFavoriteState()
+
+        favoriteCharacter(detailViewArgs)
+    }
+
+    private fun favoriteCharacter(detailViewArg: DetailViewArg) {
+        binding.imageFavoriteIcon.setOnClickListener {
+            viewModel.updateFavorite(detailViewArg)
+        }
     }
 
     // Define a animação da transição como "move"
@@ -64,28 +75,40 @@ class DetailFragment : Fragment() {
             }
     }
 
-    private fun observeInitialLoadState(characterId: Int) {
-        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
-            binding.flipperDetail.displayedChild =  when (uiState) {
+    private fun observeUiState(detailViewArg: DetailViewArg) {
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            binding.flipperDetail.displayedChild = when (state) {
                 DetailViewModel.UiState.Empty -> FLIPPER_CHILD_POSITION_EMPTY
                 DetailViewModel.UiState.Error -> {
-
                     binding.includeViewDetailErrorState.buttonRetry.setOnClickListener {
-                        viewModel.getCharacterCategories(characterId)
+                        viewModel.getCharacterCategories(detailViewArg.characterId)
                     }
 
                     FLIPPER_CHILD_POSITION_ERROR
                 }
                 DetailViewModel.UiState.Loading -> FLIPPER_CHILD_POSITION_LOADING
                 is DetailViewModel.UiState.Success -> {
-                    initDetailAdapter(uiState.detailParentList)
+                    initDetailAdapter(state.detailParentList)
 
                     FLIPPER_CHILD_POSITION_SUCCESS
                 }
             }
         }
 
-        viewModel.getCharacterCategories(characterId)
+        viewModel.getCharacterCategories(detailViewArg.characterId)
+    }
+
+    private fun observeUiFavoriteState() {
+        viewModel.favoriteUiState.observe(viewLifecycleOwner) { state ->
+            binding.flipperFavorite.displayedChild = when (state) {
+                DetailViewModel.FavoriteUiState.Loading -> FLIPPER_FAVORITE_CHILD_POSITION_LOADING
+                is DetailViewModel.FavoriteUiState.FavoriteIcon -> {
+                    binding.imageFavoriteIcon.setImageResource(state.icon)
+
+                    FLIPPER_FAVORITE_CHILD_POSITION_SUCCESS
+                }
+            }
+        }
     }
 
     private fun initDetailAdapter(details: List<DetailParentViewEntity>) {
@@ -106,5 +129,7 @@ class DetailFragment : Fragment() {
         private const val FLIPPER_CHILD_POSITION_SUCCESS = 1
         private const val FLIPPER_CHILD_POSITION_ERROR = 2
         private const val FLIPPER_CHILD_POSITION_EMPTY = 3
+        private const val FLIPPER_FAVORITE_CHILD_POSITION_SUCCESS = 0
+        private const val FLIPPER_FAVORITE_CHILD_POSITION_LOADING = 1
     }
 }

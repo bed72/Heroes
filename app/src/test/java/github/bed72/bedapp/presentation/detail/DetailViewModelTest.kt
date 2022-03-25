@@ -28,6 +28,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import github.bed72.testing.model.ComicFactory.FakeComic.FakeComicOne
 import github.bed72.testing.model.EventFactory.FakeEvent.FakeEventOne
 import github.bed72.bedapp.presentation.detail.DetailViewModel.UiState
+import github.bed72.core.usecase.AddFavoriteUseCase
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -38,6 +39,9 @@ class DetailViewModelTest {
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule() // para vincular LiveData
+
+    @Mock
+    private lateinit var addFavoriteUseCase: AddFavoriteUseCase
 
     @Mock
     private lateinit var getCharacterCategoriesUseCase: GetCharacterCategoriesUseCase
@@ -53,7 +57,7 @@ class DetailViewModelTest {
 
     @Before
     fun setUp() {
-        detailViewModel = DetailViewModel(getCharacterCategoriesUseCase)
+        detailViewModel = DetailViewModel(addFavoriteUseCase, getCharacterCategoriesUseCase)
         // Vinculação sempre depois do UseCase, toda vez que for notificado no viewModel vou receber aqui...
         detailViewModel.uiState.observeForever(uiStateObserver)
     }

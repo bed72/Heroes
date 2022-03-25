@@ -3,7 +3,7 @@ package github.bed72.core.usecase
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import github.bed72.core.data.repository.CharactersRepository
+import github.bed72.core.data.repository.characters.CharacterRepository
 import github.bed72.core.domain.model.Character
 import github.bed72.core.usecase.GetCharactersUseCase.GetCharactersParams
 import github.bed72.core.usecase.base.PagingUseCase
@@ -17,11 +17,11 @@ interface GetCharactersUseCase {
 }
 
 class GetCharactersUseCaseImpl @Inject constructor(
-    private val charactersRepository: CharactersRepository
+    private val characterRepository: CharacterRepository
 ) : PagingUseCase<GetCharactersParams, Character>(), GetCharactersUseCase {
 
     override fun createFlowObservable(params: GetCharactersParams): Flow<PagingData<Character>> {
-        val pagingSource = charactersRepository.getCharacters(params.query)
+        val pagingSource = characterRepository.getCharacters(params.query)
 
         return Pager(config = params.pagingConfig) {
             pagingSource
