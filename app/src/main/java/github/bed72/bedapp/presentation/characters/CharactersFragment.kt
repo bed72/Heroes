@@ -60,7 +60,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
             setHasFixedSize(true)
             adapter = charactersAdapter.withLoadStateFooter(
                 footer = CharactersLoadStateAdapter(
-                    // Passed lambda function
                     charactersAdapter::retry
                 )
             )
