@@ -2,25 +2,25 @@ package github.bed72.bedapp.presentation.characters
 
 import android.os.Bundle
 import android.view.View
+import javax.inject.Inject
+import androidx.paging.LoadState
+import kotlinx.coroutines.launch
+import androidx.lifecycle.Lifecycle
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
-import github.bed72.bedapp.databinding.FragmentCharactersBinding
-import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
+import kotlinx.coroutines.flow.collectLatest
+import github.bed72.core.domain.model.Character
+import androidx.navigation.fragment.findNavController
 import github.bed72.bedapp.presentation.base.BaseFragment
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import github.bed72.bedapp.databinding.FragmentCharactersBinding
+import github.bed72.bedapp.presentation.detail.args.DetailViewArg
+import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
-import github.bed72.bedapp.presentation.detail.args.DetailViewArg
-import github.bed72.core.domain.model.Character
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
@@ -29,7 +29,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     lateinit var imageLoader: ImageLoader
 
     private val viewModel: CharactersViewModel by viewModels()
-
     private lateinit var charactersAdapter: CharactersAdapter
 
     override fun getViewBinding() = FragmentCharactersBinding.inflate(layoutInflater)
@@ -58,7 +57,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
         }
 
         with(binding.recyclerCharacters) {
-            scrollToPosition(0) // Set initial position
             setHasFixedSize(true)
             adapter = charactersAdapter.withLoadStateFooter(
                 footer = CharactersLoadStateAdapter(
@@ -70,9 +68,7 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     }
 
     private fun handleNavigation(view: View, character: Character) {
-        val extras = FragmentNavigatorExtras(
-            view to character.name
-        )
+        val extras = FragmentNavigatorExtras(view to character.name)
 
         val directions = CharactersFragmentDirections.actionCharactersFragmentToDetailFragment(
             character.name,
@@ -92,11 +88,13 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                  binding.flipperCharacters.displayedChild = when (loadState.refresh) {
                     is LoadState.Loading -> {
                         setShimmerVisibility(true)
-                        FLIPPER_CHILD_LOADING
+
+                        FLIPPER_LOADING
                     }
                      is LoadState.NotLoading -> {
                          setShimmerVisibility(false)
-                         FLIPPER_CHILD_CHARACTERS
+
+                         FLIPPER_SUCCESS
                      }
                      is LoadState.Error -> {
                          setShimmerVisibility(false)
@@ -104,7 +102,8 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                          binding.includeViewCharactersErrorState.buttonRetry.setOnClickListener {
                              charactersAdapter.retry()
                          }
-                         FLIPPER_CHILD_ERROR
+
+                         FLIPPER_ERROR
                      }
                 }
             }
@@ -120,8 +119,8 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     }
 
     companion object {
-        private const val FLIPPER_CHILD_LOADING = 0
-        private const val FLIPPER_CHILD_CHARACTERS = 1
-        private const val FLIPPER_CHILD_ERROR = 2
+        private const val FLIPPER_LOADING = 0
+        private const val FLIPPER_SUCCESS = 1
+        private const val FLIPPER_ERROR = 2
     }
 }

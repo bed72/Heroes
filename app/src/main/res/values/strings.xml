@@ -5,6 +5,7 @@
     <string name="common_no_internet_connection">No internet connection</string>
 
     <string name="error_loading_data">Error when trying to load data</string>
+    <string name="error_favorite_data">Error when trying saved favorite</string>
     <string name="error_loading_more_try_again">Error when trying to load the next page. Try again</string>
 
     <!-- App Menu -->
