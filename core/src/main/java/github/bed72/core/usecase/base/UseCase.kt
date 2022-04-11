@@ -2,8 +2,8 @@ package github.bed72.core.usecase.base
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.catch
 
 abstract class UseCase<in P, R> {
 

@@ -5,11 +5,9 @@ import android.view.View
 import javax.inject.Inject
 import androidx.paging.LoadState
 import kotlinx.coroutines.launch
-import androidx.lifecycle.Lifecycle
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import github.bed72.core.domain.model.Character
@@ -21,6 +19,7 @@ import github.bed72.bedapp.presentation.detail.args.DetailViewArg
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
+import github.bed72.bedapp.presentation.characters.CharactersViewModel.States.SearchResult
 
 @AndroidEntryPoint
 class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
@@ -29,33 +28,37 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     lateinit var imageLoader: ImageLoader
 
     private val viewModel: CharactersViewModel by viewModels()
-    private lateinit var charactersAdapter: CharactersAdapter
+
+    private val charactersAdapter: CharactersAdapter by lazy { setLazyAdapter() }
 
     override fun getViewBinding() = FragmentCharactersBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initCharactersAdapter()
+        initAdapter()
         observeInitialLoadState()
         handleCharactersPagingData()
     }
 
     private fun handleCharactersPagingData() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.charactersPagingData("").collect { pagingData ->
-                    charactersAdapter.submitData(pagingData)
+        with (viewModel) {
+            state.observe(viewLifecycleOwner) { states ->
+                when (states) {
+                    is SearchResult ->
+                        charactersAdapter.submitData(viewLifecycleOwner.lifecycle, states.data)
                 }
             }
+
+            search()
         }
     }
 
-    private fun initCharactersAdapter() {
-        charactersAdapter = CharactersAdapter(imageLoader) { character, view ->
-            handleNavigation(view, character)
-        }
+    private fun setLazyAdapter() = CharactersAdapter(imageLoader) { character, view ->
+        handleNavigation(view, character)
+    }
 
+    private fun initAdapter() {
         with(binding.recyclerCharacters) {
             setHasFixedSize(true)
             adapter = charactersAdapter.withLoadStateFooter(

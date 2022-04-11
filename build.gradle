@@ -3,24 +3,23 @@ buildscript {
     ext {
         hilt_version = '2.41'
         paging_version = '3.1.1'
-        kotlin_version = '1.6.20'
+        kotlin_version = '1.6.10'
         detekt_version = '1.19.0'
         nav_version = '2.5.0-alpha03'
         coroutines_version  = '1.6.0'
     }
 
     dependencies {
+        classpath 'com.google.gms:google-services:4.3.10'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
-
-        classpath 'com.google.gms:google-services:4.3.10'
     }
 }
 
 plugins {
     id 'com.android.library' version '7.1.3' apply false
     id 'com.android.application' version '7.1.3' apply false
-    id 'io.gitlab.arturbosch.detekt' version "$detekt_version" apply false
+    id 'io.gitlab.arturbosch.detekt' version "$detekt_version" apply true
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
 }
 
