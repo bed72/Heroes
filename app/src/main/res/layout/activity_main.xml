@@ -10,12 +10,12 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_app"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@android:color/white"/>
+        app:titleTextColor="@android:color/white"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_container"

@@ -9,16 +9,11 @@ java {
 }
 
 dependencies {
-    // OkHttp
-    def okhttp_version = '4.9.3'
-    api "com.squareup.okhttp3:okhttp:$okhttp_version"
-    api "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
-    api platform("com.squareup.okhttp3:okhttp-bom:$okhttp_version")
+    // Javax Inject
+    implementation 'javax.inject:javax.inject:1'
 
-    // Retrofit
-    def retrofit_version = '2.9.0'
-    api "com.squareup.retrofit2:retrofit:$retrofit_version"
-    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    // Paging3 Common
+    implementation "androidx.paging:paging-common:$paging_version"
 
     // Gson
     api 'com.google.code.gson:gson:2.9.0'
@@ -26,12 +21,18 @@ dependencies {
     // Coroutines Core
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
-    // Javax Inject
-    implementation 'javax.inject:javax.inject:1'
+    // Retrofit
+    def retrofit_version = '2.9.0'
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-    // Paging3 Common
-    implementation "androidx.paging:paging-common:$paging_version"
+    // OkHttp
+    def okhttp_version = '4.9.3'
+    api "com.squareup.okhttp3:okhttp:$okhttp_version"
+    api "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    api platform("com.squareup.okhttp3:okhttp-bom:$okhttp_version")
 
     // Unit tests
     testImplementation project(':testing')
+
 }

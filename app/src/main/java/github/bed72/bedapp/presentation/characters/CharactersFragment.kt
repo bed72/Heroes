@@ -2,25 +2,28 @@ package github.bed72.bedapp.presentation.characters
 
 import android.os.Bundle
 import android.view.View
+import dagger.hilt.android.AndroidEntryPoint
+
+
+import javax.inject.Inject
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
+
+import androidx.paging.LoadState
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
-import dagger.hilt.android.AndroidEntryPoint
-import github.bed72.bedapp.databinding.FragmentCharactersBinding
-import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
+import androidx.navigation.fragment.FragmentNavigatorExtras
+
+import github.bed72.core.domain.model.Character
 import github.bed72.bedapp.presentation.base.BaseFragment
+import github.bed72.bedapp.databinding.FragmentCharactersBinding
+import github.bed72.bedapp.presentation.detail.args.DetailViewArg
+import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
-import github.bed72.bedapp.presentation.detail.args.DetailViewArg
-import github.bed72.core.domain.model.Character
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import github.bed72.bedapp.presentation.characters.CharactersViewModel.States.SearchResult
 
 @AndroidEntryPoint
 class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
@@ -30,49 +33,53 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
 
     private val viewModel: CharactersViewModel by viewModels()
 
-    private lateinit var charactersAdapter: CharactersAdapter
+    private val charactersAdapter: CharactersAdapter by lazy { setLazyAdapter() }
 
     override fun getViewBinding() = FragmentCharactersBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initCharactersAdapter()
+        initAdapter()
         observeInitialLoadState()
         handleCharactersPagingData()
     }
 
     private fun handleCharactersPagingData() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.charactersPagingData("").collect { pagingData ->
-                    charactersAdapter.submitData(pagingData)
+        with (viewModel) {
+            state.observe(viewLifecycleOwner) { states ->
+                when (states) {
+                    is SearchResult ->
+                        charactersAdapter.submitData(viewLifecycleOwner.lifecycle, states.data)
                 }
+            }
+
+            search()
+        }
+    }
+
+    private fun setLazyAdapter() = CharactersAdapter(imageLoader) { character, view ->
+        handleNavigation(view, character)
+    }
+
+    private fun initAdapter() {
+        postponeEnterTransition()
+        with(binding.recyclerCharacters) {
+            setHasFixedSize(true)
+            adapter = charactersAdapter.withLoadStateFooter(
+                footer = CharactersLoadStateAdapter(
+                    charactersAdapter::retry
+                )
+            )
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
             }
         }
     }
 
-    private fun initCharactersAdapter() {
-        charactersAdapter = CharactersAdapter(imageLoader) { character, view ->
-            handleNavigation(view, character)
-        }
-
-        with(binding.recyclerCharacters) {
-            scrollToPosition(0) // Set initial position
-            setHasFixedSize(true)
-            adapter = charactersAdapter.withLoadStateFooter(
-                footer = CharactersLoadStateAdapter(
-                    // Passed lambda function
-                    charactersAdapter::retry
-                )
-            )
-        }
-    }
-
     private fun handleNavigation(view: View, character: Character) {
-        val extras = FragmentNavigatorExtras(
-            view to character.name
-        )
+        val extras = FragmentNavigatorExtras(view to character.name)
 
         val directions = CharactersFragmentDirections.actionCharactersFragmentToDetailFragment(
             character.name,
@@ -92,11 +99,13 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                  binding.flipperCharacters.displayedChild = when (loadState.refresh) {
                     is LoadState.Loading -> {
                         setShimmerVisibility(true)
-                        FLIPPER_CHILD_LOADING
+
+                        FLIPPER_LOADING
                     }
                      is LoadState.NotLoading -> {
                          setShimmerVisibility(false)
-                         FLIPPER_CHILD_CHARACTERS
+
+                         FLIPPER_SUCCESS
                      }
                      is LoadState.Error -> {
                          setShimmerVisibility(false)
@@ -104,7 +113,8 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                          binding.includeViewCharactersErrorState.buttonRetry.setOnClickListener {
                              charactersAdapter.retry()
                          }
-                         FLIPPER_CHILD_ERROR
+
+                         FLIPPER_ERROR
                      }
                 }
             }
@@ -120,8 +130,8 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     }
 
     companion object {
-        private const val FLIPPER_CHILD_LOADING = 0
-        private const val FLIPPER_CHILD_CHARACTERS = 1
-        private const val FLIPPER_CHILD_ERROR = 2
+        private const val FLIPPER_LOADING = 0
+        private const val FLIPPER_SUCCESS = 1
+        private const val FLIPPER_ERROR = 2
     }
 }

@@ -1,8 +1,8 @@
 package github.bed72.core.usecase.base
 
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 
 interface CoroutinesDispatchers {
     fun io(): CoroutineDispatcher = Dispatchers.IO

@@ -7,9 +7,9 @@ import github.bed72.core.usecase.base.ResultStatus.Success
 import github.bed72.core.usecase.base.ResultStatus.Loading
 
 suspend fun <T> Flow<ResultStatus<T>>.watchStatus(
-    loading: () -> Unit = {},
-    success: (data: T) -> Unit,
-    error: (throwable: Throwable) -> Unit
+    loading: suspend () -> Unit = {},
+    success: suspend (data: T) -> Unit,
+    error: suspend (throwable: Throwable) -> Unit
 ) {
     collect { status ->
         when (status) {

@@ -9,23 +9,22 @@ import github.bed72.core.usecase.base.UseCase
 import github.bed72.core.domain.model.Character
 import github.bed72.core.usecase.base.ResultStatus
 import github.bed72.core.usecase.base.CoroutinesDispatchers
-import github.bed72.core.usecase.AddFavoriteUseCase.AddFavoriteParams
 import github.bed72.core.data.repository.favorites.FavoriteRepository
+import github.bed72.core.usecase.RemoveFavoriteUseCase.RemoveFavoriteParams
 
-interface AddFavoriteUseCase {
-    operator fun invoke(params: AddFavoriteParams): Flow<ResultStatus<Unit>>
+interface RemoveFavoriteUseCase {
+    operator fun invoke(params: RemoveFavoriteParams): Flow<ResultStatus<Unit>>
 
-    data class AddFavoriteParams(val characterId: Int, val name: String, val imageUrl: String)
+    data class RemoveFavoriteParams(val characterId: Int, val name: String, val imageUrl: String)
 }
 
-class AddFavoriteUseCaseImpl @Inject constructor(
+class RemoveFavoriteUseCaseImpl @Inject constructor(
     private val dispatchers: CoroutinesDispatchers,
     private val favoriteRepository: FavoriteRepository
-) : UseCase<AddFavoriteParams, Unit>(), AddFavoriteUseCase {
-
-    override suspend fun doWork(params: AddFavoriteParams): ResultStatus<Unit> =
+) : UseCase<RemoveFavoriteParams, Unit>(), RemoveFavoriteUseCase {
+    override suspend fun doWork(params: RemoveFavoriteParams): ResultStatus<Unit> =
         withContext(dispatchers.io()) {
-            favoriteRepository.saveFavorite(
+            favoriteRepository.deleteFavorite(
                 Character(params.characterId, params.name, params.imageUrl)
             )
 

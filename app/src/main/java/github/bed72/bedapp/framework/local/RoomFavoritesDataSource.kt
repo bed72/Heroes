@@ -1,8 +1,10 @@
 package github.bed72.bedapp.framework.local
 
 import javax.inject.Inject
+
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.Flow
+
 import github.bed72.core.domain.model.Character
 import github.bed72.bedapp.framework.db.daos.FavoriteDao
 import github.bed72.bedapp.framework.db.entities.FavoriteEntity
@@ -14,6 +16,9 @@ class RoomFavoritesDataSource @Inject constructor(
 ) : FavoriteLocalDataSource {
     override fun getAllFavorite(): Flow<List<Character>> =
         favoriteDao.loadFavorites().map { favorites -> favorites.toCharactersModel() }
+
+    override suspend fun isFavorite(characterId: Int): Boolean =
+        favoriteDao.hasFavorite(characterId) != null
 
     override suspend fun saveFavorite(character: Character) {
         favoriteDao.insertFavorite(character.toFavoriteEntity())
