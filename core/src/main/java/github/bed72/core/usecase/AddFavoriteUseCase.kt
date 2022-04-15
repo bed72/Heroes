@@ -1,8 +1,10 @@
 package github.bed72.core.usecase
 
 import javax.inject.Inject
+
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+
 import github.bed72.core.usecase.base.UseCase
 import github.bed72.core.domain.model.Character
 import github.bed72.core.usecase.base.ResultStatus

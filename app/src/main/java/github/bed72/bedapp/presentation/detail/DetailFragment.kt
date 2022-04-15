@@ -1,12 +1,16 @@
 package github.bed72.bedapp.presentation.detail
 
-import android.os.Bundle
-import android.view.View
 import javax.inject.Inject
+
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+
+import android.os.Bundle
+import android.view.View
 import android.transition.TransitionInflater
+
 import dagger.hilt.android.AndroidEntryPoint
+
 import github.bed72.bedapp.presentation.base.BaseFragment
 import github.bed72.bedapp.databinding.FragmentDetailBinding
 import github.bed72.bedapp.presentation.detail.redux.LoadLiveData
@@ -78,22 +82,26 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     }
 
     private fun observeFavoritesState(detailViewArg: DetailViewArg) {
-        binding.imageFavoriteIcon.setOnClickListener {
-            viewModel.favorite.favorite(detailViewArg)
-        }
+        viewModel.favorite.run {
+            checkFavorite(detailViewArg.characterId)
 
-        viewModel.favorite.state.observe(viewLifecycleOwner) { states ->
-            binding.flipperFavorite.displayedChild = when (states) {
-                FavoritesLiveData.States.Loading -> FLIPPER_FAVORITE_LOADING
-                is FavoritesLiveData.States.Icon -> {
-                    binding.imageFavoriteIcon.setImageResource(states.icon)
+            binding.imageFavoriteIcon.setOnClickListener {
+                favorite(detailViewArg)
+            }
 
-                    FLIPPER_FAVORITE_SHOW_ICON
-                }
-                is FavoritesLiveData.States.Error -> {
-                    showShortToast(states.message)
+            state.observe(viewLifecycleOwner) { states ->
+                binding.flipperFavorite.displayedChild = when (states) {
+                    FavoritesLiveData.States.Loading -> FLIPPER_FAVORITE_LOADING
+                    is FavoritesLiveData.States.Icon -> {
+                        binding.imageFavoriteIcon.setImageResource(states.icon)
 
-                    FLIPPER_FAVORITE_SHOW_ICON
+                        FLIPPER_FAVORITE_SHOW_ICON
+                    }
+                    is FavoritesLiveData.States.Error -> {
+                        showShortToast(states.message)
+
+                        FLIPPER_FAVORITE_SHOW_ICON
+                    }
                 }
             }
         }
