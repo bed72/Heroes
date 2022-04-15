@@ -1,20 +1,24 @@
 package github.bed72.bedapp.presentation.characters
 
 import javax.inject.Inject
+
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
+
 import androidx.paging.cachedIn
 import androidx.paging.PagingData
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.flow.map
-import androidx.paging.PagingConfig
-import kotlinx.coroutines.flow.Flow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
+import androidx.paging.PagingConfig
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.distinctUntilChanged
-import github.bed72.core.domain.model.Character
+
 import dagger.hilt.android.lifecycle.HiltViewModel
+
+import github.bed72.core.domain.model.Character
 import github.bed72.core.usecase.GetCharactersUseCase
 import github.bed72.core.usecase.base.CoroutinesDispatchers
 import github.bed72.core.usecase.GetCharactersUseCase.GetCharactersParams

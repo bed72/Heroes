@@ -11,6 +11,7 @@ import dagger.hilt.android.testing.UninstallModules
 import github.bed72.bedapp.R
 import github.bed72.bedapp.data.extensions.asJsonString
 import github.bed72.bedapp.framework.di.BaseUrlModule
+import github.bed72.bedapp.framework.di.CoroutinesModule
 import github.bed72.bedapp.launchFragmentInHiltContainer
 import github.bed72.bedapp.presentation.characters.viewholders.CharactersViewHolder
 import okhttp3.mockwebserver.MockResponse
@@ -23,7 +24,7 @@ import org.junit.runner.RunWith
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-@UninstallModules(BaseUrlModule::class) // Desisntalando o modulo de Prod... O Hilt já vai pegar o Modulo BaseUrl de Test de forma automatica
+@UninstallModules(BaseUrlModule::class, CoroutinesModule::class) // Desisntalando o modulo de Prod... O Hilt já vai pegar o Modulo BaseUrl de Test de forma automatica
 class CharactersFragmentTest {
 
     @get:Rule

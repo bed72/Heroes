@@ -2,18 +2,22 @@ package github.bed72.bedapp.presentation.characters
 
 import android.os.Bundle
 import android.view.View
+import dagger.hilt.android.AndroidEntryPoint
+
+
 import javax.inject.Inject
-import androidx.paging.LoadState
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
+
+import androidx.paging.LoadState
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import github.bed72.core.domain.model.Character
 import androidx.navigation.fragment.findNavController
-import github.bed72.bedapp.presentation.base.BaseFragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
+
+import github.bed72.core.domain.model.Character
+import github.bed72.bedapp.presentation.base.BaseFragment
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
 import github.bed72.bedapp.presentation.detail.args.DetailViewArg
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
@@ -59,6 +63,7 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     }
 
     private fun initAdapter() {
+        postponeEnterTransition()
         with(binding.recyclerCharacters) {
             setHasFixedSize(true)
             adapter = charactersAdapter.withLoadStateFooter(
@@ -66,6 +71,10 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                     charactersAdapter::retry
                 )
             )
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
         }
     }
 
