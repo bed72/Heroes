@@ -86,7 +86,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
             checkFavorite(detailViewArg.characterId)
 
             binding.imageFavoriteIcon.setOnClickListener {
-                favorite(detailViewArg)
+                updateFavorite(detailViewArg)
             }
 
             state.observe(viewLifecycleOwner) { states ->

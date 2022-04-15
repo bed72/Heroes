@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 
 import github.bed72.core.usecase.AddFavoriteUseCase
 import github.bed72.core.usecase.CheckFavoriteUseCase
+import github.bed72.core.usecase.RemoveFavoriteUseCase
 import github.bed72.core.usecase.base.CoroutinesDispatchers
 import github.bed72.core.usecase.GetCharacterCategoriesUseCase
 import github.bed72.bedapp.presentation.detail.redux.LoadLiveData
@@ -18,6 +19,7 @@ class DetailViewModel @Inject constructor(
     addFavoriteUseCase: AddFavoriteUseCase,
     coroutineDispatcher: CoroutinesDispatchers,
     checkFavoriteUseCase: CheckFavoriteUseCase,
+    removeFavoriteUseCase: RemoveFavoriteUseCase,
     getCharacterCategoriesUseCase: GetCharacterCategoriesUseCase
 ) : ViewModel() {
 
@@ -29,6 +31,7 @@ class DetailViewModel @Inject constructor(
     val favorite = FavoritesLiveData(
         coroutineDispatcher.main(),
         addFavoriteUseCase,
-        checkFavoriteUseCase
+        checkFavoriteUseCase,
+        removeFavoriteUseCase
     )
 }
