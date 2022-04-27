@@ -84,7 +84,7 @@ android {
 
     kotlinOptions {
         jvmTarget = '11'
-        freeCompilerArgs += ['-Xopt-in=kotlin.RequiresOptIn']
+        freeCompilerArgs += ['-opt-in=kotlin.RequiresOptIn']
     }
 
     buildFeatures {
@@ -146,7 +146,7 @@ dependencies {
     androidTestUtil 'androidx.test:orchestrator:1.4.1'
 
     debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 

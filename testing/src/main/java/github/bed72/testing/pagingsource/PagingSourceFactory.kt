@@ -1,7 +1,8 @@
 package github.bed72.testing.pagingsource
 
-import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import androidx.paging.PagingSource
+
 import github.bed72.core.domain.model.Character
 
 class PagingSourceFactory {

@@ -18,4 +18,5 @@ dependencies {
     api 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
     api "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
+    implementation "androidx.paging:paging-common-ktx:$paging_version"
 }
