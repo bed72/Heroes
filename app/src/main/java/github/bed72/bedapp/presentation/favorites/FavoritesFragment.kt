@@ -2,21 +2,26 @@ package github.bed72.bedapp.presentation.favorites
 
 import android.os.Bundle
 import android.view.View
-import dagger.hilt.android.AndroidEntryPoint
+import androidx.fragment.app.viewModels
 
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
 import github.bed72.bedapp.databinding.FragmentFavoritesBinding
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.common.fragment.BaseFragment
 import github.bed72.bedapp.presentation.common.recycler.getGenericAdapterOf
 import github.bed72.bedapp.presentation.favorites.viewholders.FavoritesViewHolder
+import github.bed72.bedapp.presentation.favorites.FavoritesViewModel.States.ShowEmpty
+import github.bed72.bedapp.presentation.favorites.FavoritesViewModel.States.ShowFavorites
 
 @AndroidEntryPoint
 class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
 
     @Inject
     lateinit var imageLoader: ImageLoader
+
+    private val viewModel: FavoritesViewModel by viewModels()
 
     private val favoriteAdapter by lazy {
         getGenericAdapterOf { parent ->
@@ -30,6 +35,28 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
+        observeFavoritesState()
+    }
+
+    private fun observeFavoritesState() {
+        with(viewModel) {
+            states.observe(viewLifecycleOwner) { states ->
+                binding.flipperFavorites.displayedChild = when (states) {
+                    ShowEmpty -> {
+                        favoriteAdapter.submitList(emptyList())
+
+                        FLIPPER_EMPTY
+                    }
+                    is ShowFavorites -> {
+                        favoriteAdapter.submitList(states.favorites)
+
+                        FLIPPER_FAVORITES
+                    }
+                }
+            }
+
+            getAll()
+        }
     }
 
     private fun initAdapter() {
@@ -39,4 +66,8 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
         }
     }
 
+    companion object {
+        private const val FLIPPER_FAVORITES = 0
+        private const val FLIPPER_EMPTY = 1
+    }
 }
