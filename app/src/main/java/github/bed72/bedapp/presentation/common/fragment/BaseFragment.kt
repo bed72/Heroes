@@ -1,4 +1,4 @@
-package github.bed72.bedapp.presentation.base
+package github.bed72.bedapp.presentation.common.fragment
 
 import android.os.Bundle
 import android.view.ViewGroup

@@ -1,14 +1,17 @@
 package github.bed72.core.usecase
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import github.bed72.core.data.repository.characters.CharacterRepository
-import github.bed72.core.domain.model.Character
-import github.bed72.core.usecase.GetCharactersUseCase.GetCharactersParams
-import github.bed72.core.usecase.base.PagingUseCase
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+
+import kotlinx.coroutines.flow.Flow
+
+import androidx.paging.Pager
+import androidx.paging.PagingData
+import androidx.paging.PagingConfig
+
+import github.bed72.core.domain.model.Character
+import github.bed72.core.usecase.base.PagingUseCase
+import github.bed72.core.data.repository.characters.CharacterRepository
+import github.bed72.core.usecase.GetCharactersUseCase.GetCharactersParams
 
 interface GetCharactersUseCase {
     operator fun invoke(params: GetCharactersParams): Flow<PagingData<Character>>

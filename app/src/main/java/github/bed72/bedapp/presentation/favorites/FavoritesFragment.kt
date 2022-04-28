@@ -1,19 +1,42 @@
 package github.bed72.bedapp.presentation.favorites
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import github.bed72.bedapp.R
+import dagger.hilt.android.AndroidEntryPoint
 
-class FavoritesFragment : Fragment() {
+import javax.inject.Inject
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false)
+import github.bed72.bedapp.databinding.FragmentFavoritesBinding
+import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
+import github.bed72.bedapp.presentation.common.fragment.BaseFragment
+import github.bed72.bedapp.presentation.common.recycler.getGenericAdapterOf
+import github.bed72.bedapp.presentation.favorites.viewholders.FavoritesViewHolder
+
+@AndroidEntryPoint
+class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
+    private val favoriteAdapter by lazy {
+        getGenericAdapterOf { parent ->
+            FavoritesViewHolder.create(parent, imageLoader)
+        }
     }
+
+    override fun getViewBinding() = FragmentFavoritesBinding.inflate(layoutInflater)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initAdapter()
+    }
+
+    private fun initAdapter() {
+        binding.recyclerFavorites.run {
+            setHasFixedSize(true)
+            adapter = favoriteAdapter
+        }
+    }
+
 }

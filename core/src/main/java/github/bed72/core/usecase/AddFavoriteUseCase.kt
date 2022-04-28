@@ -10,7 +10,7 @@ import github.bed72.core.domain.model.Character
 import github.bed72.core.usecase.base.ResultStatus
 import github.bed72.core.usecase.base.CoroutinesDispatchers
 import github.bed72.core.usecase.AddFavoriteUseCase.AddFavoriteParams
-import github.bed72.core.data.repository.favorites.FavoriteRepository
+import github.bed72.core.data.repository.favorites.FavoritesRepository
 
 interface AddFavoriteUseCase {
     operator fun invoke(params: AddFavoriteParams): Flow<ResultStatus<Unit>>
@@ -20,12 +20,12 @@ interface AddFavoriteUseCase {
 
 class AddFavoriteUseCaseImpl @Inject constructor(
     private val dispatchers: CoroutinesDispatchers,
-    private val favoriteRepository: FavoriteRepository
+    private val favoritesRepository: FavoritesRepository
 ) : UseCase<AddFavoriteParams, Unit>(), AddFavoriteUseCase {
 
     override suspend fun doWork(params: AddFavoriteParams): ResultStatus<Unit> =
         withContext(dispatchers.io()) {
-            favoriteRepository.saveFavorite(
+            favoritesRepository.saveFavorite(
                 Character(params.characterId, params.name, params.imageUrl)
             )
 
