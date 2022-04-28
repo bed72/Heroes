@@ -1,17 +1,19 @@
 package github.bed72.bedapp.presentation.detail.redux
 
-import github.bed72.bedapp.R
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import kotlin.coroutines.CoroutineContext
 import androidx.lifecycle.MutableLiveData
+
+import kotlin.coroutines.CoroutineContext
+
+import github.bed72.bedapp.R
 import github.bed72.core.domain.model.Comic
 import github.bed72.core.domain.model.Event
 import github.bed72.bedapp.presentation.extensions.watchStatus
 import github.bed72.core.usecase.GetCharacterCategoriesUseCase
-import github.bed72.bedapp.presentation.detail.entities.DetailChildViewEntity
-import github.bed72.bedapp.presentation.detail.entities.DetailParentViewEntity
+import github.bed72.bedapp.presentation.detail.data.DetailChildViewItem
+import github.bed72.bedapp.presentation.detail.data.DetailParentViewItem
 import github.bed72.bedapp.presentation.detail.redux.LoadLiveData.Actions.Load
 import github.bed72.bedapp.presentation.detail.redux.LoadLiveData.States.Error
 import github.bed72.bedapp.presentation.detail.redux.LoadLiveData.States.Empty
@@ -59,21 +61,21 @@ class LoadLiveData(
     private fun verifyData(
         comics: List<Comic>,
         events: List<Event>
-    ): MutableList<DetailParentViewEntity> {
-        val detailParent = mutableListOf<DetailParentViewEntity>()
+    ): MutableList<DetailParentViewItem> {
+        val detailParent = mutableListOf<DetailParentViewItem>()
 
         if (comics.isNotEmpty())
             comics.map { comic  ->
-                DetailChildViewEntity(comic.id, comic.imageUrl)
+                DetailChildViewItem(comic.id, comic.imageUrl)
             }.also { details ->
-                detailParent.add(DetailParentViewEntity(R.string.details_comics_category, details))
+                detailParent.add(DetailParentViewItem(R.string.details_comics_category, details))
             }
 
         if (events.isNotEmpty())
             events.map { event  ->
-                DetailChildViewEntity(event.id, event.imageUrl)
+                DetailChildViewItem(event.id, event.imageUrl)
             }.also { details ->
-                detailParent.add(DetailParentViewEntity(R.string.details_events_category, details))
+                detailParent.add(DetailParentViewItem(R.string.details_events_category, details))
             }
 
         return detailParent
@@ -87,6 +89,6 @@ class LoadLiveData(
         object Empty: States()
         object Error : States()
         object Loading : States()
-        data class Success(val detailParentList: List<DetailParentViewEntity>) : States()
+        data class Success(val detailParentList: List<DetailParentViewItem>) : States()
     }
 }

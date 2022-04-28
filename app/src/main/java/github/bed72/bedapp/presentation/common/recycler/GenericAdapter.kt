@@ -1,6 +1,7 @@
 package github.bed72.bedapp.presentation.common.recycler
 
 import android.view.ViewGroup
+
 import androidx.recyclerview.widget.ListAdapter
 
 // Copia e cola onde e chamado

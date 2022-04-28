@@ -1,13 +1,15 @@
 package github.bed72.bedapp.framework
 
 import javax.inject.Inject
+
 import androidx.paging.PagingSource
+
 import github.bed72.core.domain.model.Comic
-import github.bed72.core.domain.model.Character
-import github.bed72.core.data.repository.characters.CharacterRepository
-import github.bed72.bedapp.framework.paging.CharactersPagingSource
-import github.bed72.core.data.repository.characters.CharacterRemoteDataSource
 import github.bed72.core.domain.model.Event
+import github.bed72.core.domain.model.Character
+import github.bed72.bedapp.framework.paging.CharactersPagingSource
+import github.bed72.core.data.repository.characters.CharacterRepository
+import github.bed72.core.data.repository.characters.CharacterRemoteDataSource
 
 class CharacterRepositoryImpl @Inject constructor(
     private val remoteDataSource: CharacterRemoteDataSource

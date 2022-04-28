@@ -3,11 +3,12 @@ package github.bed72.bedapp.presentation.detail.redux
 import androidx.lifecycle.liveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.LiveDataScope
+import androidx.lifecycle.MutableLiveData
+
 import androidx.annotation.StringRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.LiveDataScope
-import androidx.lifecycle.MutableLiveData
 
 import kotlin.coroutines.CoroutineContext
 

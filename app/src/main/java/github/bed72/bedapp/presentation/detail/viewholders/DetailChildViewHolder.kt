@@ -1,12 +1,15 @@
 package github.bed72.bedapp.presentation.detail.viewholders
 
-import android.view.ViewGroup
 import android.widget.ImageView
+
+import android.view.ViewGroup
 import android.view.LayoutInflater
+
 import androidx.recyclerview.widget.RecyclerView
+
 import github.bed72.bedapp.databinding.ItemChildDetailBinding
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
-import github.bed72.bedapp.presentation.detail.entities.DetailChildViewEntity
+import github.bed72.bedapp.presentation.detail.data.DetailChildViewItem
 
 class DetailChildViewHolder(
     itemBinding: ItemChildDetailBinding,
@@ -15,8 +18,8 @@ class DetailChildViewHolder(
 
     private val imageCategory: ImageView = itemBinding.imageItemCategory
 
-    fun bind(detailChildViewEntity: DetailChildViewEntity) {
-        imageLoader.load(imageCategory, detailChildViewEntity.imageUrl)
+    fun bind(detailChildViewItem: DetailChildViewItem) {
+        imageLoader.load(imageCategory, detailChildViewItem.imageUrl)
     }
 
     companion object {

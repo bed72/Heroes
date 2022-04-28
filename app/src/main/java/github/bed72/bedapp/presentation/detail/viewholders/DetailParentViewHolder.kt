@@ -1,13 +1,16 @@
 package github.bed72.bedapp.presentation.detail.viewholders
 
-import android.view.ViewGroup
 import android.widget.TextView
+
+import android.view.ViewGroup
 import android.view.LayoutInflater
+
 import androidx.recyclerview.widget.RecyclerView
+
 import github.bed72.bedapp.databinding.ItemParentDetailBinding
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.detail.adapters.DetailChildAdapter
-import github.bed72.bedapp.presentation.detail.entities.DetailParentViewEntity
+import github.bed72.bedapp.presentation.detail.data.DetailParentViewItem
 
 class DetailParentViewHolder(
     itemBinding: ItemParentDetailBinding,
@@ -17,11 +20,11 @@ class DetailParentViewHolder(
     private val category: TextView = itemBinding.textItemCategory
     private val details: RecyclerView = itemBinding.recyclerChildDetail
 
-    fun bind(detailParentViewEntity: DetailParentViewEntity) {
-        category.text = itemView.context.getString(detailParentViewEntity.categoryStringResId)
+    fun bind(detailParentViewItem: DetailParentViewItem) {
+        category.text = itemView.context.getString(detailParentViewItem.categoryStringResId)
         details.run {
             setHasFixedSize(true)
-            adapter = DetailChildAdapter(imageLoader, detailParentViewEntity.detailChildViewEntity)
+            adapter = DetailChildAdapter(imageLoader, detailParentViewItem.detailChildViewItem)
         }
     }
 
