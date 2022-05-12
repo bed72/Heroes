@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
+<manifest package="github.bed72.bedapp"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="github.bed72.bedapp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        tools:targetApi="32"
         android:name=".BedApp"
-        android:theme="@style/Theme.BedApp">
+        android:supportsRtl="true"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.App.Starting"
+        android:roundIcon="@mipmap/ic_launcher_round">
         <activity
-            android:name=".presentation.MainActivity"
-            android:theme="@style/Theme.App.Starting"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.BedApp"
+            android:name=".presentation.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

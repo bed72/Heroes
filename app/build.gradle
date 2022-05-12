@@ -90,6 +90,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'github.bed72.bedapp'
 }
 
 dependencies {
@@ -109,6 +110,8 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
 
+    implementation 'com.google.android.material:material:1.6.0'
+
     // Room
     def room_version = '2.4.2'
     kapt "androidx.room:room-compiler:$room_version"
@@ -122,7 +125,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     // Glide
-    def glide_version = '4.13.1'
+    def glide_version = '4.13.2'
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
 
@@ -131,8 +134,8 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
 
     // Firebase and Material design
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'com.google.firebase:firebase-analytics-ktx:20.1.2'
+    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.0.0'
     implementation platform('com.google.firebase:firebase-bom:29.0.3')
 
     // Other Libs

@@ -2,14 +2,17 @@ package github.bed72.bedapp.presentation
 
 import android.os.Bundle
 import android.view.View
-import github.bed72.bedapp.R
-import androidx.navigation.NavController
+
 import dagger.hilt.android.AndroidEntryPoint
+
+import github.bed72.bedapp.R
+import github.bed72.bedapp.databinding.ActivityMainBinding
+
+import androidx.navigation.NavController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import github.bed72.bedapp.databinding.ActivityMainBinding
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 @AndroidEntryPoint
