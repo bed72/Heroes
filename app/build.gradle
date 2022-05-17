@@ -97,6 +97,9 @@ dependencies {
     // My Modules
     implementation project(':core')
 
+    // Material3
+    implementation 'com.google.android.material:material:1.6.0'
+
     // AndroidX
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -110,8 +113,6 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
 
-    implementation 'com.google.android.material:material:1.6.0'
-
     // Room
     def room_version = '2.4.2'
     kapt "androidx.room:room-compiler:$room_version"
@@ -119,7 +120,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
 
     // ViewModel and LiveData
-    def lifecycle_version = '2.4.1'
+    def lifecycle_version = '2.5.0-rc01'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
