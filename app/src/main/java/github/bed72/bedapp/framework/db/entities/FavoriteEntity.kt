@@ -3,6 +3,7 @@ package github.bed72.bedapp.framework.db.entities
 import androidx.room.Entity
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
+
 import github.bed72.core.domain.model.Character
 import github.bed72.core.data.constants.DbConstants
 

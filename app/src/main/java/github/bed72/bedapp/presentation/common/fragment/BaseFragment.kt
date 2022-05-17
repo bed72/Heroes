@@ -1,4 +1,4 @@
-package github.bed72.bedapp.presentation.base
+package github.bed72.bedapp.presentation.common.fragment
 
 import android.os.Bundle
 import android.view.ViewGroup
@@ -15,7 +15,7 @@ abstract class BaseFragment<viewBinding : ViewBinding> : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Aqui garantimos que não será nulo
+
         _binding = getViewBinding()
     }
 

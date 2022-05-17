@@ -5,12 +5,12 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
 import github.bed72.core.domain.model.Character
-import github.bed72.core.data.repository.favorites.FavoriteRepository
+import github.bed72.core.data.repository.favorites.FavoritesRepository
 import github.bed72.core.data.repository.favorites.FavoriteLocalDataSource
 
-class FavoriteRepositoryImpl @Inject constructor(
+class FavoritesRepositoryImpl @Inject constructor(
     private val localDataSource: FavoriteLocalDataSource
-) : FavoriteRepository {
+) : FavoritesRepository {
     override fun getAllFavorite(): Flow<List<Character>> =
         localDataSource.getAllFavorite()
 

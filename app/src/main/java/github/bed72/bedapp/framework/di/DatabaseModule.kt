@@ -1,14 +1,17 @@
 package github.bed72.bedapp.framework.di
 
+import androidx.room.Room
+
+import android.content.Context
+
 import dagger.Module
 import dagger.Provides
-import androidx.room.Room
 import dagger.hilt.InstallIn
-import android.content.Context
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+
 import github.bed72.bedapp.framework.db.AppDatabase
 import github.bed72.core.data.constants.DbConstants
-import dagger.hilt.android.qualifiers.ApplicationContext
 import github.bed72.bedapp.framework.db.daos.FavoriteDao
 
 @Module

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
 
-
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collectLatest
@@ -17,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 
 import github.bed72.core.domain.model.Character
-import github.bed72.bedapp.presentation.base.BaseFragment
+import github.bed72.bedapp.presentation.common.fragment.BaseFragment
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
 import github.bed72.bedapp.presentation.detail.args.DetailViewArg
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader

@@ -1,15 +1,18 @@
 package github.bed72.bedapp.framework.di
 
-import dagger.Module
-import dagger.Provides
-import retrofit2.Retrofit
 import java.util.Calendar
 import java.util.TimeZone
-import okhttp3.OkHttpClient
-import dagger.hilt.InstallIn
 import java.util.concurrent.TimeUnit
+
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+
+import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 import github.bed72.bedapp.BuildConfig

@@ -1,14 +1,16 @@
 package github.bed72.bedapp.presentation.detail.adapters
 
 import android.view.ViewGroup
+
 import androidx.recyclerview.widget.RecyclerView
+
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
-import github.bed72.bedapp.presentation.detail.entities.DetailParentViewEntity
+import github.bed72.bedapp.presentation.detail.data.DetailParentViewItem
 import github.bed72.bedapp.presentation.detail.viewholders.DetailParentViewHolder
 
 class DetailParentAdapter(
     private val imageLoader: ImageLoader,
-    private val detailParentList: List<DetailParentViewEntity>
+    private val detailParentList: List<DetailParentViewItem>
 ) : RecyclerView.Adapter<DetailParentViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         DetailParentViewHolder.create(parent, imageLoader)

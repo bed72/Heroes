@@ -6,10 +6,12 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 
 import github.bed72.core.usecase.AddFavoriteUseCase
+import github.bed72.core.usecase.GetFavoritesUseCase
 import github.bed72.core.usecase.CheckFavoriteUseCase
 import github.bed72.core.usecase.GetCharactersUseCase
 import github.bed72.core.usecase.RemoveFavoriteUseCase
 import github.bed72.core.usecase.AddFavoriteUseCaseImpl
+import github.bed72.core.usecase.GetFavoritesUseCaseImpl
 import github.bed72.core.usecase.CheckFavoriteUseCaseImpl
 import github.bed72.core.usecase.GetCharactersUseCaseImpl
 import github.bed72.core.usecase.RemoveFavoriteUseCaseImpl
@@ -35,4 +37,7 @@ interface UseCaseModule {
 
     @Binds
     fun bindRemoveFavoriteUseCase(useCase: RemoveFavoriteUseCaseImpl): RemoveFavoriteUseCase
+
+    @Binds
+    fun bindGetFavoriteUseCase(useCase: GetFavoritesUseCaseImpl): GetFavoritesUseCase
 }

@@ -11,7 +11,7 @@ import android.transition.TransitionInflater
 
 import dagger.hilt.android.AndroidEntryPoint
 
-import github.bed72.bedapp.presentation.base.BaseFragment
+import github.bed72.bedapp.presentation.common.fragment.BaseFragment
 import github.bed72.bedapp.databinding.FragmentDetailBinding
 import github.bed72.bedapp.presentation.detail.redux.LoadLiveData
 import github.bed72.bedapp.presentation.detail.args.DetailViewArg

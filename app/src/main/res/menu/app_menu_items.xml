@@ -3,14 +3,17 @@
 
     <item
         android:id="@+id/home"
-        android:icon="@drawable/ic_heroes_menu_outlined"
-        android:title="@string/app_menu_heroes" />
+        android:title="@string/app_menu_heroes"
+        android:enabled="true"
+        android:icon="@drawable/ic_heroes_menu_outlined" />
     <item
         android:id="@+id/favorites"
-        android:icon="@drawable/ic_favorite_menu_outlined"
-        android:title="@string/app_menu_favorites" />
+        android:title="@string/app_menu_favorites"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorite_menu_outlined" />
     <item
         android:id="@+id/about"
-        android:icon="@drawable/ic_info_menu_outlined"
-        android:title="@string/app_menu_about" />
+        android:title="@string/app_menu_about"
+        android:enabled="true"
+        android:icon="@drawable/ic_info_menu_outlined" />
 </menu>

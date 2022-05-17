@@ -1,11 +1,13 @@
 package github.bed72.bedapp.presentation.about
 
+import github.bed72.bedapp.R
+
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import github.bed72.bedapp.R
+import android.view.LayoutInflater
+
+import androidx.fragment.app.Fragment
 
 class AboutFragment : Fragment() {
 
@@ -15,5 +17,4 @@ class AboutFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
-
 }
