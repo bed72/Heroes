@@ -8,8 +8,6 @@
     <application
         tools:targetApi="32"
         android:name=".BedApp"
-        android:supportsRtl="true"
-        android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.App.Starting"
