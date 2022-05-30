@@ -6,19 +6,19 @@
 
     <TextView
         android:id="@+id/text_try_again"
-        android:paddingEnd="16dp"
         android:paddingTop="24dp"
+        android:paddingEnd="16dp"
         android:paddingStart="16dp"
         android:paddingBottom="24dp"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_800"
-        android:text="@string/error_loading_more_try_again"/>
+        android:background="@color/medium_grey"
+        android:text="@string/common_offline_try_again"/>
 
     <ProgressBar
-        android:id="@+id/progress_load_more"
+        android:id="@+id/progress_refresh"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

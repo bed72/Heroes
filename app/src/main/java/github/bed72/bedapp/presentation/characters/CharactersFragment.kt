@@ -2,6 +2,7 @@ package github.bed72.bedapp.presentation.characters
 
 import android.os.Bundle
 import android.view.View
+
 import dagger.hilt.android.AndroidEntryPoint
 
 import javax.inject.Inject
@@ -14,15 +15,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.paging.CombinedLoadStates
 
 import github.bed72.core.domain.model.Character
-import github.bed72.bedapp.presentation.common.fragment.BaseFragment
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
 import github.bed72.bedapp.presentation.detail.args.DetailViewArg
+import github.bed72.bedapp.presentation.common.fragment.BaseFragment
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
-import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadStateAdapter
+import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadMoreStateAdapter
 import github.bed72.bedapp.presentation.characters.CharactersViewModel.States.SearchResult
+import github.bed72.bedapp.presentation.characters.adapters.CharactersRefreshStateAdapter
 
 @AndroidEntryPoint
 class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
@@ -33,6 +36,12 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     private val viewModel: CharactersViewModel by viewModels()
 
     private val charactersAdapter: CharactersAdapter by lazy { setLazyAdapter() }
+
+    private val headerAdapter: CharactersRefreshStateAdapter by lazy {
+        CharactersRefreshStateAdapter(
+            charactersAdapter::retry
+        )
+    }
 
     override fun getViewBinding() = FragmentCharactersBinding.inflate(layoutInflater)
 
@@ -45,7 +54,7 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     }
 
     private fun handleCharactersPagingData() {
-        with (viewModel) {
+        with(viewModel) {
             state.observe(viewLifecycleOwner) { states ->
                 when (states) {
                     is SearchResult ->
@@ -65,8 +74,9 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
         postponeEnterTransition()
         with(binding.recyclerCharacters) {
             setHasFixedSize(true)
-            adapter = charactersAdapter.withLoadStateFooter(
-                footer = CharactersLoadStateAdapter(
+            adapter = charactersAdapter.withLoadStateHeaderAndFooter(
+                header = headerAdapter,
+                footer = CharactersLoadMoreStateAdapter(
                     charactersAdapter::retry
                 )
             )
@@ -95,29 +105,43 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     private fun observeInitialLoadState() {
         lifecycleScope.launch {
             charactersAdapter.loadStateFlow.collectLatest { loadState ->
-                 binding.flipperCharacters.displayedChild = when (loadState.refresh) {
-                    is LoadState.Loading -> {
-                        setShimmerVisibility(true)
+                showInformationOffline(loadState)
 
+                binding.flipperCharacters.displayedChild = when {
+                    // Mediator -> remote
+                    loadState.mediator?.refresh is LoadState.Loading -> {
+                        setShimmerVisibility(true)
                         FLIPPER_LOADING
                     }
-                     is LoadState.NotLoading -> {
-                         setShimmerVisibility(false)
-
-                         FLIPPER_SUCCESS
-                     }
-                     is LoadState.Error -> {
-                         setShimmerVisibility(false)
-
-                         binding.includeViewCharactersErrorState.buttonRetry.setOnClickListener {
-                             charactersAdapter.retry()
-                         }
-
-                         FLIPPER_ERROR
-                     }
+                    loadState.mediator?.refresh is LoadState.Error
+                            && charactersAdapter.itemCount == 0 -> setScreenError()
+                    // Source -> Local
+                    loadState.source.refresh is LoadState.NotLoading
+                            || loadState.mediator?.refresh is LoadState.NotLoading -> {
+                        setShimmerVisibility(false)
+                        FLIPPER_SUCCESS
+                    }
+                    else -> setScreenError()
                 }
             }
         }
+    }
+
+    private fun showInformationOffline(loadState: CombinedLoadStates) {
+        headerAdapter.loadState = loadState.mediator?.refresh?.takeIf { state ->
+            // Retorne se
+            state is LoadState.Error && charactersAdapter.itemCount > 0
+        } ?: loadState.prepend
+    }
+
+    private fun setScreenError(): Int {
+        setShimmerVisibility(false)
+
+        binding.includeViewCharactersErrorState.buttonRetry.setOnClickListener {
+            charactersAdapter.retry()
+        }
+
+        return FLIPPER_ERROR
     }
 
     private fun setShimmerVisibility(visibility: Boolean) {

@@ -4,7 +4,6 @@ import javax.inject.Inject
 
 import kotlinx.coroutines.flow.Flow
 
-import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.PagingConfig
 
@@ -23,11 +22,6 @@ class GetCharactersUseCaseImpl @Inject constructor(
     private val characterRepository: CharacterRepository
 ) : PagingUseCase<GetCharactersParams, Character>(), GetCharactersUseCase {
 
-    override fun createFlowObservable(params: GetCharactersParams): Flow<PagingData<Character>> {
-        val pagingSource = characterRepository.getCharacters(params.query)
-
-        return Pager(config = params.pagingConfig) {
-            pagingSource
-        }.flow
-    }
+    override fun createFlowObservable(params: GetCharactersParams): Flow<PagingData<Character>> =
+        characterRepository.getCharacters(params.query, params.pagingConfig)
 }

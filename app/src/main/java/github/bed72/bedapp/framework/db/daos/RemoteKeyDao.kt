@@ -14,7 +14,7 @@ interface RemoteKeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrReplace(remoteKey: RemoteKeyEntity)
 
-    @Query("SELECT * ${DbConstants.REMOTE_KEYS_TABLE_NAME}")
+    @Query("SELECT * FROM ${DbConstants.REMOTE_KEYS_TABLE_NAME}")
     suspend fun remoteKey(): RemoteKeyEntity
 
     @Query("DELETE FROM ${DbConstants.REMOTE_KEYS_TABLE_NAME}")

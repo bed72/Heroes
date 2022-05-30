@@ -1,9 +1,13 @@
 package github.bed72.core.data.repository.characters
 
-import androidx.paging.PagingSource
-import github.bed72.core.domain.model.Character
+import kotlinx.coroutines.flow.Flow
+
+import androidx.paging.PagingData
+import androidx.paging.PagingConfig
+
 import github.bed72.core.domain.model.Comic
 import github.bed72.core.domain.model.Event
+import github.bed72.core.domain.model.Character
 
 interface CharacterRepository {
 
@@ -11,5 +15,5 @@ interface CharacterRepository {
 
     suspend fun getEvents(characterId: Int): List<Event>
 
-    fun getCharacters(query: String): PagingSource<Int, Character>
+    fun getCharacters(query: String, pagingConfig: PagingConfig): Flow<PagingData<Character>>
 }
