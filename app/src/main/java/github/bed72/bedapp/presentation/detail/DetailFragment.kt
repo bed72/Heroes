@@ -11,12 +11,12 @@ import android.transition.TransitionInflater
 
 import dagger.hilt.android.AndroidEntryPoint
 
-import github.bed72.bedapp.presentation.common.fragment.BaseFragment
 import github.bed72.bedapp.databinding.FragmentDetailBinding
 import github.bed72.bedapp.presentation.detail.redux.LoadLiveData
 import github.bed72.bedapp.presentation.detail.args.DetailViewArg
 import github.bed72.bedapp.presentation.extensions.showShortToast
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
+import github.bed72.bedapp.presentation.common.fragment.BaseFragment
 import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData
 import github.bed72.bedapp.presentation.detail.adapters.DetailParentAdapter
 

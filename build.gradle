@@ -6,7 +6,7 @@ buildscript {
         kotlin_version = '1.7.0'
         detekt_version = '1.19.0'
         android_version = '7.2.1'
-        nav_version = '2.5.0-rc01'
+        nav_version = '2.5.0-rc02'
         coroutines_version  = '1.6.2'
     }
 

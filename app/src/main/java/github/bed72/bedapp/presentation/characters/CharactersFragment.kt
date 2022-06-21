@@ -1,7 +1,12 @@
 package github.bed72.bedapp.presentation.characters
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -12,10 +17,12 @@ import kotlinx.coroutines.flow.collectLatest
 import androidx.paging.LoadState
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.paging.CombinedLoadStates
+import github.bed72.bedapp.R
 
 import github.bed72.core.domain.model.Character
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
@@ -48,26 +55,29 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initMenu()
         initAdapter()
         observeInitialLoadState()
         handleCharactersPagingData()
     }
 
-    private fun handleCharactersPagingData() {
-        with(viewModel) {
-            state.observe(viewLifecycleOwner) { states ->
-                when (states) {
-                    is SearchResult ->
-                        charactersAdapter.submitData(viewLifecycleOwner.lifecycle, states.data)
-                }
+    private fun initMenu() {
+        val menuSort: MenuHost = requireActivity()
+
+        menuSort.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.characters_menu_items, menu)
             }
 
-            search()
-        }
-    }
-
-    private fun setLazyAdapter() = CharactersAdapter(imageLoader) { character, view ->
-        handleNavigation(view, character)
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when(menuItem.itemId) {
+                    R.id.menu_sort -> {
+                        findNavController().navigate(R.id.action_characters_fragment_to_sortFragment)
+                        true
+                    } else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun initAdapter() {
@@ -85,21 +95,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                 true
             }
         }
-    }
-
-    private fun handleNavigation(view: View, character: Character) {
-        val extras = FragmentNavigatorExtras(view to character.name)
-
-        val directions = CharactersFragmentDirections.actionCharactersFragmentToDetailFragment(
-            character.name,
-            DetailViewArg(
-                characterId = character.id,
-                name = character.name,
-                imageUrl = character.imageUrl
-            )
-        )
-
-        findNavController().navigate(directions, extras)
     }
 
     private fun observeInitialLoadState() {
@@ -125,6 +120,38 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                 }
             }
         }
+    }
+
+    private fun handleCharactersPagingData() {
+        with(viewModel) {
+            state.observe(viewLifecycleOwner) { states ->
+                when (states) {
+                    is SearchResult ->
+                        charactersAdapter.submitData(viewLifecycleOwner.lifecycle, states.data)
+                }
+            }
+
+            search()
+        }
+    }
+
+    private fun setLazyAdapter() = CharactersAdapter(imageLoader) { character, view ->
+        handleNavigation(view, character)
+    }
+
+    private fun handleNavigation(view: View, character: Character) {
+        val extras = FragmentNavigatorExtras(view to character.name)
+
+        val directions = CharactersFragmentDirections.actionCharactersFragmentToDetailFragment(
+            character.name,
+            DetailViewArg(
+                characterId = character.id,
+                name = character.name,
+                imageUrl = character.imageUrl
+            )
+        )
+
+        findNavController().navigate(directions, extras)
     }
 
     private fun showInformationOffline(loadState: CombinedLoadStates) {

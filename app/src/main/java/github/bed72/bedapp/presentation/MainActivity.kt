@@ -14,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.ui.setupActionBarWithNavController
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbarApp)
 
         setNavigationController()
         setAppBar()
@@ -54,11 +56,14 @@ class MainActivity : AppCompatActivity() {
     private fun setAppBar() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.characters_fragment,
+                R.id.sort_fragment,
+                R.id.about_fragment,
                 R.id.favorites_fragment,
-                R.id.about_fragment
+                R.id.characters_fragment
             )
         )
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.toolbarApp.setupWithNavController(navController, appBarConfiguration)
     }
 

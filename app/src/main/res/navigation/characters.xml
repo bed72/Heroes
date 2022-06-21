@@ -16,6 +16,10 @@
             app:destination="@id/detail_fragment"
             android:id="@+id/action_characters_fragment_to_detail_fragment" />
 
+        <action
+            app:destination="@id/sort_fragment"
+            android:id="@+id/action_characters_fragment_to_sortFragment" />
+
     </fragment>
 
     <fragment
@@ -33,5 +37,10 @@
             app:argType="github.bed72.bedapp.presentation.detail.args.DetailViewArg" />
 
     </fragment>
+
+    <dialog
+        android:id="@+id/sort_fragment"
+        tools:layout="@layout/fragment_sort"
+        android:name="github.bed72.bedapp.presentation.sort.SortFragment" />
 
 </navigation>
