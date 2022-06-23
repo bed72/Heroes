@@ -21,5 +21,12 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
+        <item name="chipStyle">@style/Theme.BedApp.Chip</item>
+    </style>
+
+    <style name="Theme.BedApp.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="checkedIconTint">@color/chip_text_color</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
     </style>
 </resources>
