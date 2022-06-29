@@ -1,4 +1,4 @@
-package github.bed72.bedapp.framework.local
+package github.bed72.bedapp.framework.local.room
 
 import javax.inject.Inject
 

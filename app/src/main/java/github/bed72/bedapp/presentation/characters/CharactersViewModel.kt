@@ -27,7 +27,7 @@ import github.bed72.bedapp.presentation.characters.CharactersViewModel.States.Se
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
-    coroutineDispatcher: CoroutinesDispatchers,
+    private val coroutineDispatcher: CoroutinesDispatchers,
     private val getCharactersUseCase: GetCharactersUseCase
 ) : ViewModel() {
 

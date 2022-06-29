@@ -18,5 +18,5 @@
     <color name="checked_chip">#20C62828</color>
     <color name="unchecked_chip">@color/medium_grey</color>
     <color name="checked_chip_text">@color/red_800</color>
-    <color name="unchecked_chip_text">@color/black</color>
+    <color name="unchecked_chip_text">@color/black_900</color>
 </resources>
