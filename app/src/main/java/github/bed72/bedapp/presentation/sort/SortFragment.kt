@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import androidx.core.view.forEach
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -100,7 +101,14 @@ class SortFragment : BottomSheetDialogFragment() {
                 }
                 Error -> binding.flipperApply.displayedChild = FLIPPER_CHILD_BUTTON
                 Loading -> binding.flipperApply.displayedChild = FLIPPER_CHILD_LOADING
-                Success -> binding.flipperApply.displayedChild = FLIPPER_CHILD_BUTTON
+                Success -> {
+                    findNavController().run {
+                        previousBackStackEntry?.savedStateHandle?.set(
+                            SORTING_APPLIED_BASK_STACK_KEY, true
+                        )
+                    }
+                    // binding.flipperApply.displayedChild = FLIPPER_CHILD_BUTTON
+                }
             }
         }
     }
@@ -120,5 +128,6 @@ class SortFragment : BottomSheetDialogFragment() {
     companion object {
         private const val FLIPPER_CHILD_BUTTON = 0
         private const val FLIPPER_CHILD_LOADING = 1
+        const val SORTING_APPLIED_BASK_STACK_KEY = "sortingAppliedBackStackKey"
     }
 }
