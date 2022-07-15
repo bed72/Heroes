@@ -22,6 +22,7 @@ import github.bed72.core.domain.model.Character
 import github.bed72.core.usecase.GetCharactersUseCase
 import github.bed72.core.usecase.base.CoroutinesDispatchers
 import github.bed72.core.usecase.GetCharactersUseCase.GetCharactersParams
+import github.bed72.bedapp.presentation.characters.CharactersViewModel.Actions.Sort
 import github.bed72.bedapp.presentation.characters.CharactersViewModel.Actions.Search
 import github.bed72.bedapp.presentation.characters.CharactersViewModel.States.SearchResult
 
@@ -35,11 +36,12 @@ class CharactersViewModel @Inject constructor(
     val state: LiveData<States> = action
         /**
          * Só irá notificar o estado do LiveData se os dados que estão nele forem diferentes
+         * distinctUntilChanged()
          */
-        .distinctUntilChanged()
+        // .
         .switchMap { actions ->
             when (actions) {
-                is Search -> charactersPagingData().map {
+                is Search, Sort -> charactersPagingData().map {
                     SearchResult(it)
                 }.asLiveData(coroutineDispatcher.main())
             }
@@ -61,7 +63,12 @@ class CharactersViewModel @Inject constructor(
         action.value = Search(query)
     }
 
+    fun sort() {
+        action.value = Sort
+    }
+
     sealed class Actions {
+        object Sort : Actions()
         data class Search(val query: String) : Actions()
     }
 

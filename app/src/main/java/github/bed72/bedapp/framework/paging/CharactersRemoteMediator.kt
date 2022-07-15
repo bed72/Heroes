@@ -28,6 +28,7 @@ private data class ExecuteTransactionParams(
 @OptIn(ExperimentalPagingApi::class)
 class CharactersRemoteMediator @Inject constructor(
     private val query: String,
+    private val orderBy: String,
     private val database: AppDatabase,
     private val remoteDataSource: CharacterRemoteDataSource
 ) : RemoteMediator<Int, CharacterEntity>() {
@@ -106,6 +107,9 @@ class CharactersRemoteMediator @Inject constructor(
 
         if (queries.isNotEmpty() && query.isNotEmpty())
             queries["nameStartsWith"] = query
+
+        if (queries.isNotEmpty() && orderBy.isNotEmpty())
+            queries["orderBy"] = orderBy
 
         return queries
     }

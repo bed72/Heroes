@@ -192,6 +192,7 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
 
             if (event == Lifecycle.Event.ON_RESUME && isSortingApplied) {
                 // Call API
+                viewModel.sort()
 
                 // Clear State
                 navBackStackEntry.savedStateHandle.remove<Boolean>(
