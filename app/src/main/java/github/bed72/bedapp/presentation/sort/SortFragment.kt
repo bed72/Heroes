@@ -101,15 +101,17 @@ class SortFragment : BottomSheetDialogFragment() {
                 }
                 Error -> binding.flipperApply.displayedChild = FLIPPER_CHILD_BUTTON
                 Loading -> binding.flipperApply.displayedChild = FLIPPER_CHILD_LOADING
-                Success -> {
-                    findNavController().run {
-                        previousBackStackEntry?.savedStateHandle?.set(
-                            SORTING_APPLIED_BASK_STACK_KEY, true
-                        )
-                    }
-                    // binding.flipperApply.displayedChild = FLIPPER_CHILD_BUTTON
-                }
+                Success -> navigate()
             }
+        }
+    }
+
+    private fun navigate() {
+        findNavController().run {
+            previousBackStackEntry?.savedStateHandle?.set(
+                SORTING_APPLIED_BASK_STACK_KEY, true
+            )
+            popBackStack()
         }
     }
 

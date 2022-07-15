@@ -1,38 +1,41 @@
 package github.bed72.bedapp.presentation.characters
 
+import javax.inject.Inject
+
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
+import android.view.MenuItem
+import android.view.MenuInflater
 
 import dagger.hilt.android.AndroidEntryPoint
 
-import javax.inject.Inject
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collectLatest
 
 import androidx.paging.LoadState
-import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.core.view.MenuHost
 import androidx.lifecycle.Lifecycle
+import androidx.core.view.isVisible
+import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.paging.CombinedLoadStates
-import github.bed72.bedapp.R
 
+import github.bed72.bedapp.R
 import github.bed72.core.domain.model.Character
+import github.bed72.bedapp.presentation.sort.SortFragment
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
 import github.bed72.bedapp.presentation.detail.args.DetailViewArg
 import github.bed72.bedapp.presentation.common.fragment.BaseFragment
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
-import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadMoreStateAdapter
-import github.bed72.bedapp.presentation.characters.CharactersViewModel.States.SearchResult
 import github.bed72.bedapp.presentation.characters.adapters.CharactersRefreshStateAdapter
+import github.bed72.bedapp.presentation.characters.CharactersViewModel.States.SearchResult
+import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadMoreStateAdapter
 
 @AndroidEntryPoint
 class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
@@ -57,6 +60,7 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
 
         initMenu()
         initAdapter()
+        observerSortingData()
         observeInitialLoadState()
         handleCharactersPagingData()
     }
@@ -177,6 +181,31 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
 
             if (visibility) startShimmer() else startShimmer()
         }
+    }
+
+    private fun observerSortingData() {
+        val navBackStackEntry = findNavController().getBackStackEntry(R.id.characters_fragment)
+        val observer = LifecycleEventObserver { _, event ->
+            val isSortingApplied = navBackStackEntry.savedStateHandle.contains(
+                SortFragment.SORTING_APPLIED_BASK_STACK_KEY
+            )
+
+            if (event == Lifecycle.Event.ON_RESUME && isSortingApplied) {
+                // Call API
+
+                // Clear State
+                navBackStackEntry.savedStateHandle.remove<Boolean>(
+                    SortFragment.SORTING_APPLIED_BASK_STACK_KEY
+                )
+            }
+        }
+
+        navBackStackEntry.lifecycle.addObserver(observer)
+
+        viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY)
+                navBackStackEntry.lifecycle.removeObserver(observer)
+        })
     }
 
     companion object {
