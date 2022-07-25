@@ -137,8 +137,8 @@ dependencies {
 
     // Firebase and Material design
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.0.0'
-    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.1.0'
+    implementation platform('com.google.firebase:firebase-bom:30.3.0')
 
     // Other Libs
     implementation 'com.facebook.shimmer:shimmer:0.5.0'

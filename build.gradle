@@ -1,7 +1,7 @@
 buildscript {
 
     ext {
-        hilt_version = '2.42'
+        hilt_version = '2.43'
         paging_version = '3.1.1'
         kotlin_version = '1.7.0'
         detekt_version = '1.19.0'
