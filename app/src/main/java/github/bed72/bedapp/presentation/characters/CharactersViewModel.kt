@@ -32,6 +32,8 @@ class CharactersViewModel @Inject constructor(
     private val getCharactersUseCase: GetCharactersUseCase
 ) : ViewModel() {
 
+    var currentSearchQuery = ""
+
     private val action = MutableLiveData<Actions>()
     val state: LiveData<States> = action
         /**
@@ -41,13 +43,13 @@ class CharactersViewModel @Inject constructor(
         // .
         .switchMap { actions ->
             when (actions) {
-                is Search, Sort -> charactersPagingData().map {
+                is Search, Sort -> charactersPagingData(currentSearchQuery).map {
                     SearchResult(it)
                 }.asLiveData(coroutineDispatcher.main())
             }
         }
 
-    private fun charactersPagingData(query: String = ""): Flow<PagingData<Character>> =
+    private fun charactersPagingData(query: String): Flow<PagingData<Character>> =
         getCharactersUseCase(
             GetCharactersParams(
                 query,
@@ -59,17 +61,21 @@ class CharactersViewModel @Inject constructor(
         pageSize = 20
     )
 
-    fun search(query: String = "") {
-        action.value = Search(query)
+    fun search() {
+        action.value = Search
     }
 
     fun sort() {
         action.value = Sort
     }
 
+    fun close() {
+        if (currentSearchQuery.isNotEmpty()) currentSearchQuery = ""
+    }
+
     sealed class Actions {
         object Sort : Actions()
-        data class Search(val query: String) : Actions()
+        object Search : Actions()
     }
 
     sealed class States {

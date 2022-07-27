@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.View
 import android.view.MenuItem
 import android.view.MenuInflater
+import androidx.appcompat.widget.SearchView
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,10 +39,14 @@ import github.bed72.bedapp.presentation.characters.CharactersViewModel.States.Se
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadMoreStateAdapter
 
 @AndroidEntryPoint
-class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
+class CharactersFragment : BaseFragment<FragmentCharactersBinding>(),
+    SearchView.OnQueryTextListener,
+    MenuItem.OnActionExpandListener {
 
     @Inject
     lateinit var imageLoader: ImageLoader
+
+    private lateinit var searchView: SearchView
 
     private val viewModel: CharactersViewModel by viewModels()
 
@@ -65,12 +70,45 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
         handleCharactersPagingData()
     }
 
+    override fun onQueryTextSubmit(query: String?): Boolean =
+         query?.let { value ->
+            with (viewModel) {
+                currentSearchQuery = value
+
+                search()
+            }
+
+            true
+        } ?: false
+
+
+    override fun onQueryTextChange(newText: String?): Boolean = true
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        searchView.setOnQueryTextListener(null)
+    }
+
+    override fun onMenuItemActionExpand(item: MenuItem?): Boolean = true
+
+    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+        with (viewModel) {
+            close()
+            search()
+        }
+
+        return true
+    }
+
     private fun initMenu() {
         val menuSort: MenuHost = requireActivity()
 
         menuSort.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.characters_menu_items, menu)
+
+                initSearchBar(menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -82,6 +120,28 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun initSearchBar(menu: Menu) {
+        val searchItem = menu.findItem(R.id.menu_search)
+        searchView = searchItem.actionView as SearchView
+
+        searchItem.setOnActionExpandListener(this)
+
+        observerStateSearchBar(searchItem)
+
+        searchView.run {
+            isSubmitButtonEnabled = true
+            setOnQueryTextListener(this@CharactersFragment)
+        }
+    }
+
+    private fun observerStateSearchBar(searchItem: MenuItem) {
+        if (viewModel.currentSearchQuery.isNotEmpty()) {
+            searchItem.expandActionView()
+            searchView.setQuery(viewModel.currentSearchQuery, false)
+        }
+
     }
 
     private fun initAdapter() {
