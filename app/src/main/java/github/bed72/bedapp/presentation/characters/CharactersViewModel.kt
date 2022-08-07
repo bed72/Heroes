@@ -14,7 +14,6 @@ import androidx.paging.PagingConfig
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.distinctUntilChanged
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 

@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.View
 import android.view.MenuItem
 import android.view.MenuInflater
-import androidx.appcompat.widget.SearchView
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,6 +21,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras

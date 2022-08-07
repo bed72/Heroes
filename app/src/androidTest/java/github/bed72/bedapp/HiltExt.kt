@@ -16,12 +16,16 @@
 
 package github.bed72.bedapp
 
-import android.content.ComponentName
-import android.content.Intent
 import android.os.Bundle
+import android.content.Intent
+import android.content.ComponentName
+
 import androidx.annotation.StyleRes
-import androidx.core.util.Preconditions
+import androidx.navigation.Navigation
 import androidx.fragment.app.Fragment
+import androidx.core.util.Preconditions
+import androidx.lifecycle.ViewModelStore
+import androidx.navigation.NavHostController
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 
@@ -36,6 +40,7 @@ import androidx.test.core.app.ApplicationProvider
  */
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
+    navHostController: NavHostController? = null,
     @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
     crossinline action: Fragment.() -> Unit = {}
 ) {
@@ -55,6 +60,15 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
             T::class.java.name
         )
         fragment.arguments = fragmentArgs
+        fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
+            if (viewLifecycleOwner != null) {
+                navHostController?.let {
+                    it.setViewModelStore(ViewModelStore())
+                    it.setGraph(R.navigation.main_nav)
+                    Navigation.setViewNavController(fragment.requireView(), it)
+                }
+            }
+        }
         activity.supportFragmentManager
             .beginTransaction()
             .add(android.R.id.content, fragment, "")

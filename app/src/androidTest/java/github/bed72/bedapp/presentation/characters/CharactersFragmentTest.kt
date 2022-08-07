@@ -1,5 +1,7 @@
 package github.bed72.bedapp.presentation.characters
 
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -14,6 +16,8 @@ import github.bed72.bedapp.framework.di.BaseUrlModule
 import github.bed72.bedapp.framework.di.CoroutinesModule
 import github.bed72.bedapp.launchFragmentInHiltContainer
 import github.bed72.bedapp.presentation.characters.viewholders.CharactersViewHolder
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -32,13 +36,19 @@ class CharactersFragmentTest {
 
     private lateinit var server: MockWebServer
 
+    private val navController = TestNavHostController(
+        ApplicationProvider.getApplicationContext()
+    )
+
     @Before
     fun setUp() {
         server = MockWebServer().apply {
             start(8080)
         }
 
-        launchFragmentInHiltContainer<CharactersFragment>()
+        launchFragmentInHiltContainer<CharactersFragment>(
+            navHostController = navController
+        )
     }
 
     @After
@@ -47,8 +57,9 @@ class CharactersFragmentTest {
     }
 
     @Test
-    fun shouldShowCharactersWhenViewIsCreated() {
+    fun shouldShowCharactersWhenViewIsCreated(): Unit = runBlocking {
         server.enqueue(MockResponse().setBody("characters_pag_1.json".asJsonString()))
+        delay(500)
 
         onView(
             withId(R.id.recycler_characters)
@@ -58,12 +69,13 @@ class CharactersFragmentTest {
     }
 
     @Test
-    fun shouldLoadMoreCharactersWhenNewPageIsRequested() {
+    fun shouldLoadMoreCharactersWhenNewPageIsRequested(): Unit = runBlocking {
         // Arrange
         with(server) {
             enqueue(MockResponse().setBody("characters_pag_1.json".asJsonString()))
             enqueue(MockResponse().setBody("characters_pag_2.json".asJsonString()))
         }
+        delay(500)
 
         // Action
         onView(
@@ -82,9 +94,10 @@ class CharactersFragmentTest {
     }
 
     @Test
-    fun shouldShowErrorViewWhenReceivesAnErrorFromApi() {
+    fun shouldShowErrorViewWhenReceivesAnErrorFromApi(): Unit = runBlocking {
         // Arrange
         server.enqueue(MockResponse().setResponseCode(404))
+        delay(500)
 
         onView(
             withId(R.id.text_initial_loading_error)
