@@ -70,6 +70,6 @@ class SortViewModel @Inject constructor(
 
     sealed class Actions {
         object GetStoredSorting : Actions()
-        data class ApplySorting(val orderBy: String, val order: String) : Actions()
+        data class ApplySorting(val orderBy: String, val order: String) : Actions( )
     }
 }
