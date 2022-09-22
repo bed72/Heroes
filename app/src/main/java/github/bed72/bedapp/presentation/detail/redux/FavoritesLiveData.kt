@@ -1,32 +1,29 @@
 package github.bed72.bedapp.presentation.detail.redux
 
-import androidx.lifecycle.liveData
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.LiveDataScope
 import androidx.lifecycle.MutableLiveData
-
-import androidx.annotation.StringRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.VisibleForTesting
-
-import kotlin.coroutines.CoroutineContext
-
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import github.bed72.bedapp.R
-import github.bed72.core.usecase.AddFavoriteUseCase
-import github.bed72.core.usecase.CheckFavoriteUseCase
-import github.bed72.core.usecase.RemoveFavoriteUseCase
-import github.bed72.bedapp.presentation.extensions.watchStatus
 import github.bed72.bedapp.presentation.detail.args.DetailViewArg
-import github.bed72.core.usecase.AddFavoriteUseCase.AddFavoriteParams
-import github.bed72.core.usecase.CheckFavoriteUseCase.CheckFavoriteParams
-import github.bed72.core.usecase.RemoveFavoriteUseCase.RemoveFavoriteParams
-import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData.States.Icon
-import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData.States.Error
-import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData.States.Loading
 import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData.Actions.AddFavorite
 import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData.Actions.CheckFavorite
 import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData.Actions.RemoveFavorite
+import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData.States.Error
+import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData.States.Icon
+import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData.States.Loading
+import github.bed72.bedapp.presentation.extensions.watchStatus
+import github.bed72.core.usecase.AddFavoriteUseCase
+import github.bed72.core.usecase.AddFavoriteUseCase.AddFavoriteParams
+import github.bed72.core.usecase.CheckFavoriteUseCase
+import github.bed72.core.usecase.CheckFavoriteUseCase.CheckFavoriteParams
+import github.bed72.core.usecase.RemoveFavoriteUseCase
+import github.bed72.core.usecase.RemoveFavoriteUseCase.RemoveFavoriteParams
+import kotlin.coroutines.CoroutineContext
 
 class FavoritesLiveData(
     private val coroutineContext: CoroutineContext,

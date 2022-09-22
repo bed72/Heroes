@@ -12,6 +12,6 @@ class ComicFactory {
     }
 
     sealed class FakeComic {
-        object  FakeComicOne : FakeComic()
+        object FakeComicOne : FakeComic()
     }
 }

@@ -1,11 +1,10 @@
 package github.bed72.bedapp.framework.db.entities
 
-import androidx.room.Entity
 import androidx.room.ColumnInfo
+import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-import github.bed72.core.domain.model.Character
 import github.bed72.core.data.constants.DbConstants
+import github.bed72.core.domain.model.Character
 
 @Entity(tableName = DbConstants.FAVORITES_TABLE_NAME)
 data class FavoriteEntity(
@@ -21,4 +20,3 @@ data class FavoriteEntity(
 )
 
 fun List<FavoriteEntity>.toCharactersModel() = map { Character(it.id, it.name, it.imageUrl) }
-

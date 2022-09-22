@@ -1,7 +1,7 @@
 package github.bed72.bedapp.framework.network.response
 
-import github.bed72.core.domain.model.Event
 import com.google.gson.annotations.SerializedName
+import github.bed72.core.domain.model.Event
 
 data class EventResponse(
     @SerializedName("id")

@@ -1,24 +1,20 @@
 package github.bed72.bedapp.framework.di
 
-import java.util.Calendar
-import java.util.TimeZone
-import java.util.concurrent.TimeUnit
-
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-
+import github.bed72.bedapp.BuildConfig
+import github.bed72.bedapp.framework.di.qualifier.BaseUrl
+import github.bed72.bedapp.framework.network.MarvelApi
+import github.bed72.bedapp.framework.network.interceptor.AuthorizationInterceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-import github.bed72.bedapp.BuildConfig
-import github.bed72.bedapp.framework.network.MarvelApi
-import github.bed72.bedapp.framework.di.qualifier.BaseUrl
-import github.bed72.bedapp.framework.network.interceptor.AuthorizationInterceptor
+import java.util.Calendar
+import java.util.TimeZone
+import java.util.concurrent.TimeUnit
 
 @Module
 @InstallIn(SingletonComponent::class)

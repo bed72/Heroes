@@ -251,7 +251,7 @@ exceptions:
       - 'IndexOutOfBoundsException'
       - 'NullPointerException'
       - 'RuntimeException'
-      - 'Throwable'
+      # - 'Throwable'
   ThrowingNewInstanceOfSameException:
     active: true
   TooGenericExceptionCaught:
@@ -265,7 +265,7 @@ exceptions:
       - 'IndexOutOfBoundsException'
       - 'NullPointerException'
       - 'RuntimeException'
-      - 'Throwable'
+     # - 'Throwable'
     allowedExceptionNameRegex: '_|(ignore|expected).*'
   TooGenericExceptionThrown:
     active: true
@@ -273,7 +273,7 @@ exceptions:
       - 'Error'
       - 'Exception'
       - 'RuntimeException'
-      - 'Throwable'
+      # - 'Throwable'
 
 formatting:
   active: true
@@ -302,7 +302,7 @@ formatting:
   Filename:
     active: true
   FinalNewline:
-    active: true
+    active: false
     autoCorrect: true
     insertFinalNewLine: true
   ImportOrdering:

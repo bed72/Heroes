@@ -4,9 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-
-import github.bed72.core.usecase.base.CoroutinesDispatchers
 import github.bed72.core.usecase.base.AppCoroutinesDispatchers
+import github.bed72.core.usecase.base.CoroutinesDispatchers
 
 @Module
 @InstallIn(SingletonComponent::class)

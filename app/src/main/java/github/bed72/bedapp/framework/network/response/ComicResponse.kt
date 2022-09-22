@@ -1,7 +1,7 @@
 package github.bed72.bedapp.framework.network.response
 
-import github.bed72.core.domain.model.Comic
 import com.google.gson.annotations.SerializedName
+import github.bed72.core.domain.model.Comic
 
 data class ComicResponse(
     @SerializedName("id")

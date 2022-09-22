@@ -1,15 +1,13 @@
 package github.bed72.core.usecase
 
-import javax.inject.Inject
-
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
-
-import github.bed72.core.usecase.base.UseCase
-import github.bed72.core.usecase.base.ResultStatus
-import github.bed72.core.usecase.base.CoroutinesDispatchers
 import github.bed72.core.data.repository.favorites.FavoritesRepository
 import github.bed72.core.usecase.CheckFavoriteUseCase.CheckFavoriteParams
+import github.bed72.core.usecase.base.CoroutinesDispatchers
+import github.bed72.core.usecase.base.ResultStatus
+import github.bed72.core.usecase.base.UseCase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 interface CheckFavoriteUseCase {
     operator fun invoke(params: CheckFavoriteParams): Flow<ResultStatus<Boolean>>

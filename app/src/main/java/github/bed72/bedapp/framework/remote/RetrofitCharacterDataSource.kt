@@ -1,15 +1,14 @@
 package github.bed72.bedapp.framework.remote
 
-import javax.inject.Inject
-
-import github.bed72.core.domain.model.Comic
-import github.bed72.core.domain.model.Event
-import github.bed72.core.domain.model.CharacterPaging
 import github.bed72.bedapp.framework.network.MarvelApi
+import github.bed72.bedapp.framework.network.response.toCharacterModel
 import github.bed72.bedapp.framework.network.response.toComicModel
 import github.bed72.bedapp.framework.network.response.toEventModel
-import github.bed72.bedapp.framework.network.response.toCharacterModel
 import github.bed72.core.data.repository.characters.CharacterRemoteDataSource
+import github.bed72.core.domain.model.CharacterPaging
+import github.bed72.core.domain.model.Comic
+import github.bed72.core.domain.model.Event
+import javax.inject.Inject
 
 class RetrofitCharacterDataSource @Inject constructor(
     private val marvelApi: MarvelApi

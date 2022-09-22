@@ -1,5 +1,6 @@
 package github.bed72.bedapp.presentation.characters
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import org.junit.Test
 import org.junit.Rule
 import org.junit.Before
@@ -25,10 +26,14 @@ import github.bed72.testing.model.CharacterFactory
 import github.bed72.core.usecase.GetCharactersUseCase
 import github.bed72.testing.model.CharacterFactory.Hero.ABomb
 import github.bed72.testing.model.CharacterFactory.Hero.ThreeDMan
+import java.util.*
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 class CharactersViewModelTest {
+
+    @get:Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
@@ -66,9 +71,9 @@ class CharactersViewModelTest {
         )
 
         charactersViewModel.search()
-        val (data) = charactersViewModel.state.value as CharactersViewModel.States.SearchResult
+        val response = charactersViewModel.state.value as CharactersViewModel.States.SearchResult
 
-        assertNotNull(data)
+        assertNotNull(response.data)
     }
 
 

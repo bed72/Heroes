@@ -1,45 +1,41 @@
 package github.bed72.bedapp.presentation.characters
 
-import javax.inject.Inject
-
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
-import android.view.MenuItem
 import android.view.MenuInflater
-
-import dagger.hilt.android.AndroidEntryPoint
-
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.collectLatest
-
-import androidx.paging.LoadState
-import androidx.core.view.MenuHost
-import androidx.lifecycle.Lifecycle
-import androidx.core.view.isVisible
-import androidx.core.view.MenuProvider
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.CombinedLoadStates
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
-
+import androidx.navigation.fragment.findNavController
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
+import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.R
-import github.bed72.core.domain.model.Character
-import github.bed72.bedapp.presentation.sort.SortFragment
 import github.bed72.bedapp.databinding.FragmentCharactersBinding
-import github.bed72.bedapp.presentation.detail.args.DetailViewArg
-import github.bed72.bedapp.presentation.common.fragment.BaseFragment
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
-import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
-import github.bed72.bedapp.presentation.characters.adapters.CharactersRefreshStateAdapter
 import github.bed72.bedapp.presentation.characters.CharactersViewModel.States.SearchResult
+import github.bed72.bedapp.presentation.characters.adapters.CharactersAdapter
 import github.bed72.bedapp.presentation.characters.adapters.CharactersLoadMoreStateAdapter
+import github.bed72.bedapp.presentation.characters.adapters.CharactersRefreshStateAdapter
+import github.bed72.bedapp.presentation.common.fragment.BaseFragment
+import github.bed72.bedapp.presentation.detail.args.DetailViewArg
+import github.bed72.bedapp.presentation.sort.SortFragment
+import github.bed72.core.domain.model.Character
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class CharactersFragment : BaseFragment<FragmentCharactersBinding>(),
+class CharactersFragment :
+    BaseFragment<FragmentCharactersBinding>(),
     SearchView.OnQueryTextListener,
     MenuItem.OnActionExpandListener {
 
@@ -71,8 +67,8 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>(),
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean =
-         query?.let { value ->
-            with (viewModel) {
+        query?.let { value ->
+            with(viewModel) {
                 currentSearchQuery = value
 
                 search()
@@ -80,7 +76,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>(),
 
             true
         } ?: false
-
 
     override fun onQueryTextChange(newText: String?): Boolean = true
 
@@ -90,10 +85,10 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>(),
         searchView.setOnQueryTextListener(null)
     }
 
-    override fun onMenuItemActionExpand(item: MenuItem?): Boolean = true
+    override fun onMenuItemActionExpand(item: MenuItem): Boolean = true
 
-    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-        with (viewModel) {
+    override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+        with(viewModel) {
             close()
             search()
         }
@@ -104,22 +99,25 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>(),
     private fun initMenu() {
         val menuSort: MenuHost = requireActivity()
 
-        menuSort.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.characters_menu_items, menu)
+        menuSort.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.characters_menu_items, menu)
 
-                initSearchBar(menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when(menuItem.itemId) {
-                    R.id.menu_sort -> {
-                        findNavController().navigate(R.id.action_characters_fragment_to_sortFragment)
-                        true
-                    } else -> false
+                    initSearchBar(menu)
                 }
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        R.id.menu_sort -> {
+                            findNavController().navigate(R.id.action_characters_fragment_to_sortFragment)
+                            true
+                        } else -> false
+                    }
+                }
+            },
+            viewLifecycleOwner, Lifecycle.State.RESUMED
+        )
     }
 
     private fun initSearchBar(menu: Menu) {
@@ -141,7 +139,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>(),
             searchItem.expandActionView()
             searchView.setQuery(viewModel.currentSearchQuery, false)
         }
-
     }
 
     private fun initAdapter() {
@@ -172,11 +169,11 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>(),
                         setShimmerVisibility(true)
                         FLIPPER_LOADING
                     }
-                    loadState.mediator?.refresh is LoadState.Error
-                            && charactersAdapter.itemCount == 0 -> setScreenError()
+                    loadState.mediator?.refresh is LoadState.Error &&
+                        charactersAdapter.itemCount == 0 -> setScreenError()
                     // Source -> Local
-                    loadState.source.refresh is LoadState.NotLoading
-                            || loadState.mediator?.refresh is LoadState.NotLoading -> {
+                    loadState.source.refresh is LoadState.NotLoading ||
+                        loadState.mediator?.refresh is LoadState.NotLoading -> {
                         setShimmerVisibility(false)
                         FLIPPER_SUCCESS
                     }
@@ -263,10 +260,12 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>(),
 
         navBackStackEntry.lifecycle.addObserver(observer)
 
-        viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_DESTROY)
-                navBackStackEntry.lifecycle.removeObserver(observer)
-        })
+        viewLifecycleOwner.lifecycle.addObserver(
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_DESTROY)
+                    navBackStackEntry.lifecycle.removeObserver(observer)
+            }
+        )
     }
 
     companion object {
@@ -274,4 +273,5 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>(),
         private const val FLIPPER_SUCCESS = 1
         private const val FLIPPER_ERROR = 2
     }
+
 }

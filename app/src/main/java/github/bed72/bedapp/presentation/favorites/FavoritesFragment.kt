@@ -3,17 +3,15 @@ package github.bed72.bedapp.presentation.favorites
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-
-import javax.inject.Inject
 import dagger.hilt.android.AndroidEntryPoint
-
 import github.bed72.bedapp.databinding.FragmentFavoritesBinding
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.common.fragment.BaseFragment
 import github.bed72.bedapp.presentation.common.recycler.getGenericAdapterOf
-import github.bed72.bedapp.presentation.favorites.viewholders.FavoritesViewHolder
 import github.bed72.bedapp.presentation.favorites.FavoritesViewModel.States.ShowEmpty
 import github.bed72.bedapp.presentation.favorites.FavoritesViewModel.States.ShowFavorites
+import github.bed72.bedapp.presentation.favorites.viewholders.FavoritesViewHolder
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {

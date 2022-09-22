@@ -1,27 +1,27 @@
 package github.bed72.core.usecase
 
-import org.junit.Test
-import org.junit.Rule
-import org.junit.Before
-import org.mockito.Mock
-import org.junit.runner.RunWith
-import org.junit.Assert.assertTrue
-import org.junit.Assert.assertEquals
+import com.nhaarman.mockitokotlin2.whenever
+import github.bed72.core.data.repository.characters.CharacterRepository
+import github.bed72.core.usecase.GetCharacterCategoriesUseCase.GetCharacterCategoriesParams
+import github.bed72.core.usecase.base.ResultStatus
+import github.bed72.testing.MainCoroutineRule
+import github.bed72.testing.model.CharacterFactory
+import github.bed72.testing.model.CharacterFactory.Hero.ThreeDMan
+import github.bed72.testing.model.ComicFactory
+import github.bed72.testing.model.ComicFactory.FakeComic.FakeComicOne
+import github.bed72.testing.model.EventFactory
+import github.bed72.testing.model.EventFactory.FakeEvent.FakeEventOne
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
-import com.nhaarman.mockitokotlin2.whenever
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import github.bed72.testing.MainCoroutineRule
-import github.bed72.testing.model.ComicFactory
-import github.bed72.testing.model.EventFactory
-import github.bed72.core.usecase.base.ResultStatus
-import github.bed72.testing.model.CharacterFactory
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import github.bed72.core.data.repository.characters.CharacterRepository
-import github.bed72.testing.model.CharacterFactory.Hero.ThreeDMan
-import github.bed72.testing.model.ComicFactory.FakeComic.FakeComicOne
-import github.bed72.testing.model.EventFactory.FakeEvent.FakeEventOne
-import github.bed72.core.usecase.GetCharacterCategoriesUseCase.GetCharacterCategoriesParams
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)

@@ -1,24 +1,20 @@
 package github.bed72.bedapp.presentation.favorites
 
-import javax.inject.Inject
-
-import kotlinx.coroutines.flow.catch
-
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
-
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import dagger.hilt.android.lifecycle.HiltViewModel
-
-import github.bed72.core.domain.model.Character
-import github.bed72.core.usecase.GetFavoritesUseCase
-import github.bed72.core.usecase.base.CoroutinesDispatchers
-import github.bed72.bedapp.presentation.favorites.data.FavoriteItem
 import github.bed72.bedapp.presentation.favorites.FavoritesViewModel.Actions.GetAll
 import github.bed72.bedapp.presentation.favorites.FavoritesViewModel.States.ShowEmpty
 import github.bed72.bedapp.presentation.favorites.FavoritesViewModel.States.ShowFavorites
+import github.bed72.bedapp.presentation.favorites.data.FavoriteItem
+import github.bed72.core.domain.model.Character
+import github.bed72.core.usecase.GetFavoritesUseCase
+import github.bed72.core.usecase.base.CoroutinesDispatchers
+import kotlinx.coroutines.flow.catch
+import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(

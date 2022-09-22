@@ -1,24 +1,20 @@
 package github.bed72.bedapp.presentation.detail
 
-import javax.inject.Inject
-
+import android.os.Bundle
+import android.transition.TransitionInflater
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-
-import android.os.Bundle
-import android.view.View
-import android.transition.TransitionInflater
-
 import dagger.hilt.android.AndroidEntryPoint
-
 import github.bed72.bedapp.databinding.FragmentDetailBinding
-import github.bed72.bedapp.presentation.detail.redux.LoadLiveData
-import github.bed72.bedapp.presentation.detail.args.DetailViewArg
-import github.bed72.bedapp.presentation.extensions.showShortToast
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.common.fragment.BaseFragment
-import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData
 import github.bed72.bedapp.presentation.detail.adapters.DetailParentAdapter
+import github.bed72.bedapp.presentation.detail.args.DetailViewArg
+import github.bed72.bedapp.presentation.detail.redux.FavoritesLiveData
+import github.bed72.bedapp.presentation.detail.redux.LoadLiveData
+import github.bed72.bedapp.presentation.extensions.showShortToast
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding>() {

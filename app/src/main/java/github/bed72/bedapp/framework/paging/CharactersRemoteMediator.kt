@@ -1,22 +1,18 @@
 package github.bed72.bedapp.framework.paging
 
-import java.io.IOException
-
-import javax.inject.Inject
-
-import retrofit2.HttpException
-
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
-import androidx.room.withTransaction
 import androidx.paging.RemoteMediator
-import androidx.paging.ExperimentalPagingApi
-
-import github.bed72.core.domain.model.Character
+import androidx.room.withTransaction
 import github.bed72.bedapp.framework.db.AppDatabase
 import github.bed72.bedapp.framework.db.entities.CharacterEntity
 import github.bed72.bedapp.framework.db.entities.RemoteKeyEntity
 import github.bed72.core.data.repository.characters.CharacterRemoteDataSource
+import github.bed72.core.domain.model.Character
+import retrofit2.HttpException
+import java.io.IOException
+import javax.inject.Inject
 
 private data class ExecuteTransactionParams(
     val offset: Int,
@@ -60,7 +56,7 @@ class CharactersRemoteMediator @Inject constructor(
     private suspend fun buildOffset(loadType: LoadType): Int = when (loadType) {
         LoadType.REFRESH -> REFRESH
         LoadType.PREPEND -> PREPEND_OR_APPEND
-        LoadType.APPEND ->  getRemoteKey().nextOffset ?: PREPEND_OR_APPEND
+        LoadType.APPEND -> getRemoteKey().nextOffset ?: PREPEND_OR_APPEND
     }
 
     private suspend fun getRemoteKey(): RemoteKeyEntity = database.withTransaction {
@@ -98,7 +94,7 @@ class CharactersRemoteMediator @Inject constructor(
                 name = name,
                 imageUrl = imageUrl
             )
-    }
+        }
 
     private fun buildQueries(offset: Int): HashMap<String, String> {
         val queries = hashMapOf(
@@ -113,10 +109,9 @@ class CharactersRemoteMediator @Inject constructor(
 
         return queries
     }
-    
+
     companion object {
         private const val REFRESH = 0
         private const val PREPEND_OR_APPEND = 1
     }
 }
-

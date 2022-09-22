@@ -1,19 +1,16 @@
 package github.bed72.core.usecase
 
-import javax.inject.Inject
-
-import kotlinx.coroutines.flow.Flow
-
-import androidx.paging.PagingData
 import androidx.paging.PagingConfig
-
-import github.bed72.core.domain.model.Character
-import github.bed72.core.usecase.base.PagingUseCase
+import androidx.paging.PagingData
 import github.bed72.core.data.repository.characters.CharacterRepository
 import github.bed72.core.data.repository.storage.StorageRepository
+import github.bed72.core.domain.model.Character
 import github.bed72.core.usecase.GetCharactersUseCase.GetCharactersParams
+import github.bed72.core.usecase.base.PagingUseCase
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 interface GetCharactersUseCase {
     operator fun invoke(params: GetCharactersParams): Flow<PagingData<Character>>
@@ -32,5 +29,4 @@ class GetCharactersUseCaseImpl @Inject constructor(
 
         return characterRepository.getCharacters(params.query, orderBy, params.pagingConfig)
     }
-
 }

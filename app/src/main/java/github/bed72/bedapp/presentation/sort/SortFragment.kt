@@ -1,30 +1,22 @@
 package github.bed72.bedapp.presentation.sort
 
 import android.os.Bundle
-
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.LayoutInflater
 import androidx.core.view.forEach
-
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-
-import dagger.hilt.android.AndroidEntryPoint
-
-import com.google.android.material.chip.Chip
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
+import com.google.android.material.chip.Chip
+import dagger.hilt.android.AndroidEntryPoint
 import github.bed72.bedapp.R
-
-import github.bed72.core.domain.model.SortingType
-
 import github.bed72.bedapp.databinding.FragmentSortBinding
-
 import github.bed72.bedapp.presentation.sort.SortViewModel.States.Apply.Error
 import github.bed72.bedapp.presentation.sort.SortViewModel.States.Apply.Loading
 import github.bed72.bedapp.presentation.sort.SortViewModel.States.Apply.Success
 import github.bed72.bedapp.presentation.sort.SortViewModel.States.SortingResult
+import github.bed72.core.domain.model.SortingType
 
 @AndroidEntryPoint
 class SortFragment : BottomSheetDialogFragment() {
@@ -38,7 +30,8 @@ class SortFragment : BottomSheetDialogFragment() {
     private var order = SortingType.ORDER_ASCENDING.value
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = FragmentSortBinding.inflate(
         inflater,
@@ -61,7 +54,7 @@ class SortFragment : BottomSheetDialogFragment() {
     }
 
     private fun setChipGroupListeners() {
-        with (binding) {
+        with(binding) {
             chipGroupOrderBy.setOnCheckedStateChangeListener { group, checkedIds ->
                 checkedIds.forEach {
                     orderBy = getOrderByValue(group.findViewById<Chip>(it).id)
@@ -87,7 +80,7 @@ class SortFragment : BottomSheetDialogFragment() {
                     val orderBy = state.storedSorting.first
                     val order = state.storedSorting.second
 
-                    with (binding) {
+                    with(binding) {
                         chipGroupOrderBy.forEach {
                             val chip = it as Chip
                             if (getOrderByValue(chip.id) == orderBy) chip.isChecked = true

@@ -1,9 +1,9 @@
 package github.bed72.bedapp.framework.paging
 
-import androidx.paging.PagingState
 import androidx.paging.PagingSource
-import github.bed72.core.domain.model.Character
+import androidx.paging.PagingState
 import github.bed72.core.data.repository.characters.CharacterRemoteDataSource
+import github.bed72.core.domain.model.Character
 
 class CharactersPagingSource(
     private val query: String,

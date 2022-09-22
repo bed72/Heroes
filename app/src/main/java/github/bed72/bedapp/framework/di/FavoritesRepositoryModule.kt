@@ -4,11 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-
 import github.bed72.bedapp.framework.FavoritesRepositoryImpl
 import github.bed72.bedapp.framework.local.room.RoomFavoritesDataSource
-import github.bed72.core.data.repository.favorites.FavoritesRepository
 import github.bed72.core.data.repository.favorites.FavoriteLocalDataSource
+import github.bed72.core.data.repository.favorites.FavoritesRepository
 
 @Module
 @InstallIn(SingletonComponent::class)

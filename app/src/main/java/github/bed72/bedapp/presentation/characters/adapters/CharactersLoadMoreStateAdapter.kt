@@ -3,7 +3,6 @@ package github.bed72.bedapp.presentation.characters.adapters
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
-
 import github.bed72.bedapp.presentation.characters.viewholders.CharactersLoadMoreStateViewHolder
 
 class CharactersLoadMoreStateAdapter(

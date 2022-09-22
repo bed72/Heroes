@@ -1,27 +1,23 @@
 package github.bed72.bedapp.presentation.sort
 
-import javax.inject.Inject
-
-import androidx.lifecycle.liveData
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.MutableLiveData
-
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import github.bed72.bedapp.presentation.extensions.watchStatus
-
-import github.bed72.bedapp.presentation.sort.SortViewModel.States.SortingResult
+import github.bed72.bedapp.presentation.sort.SortViewModel.Actions.ApplySorting
+import github.bed72.bedapp.presentation.sort.SortViewModel.Actions.GetStoredSorting
 import github.bed72.bedapp.presentation.sort.SortViewModel.States.Apply.Error
 import github.bed72.bedapp.presentation.sort.SortViewModel.States.Apply.Loading
 import github.bed72.bedapp.presentation.sort.SortViewModel.States.Apply.Success
-import github.bed72.bedapp.presentation.sort.SortViewModel.Actions.ApplySorting
-import github.bed72.bedapp.presentation.sort.SortViewModel.Actions.GetStoredSorting
-
-import github.bed72.core.usecase.base.CoroutinesDispatchers
+import github.bed72.bedapp.presentation.sort.SortViewModel.States.SortingResult
 import github.bed72.core.usecase.GetCharactersSortingUseCase
 import github.bed72.core.usecase.SaveCharactersSortingUseCase
 import github.bed72.core.usecase.SaveCharactersSortingUseCase.SaveCharactersSortingParams
+import github.bed72.core.usecase.base.CoroutinesDispatchers
+import javax.inject.Inject
 
 @HiltViewModel
 class SortViewModel @Inject constructor(

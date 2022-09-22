@@ -1,11 +1,10 @@
 package github.bed72.bedapp.presentation.extensions
 
-import kotlinx.coroutines.flow.Flow
-
 import github.bed72.core.usecase.base.ResultStatus
 import github.bed72.core.usecase.base.ResultStatus.Error
-import github.bed72.core.usecase.base.ResultStatus.Success
 import github.bed72.core.usecase.base.ResultStatus.Loading
+import github.bed72.core.usecase.base.ResultStatus.Success
+import kotlinx.coroutines.flow.Flow
 
 suspend fun <T> Flow<ResultStatus<T>>.watchStatus(
     loading: suspend () -> Unit = {},

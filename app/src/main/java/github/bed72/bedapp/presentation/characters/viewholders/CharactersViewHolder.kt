@@ -3,8 +3,6 @@ package github.bed72.bedapp.presentation.characters.viewholders
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import github.bed72.bedapp.R
 import github.bed72.bedapp.databinding.ItemCharacterBinding
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.utils.OnCharacterItemClick

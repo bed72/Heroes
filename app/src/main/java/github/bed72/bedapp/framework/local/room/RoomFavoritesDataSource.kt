@@ -1,15 +1,13 @@
 package github.bed72.bedapp.framework.local.room
 
-import javax.inject.Inject
-
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.Flow
-
-import github.bed72.core.domain.model.Character
 import github.bed72.bedapp.framework.db.daos.FavoriteDao
 import github.bed72.bedapp.framework.db.entities.FavoriteEntity
 import github.bed72.bedapp.framework.db.entities.toCharactersModel
 import github.bed72.core.data.repository.favorites.FavoriteLocalDataSource
+import github.bed72.core.domain.model.Character
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class RoomFavoritesDataSource @Inject constructor(
     private val favoriteDao: FavoriteDao

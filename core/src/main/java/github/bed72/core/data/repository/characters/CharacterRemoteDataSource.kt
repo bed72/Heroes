@@ -1,7 +1,7 @@
 package github.bed72.core.data.repository.characters
 
-import github.bed72.core.domain.model.Comic
 import github.bed72.core.domain.model.CharacterPaging
+import github.bed72.core.domain.model.Comic
 import github.bed72.core.domain.model.Event
 // Para fonte de dados remota
 interface CharacterRemoteDataSource {

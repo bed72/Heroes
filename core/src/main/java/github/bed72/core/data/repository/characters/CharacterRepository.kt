@@ -1,13 +1,11 @@
 package github.bed72.core.data.repository.characters
 
-import kotlinx.coroutines.flow.Flow
-
-import androidx.paging.PagingData
 import androidx.paging.PagingConfig
-
+import androidx.paging.PagingData
+import github.bed72.core.domain.model.Character
 import github.bed72.core.domain.model.Comic
 import github.bed72.core.domain.model.Event
-import github.bed72.core.domain.model.Character
+import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
 

@@ -1,15 +1,12 @@
 package github.bed72.core.usecase
 
-import javax.inject.Inject
-
+import github.bed72.core.data.repository.favorites.FavoritesRepository
+import github.bed72.core.domain.model.Character
+import github.bed72.core.usecase.base.CoroutinesDispatchers
+import github.bed72.core.usecase.base.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-
-import github.bed72.core.domain.model.Character
-import github.bed72.core.usecase.base.FlowUseCase
-import github.bed72.core.usecase.base.CoroutinesDispatchers
-
-import github.bed72.core.data.repository.favorites.FavoritesRepository
+import javax.inject.Inject
 
 interface GetFavoritesUseCase {
     suspend operator fun invoke(params: Unit = Unit): Flow<List<Character>>

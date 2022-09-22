@@ -1,12 +1,12 @@
 buildscript {
 
     ext {
-        hilt_version = '2.43.2'
+        hilt_version = '2.44'
         paging_version = '3.1.1'
         kotlin_version = '1.7.0'
-        detekt_version = '1.19.0'
-        android_version = '7.2.2'
-        nav_version = '2.5.1'
+        detekt_version = '1.21.0'
+        android_version = '7.3.0'
+        nav_version = '2.5.2'
         coroutines_version  = '1.6.4'
     }
 
@@ -19,7 +19,7 @@ buildscript {
 }
 
 plugins {
-    id 'com.android.library' version '7.2.2' apply false
+    id 'com.android.library' version '7.3.0' apply false
     id 'com.android.application' version "$android_version" apply false
     id 'io.gitlab.arturbosch.detekt' version "$detekt_version" apply true
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false

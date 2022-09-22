@@ -1,8 +1,7 @@
 package github.bed72.bedapp.presentation.common.recycler
 
-import androidx.viewbinding.ViewBinding
-
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
 abstract class GenericViewHolder<T>(
     item: ViewBinding

@@ -1,15 +1,13 @@
 package github.bed72.bedapp.presentation.favorites.viewholders
 
-import android.widget.TextView
-import android.widget.ImageView
-
-import android.view.ViewGroup
 import android.view.LayoutInflater
-
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import github.bed72.bedapp.databinding.ItemCharacterBinding
-import github.bed72.bedapp.presentation.favorites.data.FavoriteItem
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.common.recycler.GenericViewHolder
+import github.bed72.bedapp.presentation.favorites.data.FavoriteItem
 
 class FavoritesViewHolder(
     item: ItemCharacterBinding,

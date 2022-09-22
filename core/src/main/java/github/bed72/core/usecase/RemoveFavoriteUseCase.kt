@@ -1,16 +1,14 @@
 package github.bed72.core.usecase
 
-import javax.inject.Inject
-
+import github.bed72.core.data.repository.favorites.FavoritesRepository
+import github.bed72.core.domain.model.Character
+import github.bed72.core.usecase.RemoveFavoriteUseCase.RemoveFavoriteParams
+import github.bed72.core.usecase.base.CoroutinesDispatchers
+import github.bed72.core.usecase.base.ResultStatus
+import github.bed72.core.usecase.base.UseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-
-import github.bed72.core.usecase.base.UseCase
-import github.bed72.core.domain.model.Character
-import github.bed72.core.usecase.base.ResultStatus
-import github.bed72.core.usecase.base.CoroutinesDispatchers
-import github.bed72.core.data.repository.favorites.FavoritesRepository
-import github.bed72.core.usecase.RemoveFavoriteUseCase.RemoveFavoriteParams
+import javax.inject.Inject
 
 interface RemoveFavoriteUseCase {
     operator fun invoke(params: RemoveFavoriteParams): Flow<ResultStatus<Unit>>

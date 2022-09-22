@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
-import github.bed72.bedapp.databinding.ItemCharacterLoadMoreStateBinding
 import github.bed72.bedapp.databinding.ItemCharacterRefreshStateBinding
 
 class CharactersRefreshStateViewHolder(

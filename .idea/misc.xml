@@ -4,9 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../../layout/custom_preview.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12031408308004053" />
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_heroes_menu_outlined.xml" value="0.2095" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.12031408308004053" />
         <entry key="app/src/main/res/layout/fragment_characters.xml" value="0.24739583333333334" />
+        <entry key="app/src/main/res/layout/fragment_detail.xml" value="0.2898148148148148" />
         <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_sort.xml" value="0.33" />
         <entry key="app/src/main/res/layout/include_view_characters_loading_state.xml" value="0.24739583333333334" />

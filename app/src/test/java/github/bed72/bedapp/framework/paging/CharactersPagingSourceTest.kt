@@ -1,23 +1,23 @@
 package github.bed72.bedapp.framework.paging
 
-import org.junit.Test
-import org.junit.Rule
-import org.junit.Before
-import org.mockito.Mock
-import org.junit.runner.RunWith
-import java.lang.RuntimeException
 import androidx.paging.PagingSource
-import org.junit.Assert.assertEquals
 import com.nhaarman.mockitokotlin2.any
-import kotlinx.coroutines.test.runTest
-import org.mockito.junit.MockitoJUnitRunner
 import com.nhaarman.mockitokotlin2.whenever
-import github.bed72.testing.MainCoroutineRule
-import github.bed72.core.domain.model.Character
-import github.bed72.testing.model.CharacterFactory
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import github.bed72.bedapp.factory.response.CharacterPagingFactory
 import github.bed72.core.data.repository.characters.CharacterRemoteDataSource
+import github.bed72.core.domain.model.Character
+import github.bed72.testing.MainCoroutineRule
+import github.bed72.testing.model.CharacterFactory
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
+import java.lang.RuntimeException
 
 @RunWith(MockitoJUnitRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -88,7 +88,7 @@ class CharactersPagingSourceTest {
             )
         )
 
-        //Assert
+        // Assert
         assertEquals(
             PagingSource.LoadResult.Error<Int, Character>(exception),
             result

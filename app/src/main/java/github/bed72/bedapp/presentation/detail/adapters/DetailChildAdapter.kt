@@ -1,9 +1,7 @@
 package github.bed72.bedapp.presentation.detail.adapters
 
 import android.view.ViewGroup
-
 import androidx.recyclerview.widget.RecyclerView
-
 import github.bed72.bedapp.framework.imageloader.usecase.ImageLoader
 import github.bed72.bedapp.presentation.detail.data.DetailChildViewItem
 import github.bed72.bedapp.presentation.detail.viewholders.DetailChildViewHolder

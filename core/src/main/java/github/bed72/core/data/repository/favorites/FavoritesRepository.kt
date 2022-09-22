@@ -1,7 +1,7 @@
 package github.bed72.core.data.repository.favorites
 
-import kotlinx.coroutines.flow.Flow
 import github.bed72.core.domain.model.Character
+import kotlinx.coroutines.flow.Flow
 
 interface FavoritesRepository {
     fun getAllFavorite(): Flow<List<Character>>
